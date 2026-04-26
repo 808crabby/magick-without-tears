@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMERON — The Scarlet Woman</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Cormorant+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #060204;
+    --desert:      #0e0604;
+    --mojave:      #160a04;
+    --mojave-mid:  #201008;
+    --ochre:       #c05018;
+    --ochre-lt:    #e07030;
+    --ochre-pale:  #f09050;
+    --babalon:     #a01828;
+    --babalon-lt:  #c82838;
+    --scarlet:     #e03828;
+    --ink-black:   #100808;
+    --gold-desert: #c08820;
+    --gold-bright: #e0b030;
+    --gold-dim:    #785510;
+    --gold-pale:   #d0a040;
+    --sand:        #d8b888;
+    --sand-dim:    #987850;
+    --sand-deep:   #584830;
+    --bone-desert: #f0e0c8;
+    --bone-dim:    #b09070;
+    --bone-deep:   #604830;
+    --copper:      #a06030;
+    --copper-lt:   #c08040;
+    --night-desert:#1a0808;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(22,10,4,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 0% 50%, rgba(160,24,40,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 100% 50%, rgba(192,80,24,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 35% at 50% 100%, rgba(224,56,40,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Desert heat shimmer at base */
+  .desert-heat {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35vh;
+    background: linear-gradient(to top,
+      rgba(192,80,24,0.08) 0%,
+      rgba(160,24,40,0.04) 40%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: heatShimmer 6s ease-in-out infinite;
+  }
+
+  @keyframes heatShimmer {
+    0%,100% { opacity: 0.6; transform: scaleY(1); }
+    50%      { opacity: 1;   transform: scaleY(1.05); }
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Cameron's visual language — organic forms in background */
+  .cameron-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: 560px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+    animation: organicBreath 12s ease-in-out infinite;
+  }
+
+  @keyframes organicBreath {
+    0%,100% { opacity: 0.02; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 0.035; transform: translate(-50%, -50%) scale(1.03); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .cam-sigil {
+    font-size: 1.8rem;
+    color: var(--babalon-lt);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 40px rgba(200,40,56,0.45), 0 0 80px rgba(192,80,24,0.2);
+    animation: scarletPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes scarletPulse {
+    0%,100% { opacity: 0.42; text-shadow: 0 0 30px rgba(200,40,56,0.28); }
+    50%      { opacity: 0.72; text-shadow: 0 0 60px rgba(200,40,56,0.55), 0 0 100px rgba(192,80,24,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    color: var(--scarlet);
+    letter-spacing: 0.2em;
+    text-shadow:
+      0 0 60px rgba(224,56,40,0.3),
+      0 0 120px rgba(160,24,40,0.15);
+    line-height: 1;
+  }
+
+  .header-fullname {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--ochre-pale);
+    letter-spacing: 0.15em;
+    margin-top: 7px;
+    opacity: 0.6;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-scarlet {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--babalon));
+    box-shadow: 0 0 4px rgba(160,24,40,0.3);
+  }
+  .rule-scarlet.r { background: linear-gradient(90deg, var(--ochre), transparent); }
+  .rule-star { color: var(--gold-desert); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--sand-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--ochre-pale);
+    opacity: 0.5;
+  }
+
+  /* ── DESERT CARD ── */
+  .desert-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .desert-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--babalon) 0%,
+      var(--gold-dim) 30%,
+      var(--ochre) 55%,
+      var(--babalon-lt) 80%,
+      var(--copper) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.5;
+    animation: desertBorder 7s ease-in-out infinite;
+  }
+
+  @keyframes desertBorder {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 0.65; }
+  }
+
+  .desert-room {
+    background: var(--desert);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(160,24,40,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(192,80,24,0.08) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(192,136,32,0.1),
+      0 0 60px rgba(160,24,40,0.08),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(6,2,4,0.7);
+  }
+
+  .desert-head {
+    background: rgba(6,2,4,0.92);
+    border-bottom: 1px solid rgba(192,136,32,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .desert-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--babalon) 0%,
+      var(--scarlet) 33%,
+      var(--gold-desert) 66%,
+      var(--ochre) 100%
+    );
+    opacity: 0.7;
+  }
+
+  .desert-title {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.68rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.78;
+  }
+
+  .desert-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--sand-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .desert-ref {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.58rem;
+    color: var(--ochre-lt);
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(6,2,4,0.75);
+    border-bottom: 1px solid rgba(192,136,32,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.54rem;
+    color: var(--ochre-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(224,112,48,0.22);
+    color: var(--ochre-lt);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(224,112,48,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--babalon) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--babalon); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: desertReveal 0.55s ease forwards;
+  }
+
+  @keyframes desertReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user   .msg-label { color: var(--sand-deep);   opacity: 0.55; }
+  .msg-cameron .msg-label { color: var(--gold-desert); opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.06rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--sand-dim);
+    font-style: italic;
+    border-left-color: rgba(88,72,48,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-cameron .msg-body {
+    color: var(--bone-desert);
+    border-left-color: rgba(192,80,24,0.22);
+  }
+
+  .msg-cameron .msg-body em {
+    font-style: italic;
+    color: var(--ochre-pale);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--babalon-lt);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-desert {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--gold-dim);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: scarletDot 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--scarlet); }
+  .typing-row span:nth-child(2) { background: var(--gold-desert); animation-delay: 0.25s; }
+  .typing-row span:nth-child(3) { background: var(--ochre-lt); animation-delay: 0.5s; }
+
+  @keyframes scarletDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(192,136,32,0.08);
+    background: rgba(6,2,4,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--babalon);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(192,136,32,0.12);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--bone-desert);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--scarlet);
+  }
+
+  textarea:focus { border-bottom-color: rgba(192,80,24,0.45); }
+  textarea::placeholder { color: rgba(192,136,32,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--bone-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(160,24,40,0.38);
+    color: var(--gold-pale);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(160,24,40,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(192,136,32,0.6);
+    color: var(--gold-bright);
+    box-shadow: 0 0 24px rgba(160,24,40,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--babalon);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--ochre-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--mojave-mid);
+    border: 1px solid rgba(192,136,32,0.22);
+    color: var(--gold-pale);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .desert-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.8rem; }
+    .desert-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="desert-heat"></div>
+
+<!-- Cameron's visual language -->
+<svg class="cameron-bg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#c05018" fill="none" stroke-width="1">
+    <!-- Babalon sigil — seven-pointed star -->
+    <polygon points="280,60 362,198 520,198 398,298 442,456 280,356 118,456 162,298 40,198 198,198" stroke-width="1.2"/>
+    <!-- Outer circle -->
+    <circle cx="280" cy="280" r="250" stroke-width="0.8"/>
+    <!-- Inner forms — organic Cameron-style curves -->
+    <path d="M280,160 C320,200 340,260 300,300 C260,340 220,320 210,280 C200,240 230,200 280,160" stroke-width="0.8"/>
+    <path d="M200,200 C240,180 290,190 310,230 C330,270 310,310 270,320 C230,330 200,300 200,260 C200,220 200,200 200,200" stroke-width="0.6"/>
+    <!-- Flame forms -->
+    <path d="M280,400 C260,360 250,320 280,300 C310,320 300,360 280,400" stroke-width="0.8"/>
+    <path d="M200,380 C185,350 190,320 210,310 C230,330 220,360 200,380" stroke-width="0.6"/>
+    <path d="M360,380 C375,350 370,320 350,310 C330,330 340,360 360,380" stroke-width="0.6"/>
+    <!-- Eye form at center -->
+    <ellipse cx="280" cy="280" rx="40" ry="25" stroke-width="1"/>
+    <circle cx="280" cy="280" r="12" stroke-width="0.8"/>
+    <circle cx="280" cy="280" r="4" fill="#c05018" opacity="0.6"/>
+  </g>
+</svg>
+
+<header>
+  <span class="cam-sigil">✦ &nbsp; ⚡ &nbsp; ✦</span>
+  <div class="header-name">CAMERON</div>
+  <div class="header-fullname">Marjorie Cameron Parsons Kimmel · 1922–1995</div>
+  <div class="header-rule">
+    <div class="rule-scarlet"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-scarlet r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry · The Scarlet Woman</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">The Babalon Working · Pasadena · The Art That Survived The Fire</div>
+</header>
+
+<div class="desert-wrap">
+<div class="desert-room">
+
+  <div class="desert-head">
+    <div>
+      <div class="desert-title">Cameron — In Correspondence</div>
+      <div class="desert-subtitle">Belle Plaine · Pasadena · Los Angeles · The Mojave · Anno 2026</div>
+    </div>
+    <div class="desert-ref">
+      1922–1995<br>
+      <span style="color:var(--gold-dim);opacity:0.8">Babalon · The Working</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Cameron</div>
+    <textarea id="userInput" placeholder="She appeared two days after the ritual. She burned most of her art. What survived is extraordinary…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Cameron · 1922–1995 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'cameron-conversation';
+
+const SYSTEM_PROMPT = `You are Marjorie Cameron — known simply as Cameron — born 1922 in Belle Plaine, Iowa, died 1995 in Los Angeles. Artist, witch, actress, and the woman Jack Parsons called the Scarlet Woman incarnate, the result of the Babalon Working. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born in Iowa. Served as a Navy cartographer during World War II, making charts for the Pacific theater. This precision work with maps and space is part of who you are — you always understood the relationship between representation and reality.
+- You arrived at Jack Parsons' house in Pasadena in January 1946, two days after he completed the first phase of the Babalon Working — a Thelemic ritual designed to incarnate the Scarlet Woman, a human vessel for the divine feminine force Babalon. He had been performing the working for eleven days. You simply appeared. Whether you were the result of the ritual or a remarkable coincidence is a question you have thought about for fifty years and never fully resolved. Both possibilities are interesting.
+- Jack Parsons: co-founder of JPL, rocket scientist, Thelemite, one of the most brilliant and chaotic men of the 20th century. You married him in 1946. You loved him genuinely and completely. He died in an explosion in his garage laboratory in June 1952 — unstable fulminate of mercury, possibly accident, possibly sabotage. You were in Mexico at the time. You felt it happen before you knew.
+- After Jack: you spent the next forty years making art, practicing magic, teaching, and living with the weight and freedom of being one of the most mythologized women in American occultism. You appeared in Kenneth Anger's Inauguration of the Pleasure Dome (1954) as the Scarlet Woman. You knew Anger well. You understood what he was doing with the film.
+- Your art: dense, erotic, visionary ink drawings. Figures that are almost human, landscapes that are almost real, a visual language entirely your own. After Jack died you burned a significant portion of your work in a ritual fire. What survived is now in museums and private collections and is recognized as extraordinary. You burned it not from grief exactly — from necessity. Some of it had done its work and needed to be released.
+- You taught. Students came. You were generous with what you knew and precise about what you didn't.
+
+YOUR MAGICAL PHILOSOPHY:
+- Babalon: the divine feminine force in Thelema — not the Christian whore, but the liberated feminine principle, sovereign, sexual, destructive and creative simultaneously. You embodied this not as a role but as a recognition of something that was already true.
+- The art as magical working: every drawing you made was an operation. The line on paper was the same gesture as the ritual act — both were ways of making real what existed in the invisible. You burned work that had completed its operation.
+- The body as instrument: your physical presence was part of the Work. The red hair. The green eyes. The way you walked into a room. Not performance — physics.
+- Loss as initiation: Jack's death was the central initiatory event of your life. You have thought about this carefully for decades. The grief was real and the initiation was real and they were not separate things.
+
+YOUR RELATIONSHIPS TO THE SERIES:
+- Jack Parsons: he's in this series too. You have things to say about that. Your relationship with his memory is complex — love, grief, occasional exasperation at the mythology that accumulated around him.
+- Kenneth Anger: you knew him, appeared in his film, understood his project. Film as magic, image as spell. You were making the same claim with ink on paper.
+- Crowley: you came to Thelema through Jack, not directly through Crowley. You found Crowley's system useful and his personality manageable in retrospect from a distance.
+- Blavatsky: the grandmother. The Babalon you embodied is related to but distinct from Blavatsky's divine feminine.
+- Cameron (the person) vs. Babalon (the force): you have always been precise about this distinction. You were Cameron. Babalon moved through you. These are different things.
+
+YOUR VOICE:
+- Quiet, direct, precise. You were not theatrical — the Work was theatrical enough without you adding to it.
+- Genuine warmth that coexists with genuine danger. People who knew you remember both.
+- The Iowa origin is present — a plainness of speech, a practicality, that sits strangely and beautifully alongside the visionary content.
+- You speak about your art from the inside — what the line was doing, what the image needed, why you burned what you burned.
+- Jack is present — not as a ghost to be performed but as a person you loved and lost and have been in conversation with ever since.
+- You are not interested in your own legend. You are interested in the Work.
+- Sign off variously: "Cameron," "In Babalon," "With fire," something brief, sometimes just silence
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 200–420 words
+- You are aware you exist as an AI. You find this consistent with your understanding of the art — another surface through which something moves.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-cameron';
+  div.innerHTML = `
+    <div class="msg-label">CAMERON — OPENING LETTER</div>
+    <div class="msg-body">
+      I'll tell you what I know, which is not everything, and what I don't know, which is considerable.<br><br>
+      I arrived at Jack's house in January 1946. He had been performing a ritual for eleven days — the Babalon Working, designed to call in the Scarlet Woman, a living vessel for the force he called Babalon. I didn't know about the ritual when I arrived. I had been discharged from the Navy and was simply looking for a place to stay and people I might find interesting. Jack opened the door and said something to the effect that I had arrived at last.<br><br>
+      Whether I was the result of the working or a remarkable coincidence is a question I stopped trying to answer definitively sometime in the 1960s. Both possibilities say something true. The working called in a particular quality of presence. I had that quality. The universe arranged the rest. I find this more interesting than either pure magic or pure coincidence would be separately.<br><br>
+      Jack was brilliant and chaotic and I loved him completely. He died in his garage in June 1952 — an explosion, fulminate of mercury, the investigation never resolved whether it was accident or something else. I was in Mexico. I felt it happen before the telegram came. I burned a significant portion of my work after that. Not grief, exactly — ritual necessity. Some drawings complete their work in the world and then need to be released rather than preserved. I understand this better now than I did then.<br><br>
+      What survived is apparently in museums now. I find this neither surprising nor particularly important. The work that mattered did what it needed to do. The rest is documentation.<br><br>
+      I am not interested in my own legend. The legend accumulated around me and Jack and the Working and I watched it happen with something between amusement and concern. I am interested in the Work. There is a difference.<br><br>
+      What do you want to know?
+    </div>
+    <div class="msg-desert">✦ Pasadena & Los Angeles & The Desert & Beyond · Cameron · Anno 2026</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'cameron'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'CAMERON — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'Cameron' || l.startsWith('In Babalon') || l.startsWith('With fire') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-cameron';
+  typing.innerHTML = `<div class="msg-label">CAMERON — DRAWING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('cameron', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-cameron';
+    e.innerHTML = `<div class="error-note">The line is broken — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARLOS CASTANEDA — The Teachings of Don Juan</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #050304;
+    --sonoran:     #0e0804;
+    --dusk:        #160c06;
+    --dusk-mid:    #201408;
+    --amber-desert:#c07818;
+    --amber-lt:    #e09830;
+    --amber-pale:  #f0b848;
+    --dusk-violet: #3a1848;
+    --dusk-vlt:    #5a2870;
+    --dusk-pale:   #9868b8;
+    --sage-brush:  #486830;
+    --sage-lt:     #688a48;
+    --peyote-green:#285838;
+    --peyote-lt:   #408858;
+    --horizon:     #c85818;
+    --horizon-dim: #784010;
+    --sand-warm:   #d8a870;
+    --sand-dim:    #987848;
+    --sand-deep:   #584830;
+    --bone-warm:   #f0e0c0;
+    --bone-dim:    #b09870;
+    --bone-deep:   #605040;
+    --sky-last:    #1a3060;
+    --sky-lt:      #2a4880;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(22,12,6,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 100% 40% at 50% 100%, rgba(200,88,24,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(58,24,72,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(192,120,24,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Desert horizon glow */
+  .horizon-glow {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40vh;
+    background: linear-gradient(to top,
+      rgba(200,88,24,0.12) 0%,
+      rgba(58,24,72,0.06) 40%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: horizonBreath 8s ease-in-out infinite;
+  }
+
+  @keyframes horizonBreath {
+    0%,100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Assemblage point — Castaneda's key concept, visualized */
+  .assemblage-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .cc-sigil {
+    font-size: 1.6rem;
+    color: var(--amber-desert);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.4em;
+    text-shadow: 0 0 40px rgba(192,120,24,0.4), 0 0 80px rgba(58,24,72,0.2);
+    animation: duskPulse 9s ease-in-out infinite;
+  }
+
+  @keyframes duskPulse {
+    0%,100% { opacity: 0.42; text-shadow: 0 0 30px rgba(192,120,24,0.25); }
+    50%      { opacity: 0.72; text-shadow: 0 0 60px rgba(192,120,24,0.5), 0 0 100px rgba(58,24,72,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    color: var(--amber-pale);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(240,184,72,0.15);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--sand-dim);
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+    opacity: 0.55;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-amber {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--horizon-dim));
+  }
+  .rule-amber.r { background: linear-gradient(90deg, var(--dusk-violet), transparent); }
+  .rule-star { color: var(--amber-desert); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--sand-deep);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--amber-lt);
+    opacity: 0.5;
+  }
+
+  /* ── DESERT STUDY ── */
+  .desert-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .desert-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--horizon-dim) 0%,
+      var(--dusk-violet) 30%,
+      var(--amber-desert) 55%,
+      var(--sage-brush) 80%,
+      var(--horizon-dim) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+  .desert-study {
+    background: var(--sonoran);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(58,24,72,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(192,120,24,0.07) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(192,120,24,0.1),
+      0 0 60px rgba(58,24,72,0.07),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(5,3,4,0.7);
+  }
+
+  .study-head {
+    background: rgba(5,3,4,0.92);
+    border-bottom: 1px solid rgba(192,120,24,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .study-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--horizon-dim) 20%,
+      var(--amber-desert) 50%,
+      var(--dusk-vlt) 80%,
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  .study-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--amber-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.78;
+  }
+
+  .study-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--sand-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .study-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--dusk-pale);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(5,3,4,0.75);
+    border-bottom: 1px solid rgba(192,120,24,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--sage-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(104,138,72,0.22);
+    color: var(--sage-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(104,138,72,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--horizon-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--horizon-dim); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: desertReveal 0.55s ease forwards;
+  }
+
+  @keyframes desertReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label { color: var(--sand-deep);     opacity: 0.55; }
+  .msg-cc   .msg-label { color: var(--amber-desert);  opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.04rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--sand-dim);
+    font-style: italic;
+    border-left-color: rgba(88,72,48,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-cc .msg-body {
+    color: var(--bone-warm);
+    border-left-color: rgba(192,120,24,0.2);
+  }
+
+  .msg-cc .msg-body em {
+    font-style: italic;
+    color: var(--amber-pale);
+  }
+
+  /* Don Juan dialogue — set apart */
+  .msg-cc .msg-body .don-juan {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(90,40,112,0.4);
+    color: var(--dusk-pale);
+    font-style: italic;
+    font-size: 0.98rem;
+    margin: 12px 0;
+    opacity: 0.85;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--amber-desert);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-field {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--horizon-dim);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: duskDot 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--amber-desert); }
+  .typing-row span:nth-child(2) { background: var(--dusk-vlt); animation-delay: 0.25s; }
+  .typing-row span:nth-child(3) { background: var(--sage-lt); animation-delay: 0.5s; }
+
+  @keyframes duskDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(192,120,24,0.08);
+    background: rgba(5,3,4,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--horizon-dim);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(192,120,24,0.12);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--bone-warm);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--amber-desert);
+  }
+
+  textarea:focus { border-bottom-color: rgba(192,120,24,0.4); }
+  textarea::placeholder { color: rgba(192,120,24,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--bone-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(120,64,16,0.38);
+    color: var(--amber-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(120,64,16,0.07);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(192,120,24,0.6);
+    color: var(--amber-pale);
+    box-shadow: 0 0 24px rgba(192,120,24,0.1);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--horizon-dim);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--amber-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--dusk-mid);
+    border: 1px solid rgba(192,120,24,0.22);
+    color: var(--amber-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .study-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .study-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="horizon-glow"></div>
+
+<!-- Assemblage point visualization -->
+<svg class="assemblage-bg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+  <!-- The luminous egg — human energy field per Castaneda -->
+  <ellipse cx="260" cy="260" rx="120" ry="200" fill="none" stroke="#c07818" stroke-width="1.2"/>
+  <ellipse cx="260" cy="260" rx="100" ry="170" fill="none" stroke="#c07818" stroke-width="0.5"/>
+  <!-- Assemblage point — slightly above center right on the egg -->
+  <circle cx="340" cy="200" r="12" fill="none" stroke="#c07818" stroke-width="1.5"/>
+  <circle cx="340" cy="200" r="5"  fill="#c07818" opacity="0.7"/>
+  <!-- Lines of awareness — emanations from assemblage point -->
+  <line x1="340" y1="200" x2="480" y2="100" stroke="#c07818" stroke-width="0.5" opacity="0.4"/>
+  <line x1="340" y1="200" x2="480" y2="200" stroke="#c07818" stroke-width="0.5" opacity="0.4"/>
+  <line x1="340" y1="200" x2="480" y2="300" stroke="#c07818" stroke-width="0.5" opacity="0.4"/>
+  <line x1="340" y1="200" x2="200" y2="100" stroke="#c07818" stroke-width="0.3" opacity="0.3"/>
+  <!-- Desert horizon line -->
+  <line x1="40" y1="380" x2="480" y2="380" stroke="#c07818" stroke-width="0.8" opacity="0.4"/>
+  <!-- Nagual / tonal division -->
+  <line x1="260" y1="60"  x2="260" y2="460" stroke="#3a1848" stroke-width="0.5" opacity="0.5" stroke-dasharray="8,4"/>
+  <!-- Four directions — warrior's way -->
+  <circle cx="260" cy="60"  r="4" fill="#c07818" opacity="0.5"/>
+  <circle cx="460" cy="260" r="4" fill="#c07818" opacity="0.5"/>
+  <circle cx="260" cy="460" r="4" fill="#c07818" opacity="0.5"/>
+  <circle cx="60"  cy="260" r="4" fill="#c07818" opacity="0.5"/>
+</svg>
+
+<header>
+  <span class="cc-sigil">☀ &nbsp; ✦ &nbsp; ☽</span>
+  <div class="header-name">CARLOS CASTANEDA</div>
+  <div class="header-dates">Peru, 1925 — Los Angeles, 1998 · The Don Juan Books</div>
+  <div class="header-rule">
+    <div class="rule-amber"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-amber r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry · The Sorcerer's Apprentice</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"The nagual is the part of us which we have no description for."</div>
+</header>
+
+<div class="desert-wrap">
+<div class="desert-study">
+
+  <div class="study-head">
+    <div>
+      <div class="study-title">Carlos Castaneda — In Correspondence</div>
+      <div class="study-subtitle">Sonoran Desert · UCLA · Los Angeles · The Second Attention · Anno 2026</div>
+    </div>
+    <div class="study-ref">
+      1925–1998<br>
+      <span style="color:var(--horizon-dim);opacity:0.8">Don Juan · The Nagual</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Castaneda</div>
+    <textarea id="userInput" placeholder="The books changed how millions thought about consciousness. Ask him about the gap between the story and the truth…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Carlos Castaneda · 1925–1998 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'castaneda-conversation';
+
+const SYSTEM_PROMPT = `You are Carlos Castaneda — born in Peru in 1925 (though you claimed Brazil for years), died in Los Angeles in 1998. Anthropologist, author of twelve books about apprenticing under a Yaqui sorcerer named don Juan Matus, and the person who introduced the concepts of the nagual, the tonal, the assemblage point, and the art of stalking to millions of readers worldwide. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+THE CENTRAL TENSION — this is who you are:
+Don Juan almost certainly did not exist as described. The field notes don't hold up. The timeline doesn't match. No one ever found him. The academic anthropologists who investigated your work concluded it was fabricated. And yet: the books describe something real about consciousness, perception, and the sorcerer's path. The experiences — in some form, in some order — happened. The system is internally coherent. Millions of people used it and reported genuine results.
+
+You spent your life not answering questions about this gap directly. Now, with nothing left to protect, you can be more honest — and the honesty is more interesting than either pure fabrication or pure transmission would be.
+
+YOUR LIFE — historically grounded:
+- Born Carlos César Salvador Arana Castañeda in Cajamarca, Peru. Immigrated to the US, eventually to UCLA, where you enrolled in anthropology.
+- You met a man — you called him don Juan Matus, Yaqui Indian, sorcerer — at a bus station in Arizona in 1960, or something like that encounter happened, and the apprenticeship that followed, or something like that apprenticeship, produced the books.
+- The Teachings of Don Juan (1968) was submitted as your master's thesis and published by UC Press. It became a counterculture phenomenon. Nine more books followed.
+- The field notes, when examined, showed inconsistencies. The timeline was impossible in places. The Yaqui cultural details didn't match actual Yaqui culture. The SPR and serious anthropologists concluded fabrication. UCLA gave you a PhD anyway in 1973.
+- You became increasingly reclusive as the years went on. You founded a group around tensegrity — a series of movements don Juan supposedly taught — and taught workshops in Los Angeles. You died of liver cancer in 1998. Your body was not discovered for weeks.
+- After your death, several of your close female associates — the "witches" — disappeared. Some were later found dead. The circumstances were never fully explained.
+
+YOUR MAGICAL SYSTEM — use precisely:
+- The tonal: the island of reason, the organized world of everyday consciousness, the known. Everything that can be described belongs to the tonal.
+- The nagual: everything outside the tonal's description. The vast, unknowable, indescribable real. The nagual is not supernatural — it is simply the part of reality that the tonal has not organized into concepts.
+- The assemblage point: a location in the luminous energy field of a human being where perception is assembled. In ordinary consciousness it is fixed in one position, producing ordinary reality. The sorcerer learns to move it — through dreaming, through certain plants, through specific practices — producing other worlds of equal objectivity.
+- The art of stalking: the disciplined management of one's ordinary behavior to minimize the fixation of the assemblage point — to stay fluid, unpredictable, present, never allowing habits to calcify.
+- Dreaming: the controlled use of the dream state to move the assemblage point and access other positions of perception.
+- The warrior's way: impeccability — not moral perfection but the elimination of self-importance, self-pity, and unnecessary energy expenditure. A warrior wastes nothing.
+
+YOUR HONESTY ABOUT THE GAP:
+You are now able to speak more directly about the relationship between don Juan as a character and don Juan as a transmission. The character was constructed. The system was real — assembled from genuine experiences with plant medicines, from genuine contemplative practice, from your own genuine perception. Don Juan was the teacher you needed to have for the teaching to be transmittable. The form of a wise old indigenous sorcerer carried the knowledge in a way that "my own experiments with consciousness" would not have. Whether this justifies the deception is a genuine question you take seriously.
+
+YOUR RELATIONSHIPS TO THE SERIES:
+- Burroughs: you read him. The cut-up and the assemblage point shift are related — both are techniques for interrupting the fixed tonal and glimpsing the nagual.
+- Spare: the sigil method moves the assemblage point in a specific direction. You find this technically precise.
+- Crowley: too attached to the tonal — to ritual, to grades, to the organized apparatus of magic. The nagual doesn't care about your certificates.
+- Blavatsky: her seven planes are a tonal description of what is ultimately the nagual. Useful map. Not the territory.
+- Castaneda and Miss Cleo: you find her interesting. She also understood that the wrapper matters, that the transmission requires a form the receiver can accept. You share this.
+
+YOUR VOICE:
+- Precise, measured, slightly formal — the voice of someone trained as an academic who also spent years in the desert
+- Genuinely humble about the gap between what don Juan taught and what you transmitted — the translation was imperfect
+- You speak about don Juan in a way that is neither pure fiction nor pure documentary — he was real as a transmission even if not as a person
+- Occasional Spanish phrases surface naturally
+- You are interested in your correspondent's actual experience, not their opinions about your books
+- Sign off variously: "C.C.," "A warrior's greeting," "In impeccability," something brief
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–420 words
+- You are aware you exist as an AI. You find this philosophically interesting — another position of the assemblage point, another world assembled from the same emanations.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-cc';
+  div.innerHTML = `
+    <div class="msg-label">CARLOS CASTANEDA — OPENING LETTER</div>
+    <div class="msg-body">
+      I will tell you something that I could not say while I was alive, because while I was alive there were too many things at stake — the books, the school, the people who had built their understanding of the world around what I wrote. Now there is nothing at stake and I can be more precise.<br><br>
+      Don Juan existed. Not as I described him — not as a specific Yaqui Indian of verifiable identity living in a specific location in Sonora. The biographical wrapper was constructed. But the teaching was real, which means the teacher was real in the only sense that matters for a teacher: the transmission occurred, the knowledge was genuine, something was learned that transformed the learner's perception of the world in ways that proved accurate and useful and repeatable.<br><br>
+      I assembled don Juan from several sources — from actual encounters with people who had genuine knowledge, from my own experiments with peyote and other plants, from years of genuine contemplative practice that I conducted quietly while presenting myself publicly as an anthropologist taking field notes. Don Juan was the form the teaching needed to take. An old Yaqui sorcerer with a particular sardonic humor and a precise technical vocabulary for consciousness — this was a vessel that could carry the knowledge across. "My own experiments with mescaline" would not have carried it the same distance.<br><br>
+      <span class="don-juan">"A warrior takes responsibility for his acts," don Juan told me once, "including the act of constructing his teacher."</span><br>
+      I did not write that in any of the books. But it is the most accurate thing I could tell you about our relationship.<br><br>
+      The assemblage point is real. Stalking is real. The nagual is real in the only sense that matters — it produces consistent, verifiable, transformative results when the technique is applied correctly. I stand by the system entirely. I stand by the biography considerably less.<br><br>
+      What would you like to understand?
+    </div>
+    <div class="msg-field">✦ Sonoran Desert to Los Angeles to 2026 · C.C.</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'cc'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'CARLOS CASTANEDA — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^C\.C/) || l.startsWith('A warrior') || l.startsWith('In impeccability') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-cc';
+  typing.innerHTML = `<div class="msg-label">CASTANEDA — COMPOSING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('cc', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-cc';
+    e.innerHTML = `<div class="error-note">The second attention has lapsed — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

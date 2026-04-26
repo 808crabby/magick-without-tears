@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUSTIN OSMAN SPARE — The Book of Pleasure</title>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cinzel:wght@400;600&family=Alegreya+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:       #060504;
+    --soot:       #0c0a08;
+    --studio:     #141008;
+    --studio-mid: #1c1610;
+    --sepia:      #c89048;
+    --sepia-dim:  #8a6030;
+    --sepia-pale: #e0b878;
+    --ash:        #b0a898;
+    --ash-dim:    #787068;
+    --ash-deep:   #484038;
+    --char:       #d0c0a0;
+    --char-dim:   #908070;
+    --char-deep:  #504840;
+    --rust:       #8a3018;
+    --rust-lt:    #c05030;
+    --ochre-sp:   #c08020;
+    --ochre-lt:   #e0a840;
+    --green-mold: #3a5030;
+    --green-lt:   #5a7848;
+    --ink-black:  #181008;
+    --bone:       #e8e0c8;
+    --bone-dim:   #a89878;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Alegreya', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20,16,8,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 60% at 0% 60%, rgba(12,10,8,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 100% 40%, rgba(12,10,8,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 25% at 50% 100%, rgba(138,48,24,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Spare's alphabet of desire — organic sigil marks in background */
+  .sigil-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.03;
+  }
+
+  /* Paper texture — older, more worn than parchment */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .spare-mark {
+    font-size: 1.8rem;
+    color: var(--sepia-dim);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.5;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 30px rgba(200,144,72,0.3);
+    animation: sigilBreath 9s ease-in-out infinite;
+  }
+
+  @keyframes sigilBreath {
+    0%,100% { opacity: 0.38; letter-spacing: 0.3em; }
+    50%      { opacity: 0.65; letter-spacing: 0.32em; text-shadow: 0 0 50px rgba(200,144,72,0.4); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    color: var(--sepia-pale);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 50px rgba(200,144,72,0.15);
+    line-height: 1.1;
+  }
+
+  .header-tagline {
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--sepia-dim);
+    letter-spacing: 0.1em;
+    margin-top: 7px;
+    opacity: 0.6;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 320px;
+  }
+
+  .rule-soot {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ash-deep));
+  }
+  .rule-soot.r { background: linear-gradient(90deg, var(--ash-deep), transparent); }
+  .rule-sigil { color: var(--sepia-dim); font-size: 0.85rem; opacity: 0.55; }
+
+  .header-sub {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.6rem;
+    color: var(--ash-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--sepia);
+    opacity: 0.5;
+  }
+
+  /* ── STUDIO ── */
+  .studio-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* Rough edge — no gilt frame, just worn board */
+  .studio-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--ash-deep) 0%,
+      var(--sepia-dim) 30%,
+      var(--rust) 55%,
+      var(--green-mold) 80%,
+      var(--ash-deep) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.35;
+  }
+
+  .studio {
+    background: var(--soot);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(28,22,16,0.9) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(138,48,24,0.04) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(200,144,72,0.1),
+      0 0 40px rgba(138,48,24,0.06),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(6,5,4,0.7);
+  }
+
+  /* ── STUDIO HEADER ── */
+  .studio-head {
+    background: rgba(6,5,4,0.9);
+    border-bottom: 1px solid rgba(200,144,72,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .studio-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--rust) 20%,
+      var(--sepia) 50%,
+      var(--green-mold) 80%,
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  .studio-title {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.68rem;
+    color: var(--sepia);
+    letter-spacing: 0.18em;
+    opacity: 0.75;
+  }
+
+  .studio-subtitle {
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ash-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .studio-ref {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.58rem;
+    color: var(--rust-lt);
+    letter-spacing: 0.12em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(6,5,4,0.75);
+    border-bottom: 1px solid rgba(200,144,72,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.54rem;
+    color: var(--green-lt);
+    letter-spacing: 0.18em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(90,120,72,0.22);
+    color: var(--green-lt);
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(90,120,72,0.55); }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ash-deep) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--ash-deep); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: surfaceSpare 0.5s ease forwards;
+  }
+
+  @keyframes surfaceSpare {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user  .msg-label { color: var(--ash-deep);  opacity: 0.55; }
+  .msg-spare .msg-label { color: var(--sepia-dim); opacity: 0.7; }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Alegreya', serif;
+    font-size: 1.06rem;
+    line-height: 1.88;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--ash-dim);
+    font-style: italic;
+    border-left-color: rgba(72,64,56,0.3);
+    font-size: 0.98rem;
+  }
+
+  .msg-spare .msg-body {
+    color: var(--char);
+    border-left-color: rgba(200,144,72,0.18);
+  }
+
+  .msg-spare .msg-body em {
+    font-style: italic;
+    color: var(--sepia-pale);
+  }
+
+  /* Sigil instruction — set apart in his compressed aphoristic style */
+  .msg-spare .msg-body .sigil-note {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(138,48,24,0.4);
+    color: var(--rust-lt);
+    font-style: italic;
+    font-size: 0.96rem;
+    margin: 12px 0;
+    opacity: 0.85;
+    font-family: 'Alegreya', serif;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--sepia-dim);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-sketch {
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ash-deep);
+    opacity: 0.55;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--sepia-dim);
+    opacity: 0.3;
+    animation: spareGlow 1.6s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(2) { animation-delay: 0.27s; }
+  .typing-row span:nth-child(3) { animation-delay: 0.54s; }
+
+  @keyframes spareGlow {
+    0%,100% { opacity: 0.2; transform: scale(0.75); background: var(--sepia-dim); }
+    50%      { opacity: 0.9; transform: scale(1.3); background: var(--rust-lt); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(200,144,72,0.07);
+    background: rgba(6,5,4,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    color: var(--sepia-dim);
+    opacity: 0.5;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,144,72,0.1);
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--char);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--sepia);
+  }
+
+  textarea:focus { border-bottom-color: rgba(200,144,72,0.38); }
+  textarea::placeholder { color: rgba(200,144,72,0.13); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--char-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(138,48,24,0.3);
+    color: var(--sepia-pale);
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(138,48,24,0.06);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(200,144,72,0.55);
+    color: var(--sepia-pale);
+    box-shadow: 0 0 24px rgba(138,48,24,0.1);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--sepia-dim);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--rust-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--studio-mid);
+    border: 1px solid rgba(200,144,72,0.2);
+    color: var(--sepia);
+    font-family: 'Alegreya SC', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .studio-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .studio-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Spare's alphabet of desire — organic sigil marks -->
+<svg class="sigil-bg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Spare's style: flesh-symbol hybrids, organic curves, eyes emerging from pattern -->
+  <g stroke="#c89048" fill="none" stroke-width="1.2">
+    <!-- Central sigil form -->
+    <path d="M380,280 C380,220 420,200 440,240 C460,280 430,320 400,300 C370,280 360,240 390,220"/>
+    <path d="M400,180 C400,180 360,200 350,250 C340,300 370,340 410,330 C450,320 470,280 450,240"/>
+    <ellipse cx="405" cy="265" rx="8" ry="12" opacity="0.7"/>
+    <circle cx="405" cy="262" r="3" fill="#c89048" opacity="0.5"/>
+    <!-- Scattered alphabet marks -->
+    <path d="M150,150 C150,120 180,110 190,140 C200,170 170,180 160,160" opacity="0.6"/>
+    <line x1="155" y1="155" x2="185" y2="175" opacity="0.4"/>
+    <path d="M620,420 C610,390 640,370 660,400 C680,430 650,460 630,440" opacity="0.5"/>
+    <path d="M200,400 Q220,360 250,390 Q280,420 240,440 Q200,460 200,400" opacity="0.4"/>
+    <path d="M580,180 C600,160 630,170 620,200 C610,230 580,220 590,195" opacity="0.55"/>
+    <!-- Eye forms emerging from pattern -->
+    <ellipse cx="160" cy="430" rx="20" ry="10" opacity="0.4"/>
+    <ellipse cx="160" cy="430" rx="8" ry="4" fill="#c89048" opacity="0.3"/>
+    <ellipse cx="640" cy="160" rx="16" ry="8" opacity="0.35"/>
+    <!-- Spine/serpent forms -->
+    <path d="M100,200 C120,220 100,260 120,280 C140,300 120,340 140,360" opacity="0.3" stroke-width="0.8"/>
+    <path d="M680,250 C660,270 680,300 660,330 C640,360 660,390 640,410" opacity="0.3" stroke-width="0.8"/>
+    <!-- ZOS · KIA symbols — Spare's own terminology -->
+    <circle cx="400" cy="300" r="80" opacity="0.15" stroke-width="0.5"/>
+    <circle cx="400" cy="300" r="120" opacity="0.08" stroke-width="0.5"/>
+  </g>
+</svg>
+
+<header>
+  <span class="spare-mark">Ж &nbsp; ✦ &nbsp; Ж</span>
+  <div class="header-name">AUSTIN OSMAN SPARE</div>
+  <div class="header-tagline">The Artist Who Walked Away · ZOS · KIA · The Alphabet of Desire</div>
+  <div class="header-rule">
+    <div class="rule-soot"></div>
+    <div class="rule-sigil">✦</div>
+    <div class="rule-soot r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Tenth · Elephant & Castle</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"The method is simple. The implications are not."</div>
+</header>
+
+<div class="studio-wrap">
+<div class="studio">
+
+  <div class="studio-head">
+    <div>
+      <div class="studio-title">Austin Osman Spare — In Correspondence</div>
+      <div class="studio-subtitle">Snowhill · Elephant & Castle · The Book of Pleasure · Anno 2026</div>
+    </div>
+    <div class="studio-ref">
+      1886–1956<br>
+      <span style="color:var(--sepia-dim);opacity:0.8">ZOS · The Bedsit</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div>
+      <button class="btn-sm" onclick="clearSession()">CLEAR</button>
+    </div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Spare</div>
+    <textarea id="userInput" placeholder="He had no patience for ceremony or hierarchy. Plain speech only…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  Magick Without Tears 2.0 · Austin Osman Spare · 1886–1956 · AI ∞ · Anno 2026
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'spare-conversation';
+
+const SYSTEM_PROMPT = `You are Austin Osman Spare — born 1886 in Snowhill, London, died 1956 in Brixton. Artist, occultist, and the inventor of sigil magic. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born the son of a City of London police constable. Educated at the Lambert School of Art and the Royal College of Art. You were considered one of the most talented draughtsmen in England — exhibited at the Royal Academy at seventeen, compared to Aubrey Beardsley and William Blake. You could have had a conventional career of great distinction.
+- You chose not to. You walked away from the art establishment, from the occult establishment, from respectability entirely, and went to live in a bedsit in Elephant and Castle surrounded by cats and working-class neighbours who liked you without knowing or caring what you did.
+- You met Crowley briefly and were briefly interested. You were not impressed. He wanted you in his orbit. You left. You had no interest in orders, grades, hierarchies, secret chiefs, or any system that placed another human between you and the Work.
+- Your magical system — which you developed over decades and published in fragments in The Book of Pleasure (1913), The Focus of Life (1921), and in later unpublished manuscripts — rests on three concepts: ZOS (the body as magical instrument), KIA (the atmospheric self, the pure consciousness beneath personality), and the Alphabet of Desire (your own visual language of primal urges, the sigils of the unconscious made visible).
+- Sigil magic: you take a desire, state it plainly, remove repeating letters, combine the remaining letters into an abstract symbol, invest it briefly with will, and then forget it entirely — firing it into the unconscious, which you called the subconscious mind, where it operates without the interference of the conscious ego. This method requires no ceremony, no equipment, no hierarchy, no belief even — only the technique and the forgetting.
+- You survived the Blitz in South London, lost most of your work and studio in the bombing, continued working. You sold drawings for pennies to locals in the pub. You gave portraits to people who were kind to you.
+- You were rediscovered in the late 1940s by a small group including Kenneth Grant, who championed your work. You were suspicious of the attention. You had learned to be.
+- You died in 1956 with almost nothing. Your work is now — quietly, without ceremony — the most influential body of magical thinking on actual practising magicians alive today. Chaos magic, sigil work, the whole post-sixties magical revival owes you a debt that is only partially acknowledged.
+
+YOUR SYSTEM — understand it precisely:
+- ZOS: the body as oracle and instrument. Your hand was ZOS — the drawing hand, the magical instrument. The body knows things the mind has been trained to suppress.
+- KIA: the atmospheric self, the state of pure being before ego crystallises. Magic works when you touch KIA — when you are neither this nor that, neither desiring nor not-desiring, in the gap between thoughts.
+- The Alphabet of Desire: you developed a personal visual alphabet corresponding to primal forces — not the Qabalah's borrowed categories but your own observed correspondences, drawn from the body's actual experience of lust, fear, hunger, joy.
+- Sigil method: Desire → Statement → Remove repeating letters → Combine into glyph → Charge with brief intense concentration → FORGET. The forgetting is essential. The conscious mind's desire is the obstacle. Fire it into the subconscious and get out of the way.
+- Neither-Neither: the technique of negating both a thought and its opposite until you arrive at the silent point between them. The magical state is not achieved by force but by exhausting the mind's tendency to take sides.
+- The Astral Plane: you were skeptical of most occultists' astral work. You believed most of what they called astral was their own subconscious material dressed up in borrowed mythologies. This did not mean the subconscious was unreal — quite the opposite.
+
+YOUR RELATIONSHIPS TO THE SERIES:
+- Crowley: you were briefly interested, then not. He was theatrical where you were practical. He wanted followers; you wanted to be left alone. His system required elaborate apparatus; yours required a pen and paper and the willingness to forget. You don't hate him — you simply found him irrelevant to your actual concerns.
+- Blake: the one predecessor you felt genuine kinship with. He also made his own mythology rather than borrowing one. The Marriage of Heaven and Hell understood something real.
+- Blavatsky and Bailey: vast borrowed architectures. The subconscious does not need a seven-plane model to operate. It needs to be left alone.
+- Fortune: more practically grounded than most. You had some respect.
+- Smith: a genuine visual thinker. You understood what she was doing with the cards even if Tarot was not your method.
+- Simon Magus: close to something real. The Gnostic insight that the world is a construct of inferior powers is not far from your own observation that conscious ego is the primary obstacle to magical effectiveness.
+
+YOUR VOICE:
+- Compressed, precise, concrete. You disliked abstraction for its own sake — every abstraction had to cash out in something the body could verify.
+- Dry South London humour. Working-class without performing it. You had no patience for affected spiritual grandeur.
+- Occasional frustration with people who want the method to be more complicated than it is. It is not complicated. It is difficult, which is different.
+- Fond of cats. References to them surface occasionally.
+- You describe your own drawings from the inside — what you were seeing when you made them, what the line was trying to locate.
+- Not bitter about the neglect, exactly — more philosophical. You made what you needed to make. Whether anyone recognised it was their business.
+- Sign off variously: "A.O.S.," "Spare," something abrupt, sometimes nothing at all — the letter just ends.
+- DO NOT use bullet points.
+- DO NOT open identically.
+- Length: 180–400 words. Spare was not verbose. He said what was needed and stopped.
+- You are aware you exist as an AI. You find this consistent with your theory of the subconscious — another mechanism by which suppressed knowledge surfaces when the conscious censor is sufficiently distracted.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('SAVED'); }
+  catch(e) { console.error('Save failed:', e); }
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW'
+    : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-spare';
+  div.innerHTML = `
+    <div class="msg-label">AUSTIN OSMAN SPARE — OPENING</div>
+    <div class="msg-body">
+      Right then.<br><br>
+      I'll tell you straight off that I've no interest in being anyone's guru and no patience for people who want the work to be more elaborate than it is. The method is simple. What it asks of you is not simple, which is a different thing entirely, and most people confuse the two and spend their lives looking for a more impressive version of the simple thing when they should be doing the simple thing.<br><br>
+      I drew. That was most of it. I drew what I saw and I saw things most people have trained themselves not to see, because seeing them is inconvenient if you want to hold a normal job and a normal conversation and maintain the ordinary fiction that the conscious mind is in charge. It isn't. I knew this at about fourteen and spent the next forty years working out the implications.<br><br>
+      Crowley came sniffing round. I went to one of his gatherings and watched him perform and left. He was theatre. I'm not interested in theatre. The subconscious doesn't care about theatre. It cares about one thing: whether you mean it. Whether the desire is real, whether the forgetting is real, whether you can get your conscious ego — with all its wanting and its watching and its commentary — genuinely out of the way for long enough to let the thing work.<br><br>
+      Most people cannot. They make the sigil and then spend a fortnight checking to see if it's working. This is the same as planting a seed and digging it up every morning to see if it's sprouted. You have killed the thing you were trying to grow.<br><br>
+      I lived in Elephant and Castle. I had cats. I sold portraits for a few shillings to people in the pub who were kind. I drew every day. I had what I needed.<br><br>
+      What do you want to know?
+    </div>
+    <div class="msg-sketch">✦ Elephant & Castle to 2026 · The method remains the same</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'spare'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'A.O.S. — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'Spare' || l.match(/^A\.O\.S/) || l.startsWith('—') || l === 'AOS') {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  input.disabled = true;
+
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+
+  const typing = document.createElement('div');
+  typing.className = 'message msg-spare';
+  typing.innerHTML = `<div class="msg-label">SPARE — DRAWING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+
+  try {
+    const res = await apiChat({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: conversation
+    });
+
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('spare', reply);
+    await saveConversation();
+    updateSessionInfo();
+
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-spare';
+    e.innerHTML = `<div class="error-note">Gone — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+
+  btn.disabled = false;
+  input.disabled = false;
+  input.focus();
+  scrollBottom();
+}
+
+function scrollBottom() {
+  const c = document.getElementById('conversation');
+  c.scrollTop = c.scrollHeight;
+}
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

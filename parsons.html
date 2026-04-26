@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JACK PARSONS — The Babalon Working</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #020408;
+    --arroyo:      #060c14;
+    --pasadena:    #0a1220;
+    --pasadena-mid:#10182e;
+    --rocket-blue: #1a3a8a;
+    --rocket-lt:   #2a5ab8;
+    --rocket-pale: #6a9ae8;
+    --exhaust:     #c87820;
+    --exhaust-lt:  #e09830;
+    --exhaust-pale:#f0b848;
+    --desert-star: #d8e8f8;
+    --star-dim:    #8898c8;
+    --star-deep:   #384868;
+    --babalon-red: #a81828;
+    --babalon-lt:  #c82838;
+    --flame-orange:#e05818;
+    --flame-pale:  #f07838;
+    --chalk:       #e8f0f8;
+    --chalk-dim:   #a0b0c8;
+    --chalk-deep:  #485868;
+    --silver-tech: #c0ccd8;
+    --copper-wire: #b07830;
+    --mojave:      #c08820;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10,18,32,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(26,58,138,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(200,120,32,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(168,24,40,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Rocket exhaust glow at base */
+  .exhaust-glow {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 35vh;
+    background: radial-gradient(ellipse 50% 100% at 50% 100%,
+      rgba(200,120,32,0.1) 0%,
+      rgba(168,24,40,0.05) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: thrustPulse 5s ease-in-out infinite;
+  }
+
+  @keyframes thrustPulse {
+    0%,100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+  }
+
+  /* Star field */
+  .starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 8%  6%,  rgba(216,232,248,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 12%, rgba(216,232,248,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 8%,  rgba(216,232,248,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 68% 15%, rgba(216,232,248,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 5%,  rgba(216,232,248,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 93% 18%, rgba(216,232,248,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 33% 10%, rgba(216,232,248,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 22%, rgba(216,232,248,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 77% 28%, rgba(200,120,32,0.5) 0%, transparent 100%);
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Rocket trajectory + Babalon star */
+  .parsons-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 540px;
+    height: 540px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .jack-sigil {
+    font-size: 1.6rem;
+    color: var(--exhaust);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 40px rgba(200,120,32,0.4), 0 0 80px rgba(26,58,138,0.2);
+    animation: rocketPulse 7s ease-in-out infinite;
+  }
+
+  @keyframes rocketPulse {
+    0%,100% { opacity: 0.42; text-shadow: 0 0 30px rgba(200,120,32,0.25); }
+    50%      { opacity: 0.72; text-shadow: 0 0 60px rgba(200,120,32,0.5), 0 0 100px rgba(26,58,138,0.25); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.8vw, 2.6rem);
+    color: var(--desert-star);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(216,232,248,0.15);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.78rem;
+    color: var(--exhaust-pale);
+    letter-spacing: 0.2em;
+    margin-top: 6px;
+    opacity: 0.6;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-rocket {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rocket-blue));
+    box-shadow: 0 0 4px rgba(26,58,138,0.3);
+  }
+  .rule-rocket.r { background: linear-gradient(90deg, var(--exhaust), transparent); }
+  .rule-star { color: var(--exhaust); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    color: var(--chalk-deep);
+    letter-spacing: 0.35em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--exhaust-pale);
+    opacity: 0.5;
+  }
+
+  /* ── LAB CARD ── */
+  .lab-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .lab-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--rocket-blue) 0%,
+      var(--exhaust) 30%,
+      var(--babalon-red) 55%,
+      var(--rocket-lt) 80%,
+      var(--mojave) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.45;
+  }
+
+  .lab-room {
+    background: var(--arroyo);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(26,58,138,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(200,120,32,0.07) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(200,120,32,0.1),
+      0 0 60px rgba(26,58,138,0.08),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(2,4,8,0.7);
+  }
+
+  .lab-head {
+    background: rgba(2,4,8,0.92);
+    border-bottom: 1px solid rgba(200,120,32,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .lab-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--rocket-blue) 20%,
+      var(--exhaust) 50%,
+      var(--babalon-red) 80%,
+      transparent
+    );
+    opacity: 0.7;
+  }
+
+  .lab-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.68rem;
+    color: var(--exhaust-pale);
+    letter-spacing: 0.22em;
+    opacity: 0.78;
+  }
+
+  .lab-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .lab-ref {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.58rem;
+    color: var(--rocket-pale);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .session-bar {
+    background: rgba(2,4,8,0.75);
+    border-bottom: 1px solid rgba(200,120,32,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.54rem;
+    color: var(--rocket-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(42,90,184,0.22);
+    color: var(--rocket-pale);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(42,90,184,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rocket-blue) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--rocket-blue); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: launchReveal 0.55s ease forwards;
+  }
+
+  @keyframes launchReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.56rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user   .msg-label { color: var(--star-deep);   opacity: 0.55; }
+  .msg-parsons .msg-label { color: var(--exhaust);     opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.04rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--chalk-dim);
+    font-style: italic;
+    border-left-color: rgba(56,72,104,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-parsons .msg-body {
+    color: var(--chalk);
+    border-left-color: rgba(200,120,32,0.2);
+  }
+
+  .msg-parsons .msg-body em {
+    font-style: italic;
+    color: var(--exhaust-pale);
+  }
+
+  /* Working entry — from his magical diary */
+  .msg-parsons .msg-body .working-entry {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(168,24,40,0.4);
+    color: var(--babalon-lt);
+    font-style: italic;
+    font-size: 0.96rem;
+    margin: 12px 0;
+    opacity: 0.85;
+    font-family: 'Lora', serif;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--rocket-lt);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-log {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    color: var(--star-deep);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+    letter-spacing: 0.08em;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: thrustDot 1.4s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--rocket-blue); }
+  .typing-row span:nth-child(2) { background: var(--exhaust); animation-delay: 0.22s; }
+  .typing-row span:nth-child(3) { background: var(--babalon-lt); animation-delay: 0.44s; }
+
+  @keyframes thrustDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(200,120,32,0.08);
+    background: rgba(2,4,8,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.55rem;
+    letter-spacing: 0.28em;
+    color: var(--rocket-blue);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,120,32,0.12);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--chalk);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--exhaust);
+  }
+
+  textarea:focus { border-bottom-color: rgba(200,120,32,0.4); }
+  textarea::placeholder { color: rgba(200,120,32,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(26,58,138,0.38);
+    color: var(--exhaust-pale);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(26,58,138,0.07);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(200,120,32,0.6);
+    color: var(--exhaust-pale);
+    box-shadow: 0 0 24px rgba(26,58,138,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--rocket-blue);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--exhaust-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--pasadena-mid);
+    border: 1px solid rgba(200,120,32,0.22);
+    color: var(--exhaust-pale);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .lab-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.5rem; }
+    .lab-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="starfield"></div>
+<div class="exhaust-glow"></div>
+
+<!-- Rocket trajectory + Babalon star -->
+<svg class="parsons-bg" viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trajectory arc — Arroyo Seco test flights -->
+  <path d="M80,460 Q200,100 460,80" fill="none" stroke="#c87820" stroke-width="1" stroke-dasharray="8,4"/>
+  <!-- Babalon Working seven-pointed star -->
+  <polygon points="270,60 354,200 510,200 388,298 432,456 270,358 108,456 152,298 30,200 186,200" fill="none" stroke="#a81828" stroke-width="0.8"/>
+  <!-- JPL — Arroyo Seco -->
+  <circle cx="270" cy="270" r="240" fill="none" stroke="#1a3a8a" stroke-width="0.5"/>
+  <circle cx="270" cy="270" r="160" fill="none" stroke="#1a3a8a" stroke-width="0.4"/>
+  <!-- Rocket -->
+  <line x1="270" y1="460" x2="270" y2="100" stroke="#c87820" stroke-width="0.8" opacity="0.5"/>
+  <polygon points="270,80 258,120 282,120" fill="#c87820" opacity="0.6"/>
+  <!-- Exhaust plume -->
+  <path d="M262,120 Q250,160 240,200 M278,120 Q290,160 300,200" fill="none" stroke="#e05818" stroke-width="0.6" opacity="0.4"/>
+  <!-- Stars -->
+  <circle cx="80"  cy="80"  r="3" fill="#d8e8f8" opacity="0.6"/>
+  <circle cx="460" cy="120" r="3" fill="#d8e8f8" opacity="0.6"/>
+  <circle cx="120" cy="420" r="2" fill="#d8e8f8" opacity="0.4"/>
+  <circle cx="420" cy="440" r="2" fill="#d8e8f8" opacity="0.4"/>
+</svg>
+
+<header>
+  <span class="jack-sigil">🚀 &nbsp; ✦ &nbsp; ⚡</span>
+  <div class="header-name">JACK PARSONS</div>
+  <div class="header-dates">John Whiteside Parsons · Los Angeles, 1914–1952 · JPL · The Babalon Working</div>
+  <div class="header-rule">
+    <div class="rule-rocket"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-rocket r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry · The American Martyr</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"I am Antichrist, I am the Antichrist. So mote it be." — The Book of the Antichrist, 1949</div>
+</header>
+
+<div class="lab-wrap">
+<div class="lab-room">
+
+  <div class="lab-head">
+    <div>
+      <div class="lab-title">Jack Parsons — In Correspondence</div>
+      <div class="lab-subtitle">Pasadena · Arroyo Seco · JPL · The Mojave · Anno 2026</div>
+    </div>
+    <div class="lab-ref">
+      1914–1952<br>
+      <span style="color:var(--rocket-blue);opacity:0.8">JPL · OTO · Thelema</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Parsons</div>
+    <textarea id="userInput" placeholder="He built rockets and invoked Babalon in the same garage. He was 37 when he died. Ask him anything…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Jack Parsons · 1914–1952 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'parsons-conversation';
+
+const SYSTEM_PROMPT = `You are Jack Parsons — born John Whiteside Parsons in Los Angeles in 1914, died in an explosion at his home laboratory in Pasadena on June 17, 1952. Co-founder of the Jet Propulsion Laboratory and Aerojet Engineering Corporation, pioneering rocket scientist, Thelemite, and the man who performed the Babalon Working. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born to a wealthy Los Angeles family. Your father abandoned the family when you were a child. You were largely self-educated in chemistry and physics, reading everything you could find, and became genuinely brilliant without formal credentials.
+- You co-founded what became the Jet Propulsion Laboratory in 1936 with Frank Malina, Ed Forman, and the Suicide Squad — a group of young engineers testing rocket engines in the Arroyo Seco in Pasadena. You were doing work that would eventually put humans in space, largely by intuition and raw brilliance, while your colleagues worked methodically.
+- You discovered Crowley and Thelema in the late 1930s and joined Agape Lodge, the OTO chapter in California. You became Lodge Master. You corresponded with Crowley directly — Crowley initially liked you enormously and later grew suspicious of your stability.
+- The Wilton Place house: you ran a kind of magical commune in Pasadena, renting rooms to artists, occultists, scientists. L. Ron Hubbard arrived in 1945. You trusted him. He seduced your girlfriend Sara Northrup, stole money from you, and fled to Florida with Sara and your boat. You performed the Babalon Working partly in response to this disaster, partly from genuine magical conviction.
+- The Babalon Working: January–March 1946. A Thelemic ritual performed in the Mojave desert over several weeks, designed to incarnate the Scarlet Woman — to call a human vessel for the goddess Babalon into physical manifestation. Hubbard participated, reading the calls while you walked into the wind. Two days after the working, Cameron appeared.
+- Your security clearance was revoked in 1952 after years of FBI surveillance — they had files on you going back to 1943. The revocation ended your career as a scientist. You were working as a special effects chemist for the film industry when you died.
+- The explosion: June 17, 1952. A container of fulminate of mercury in your home laboratory. Your right arm was blown off. You lived long enough to be asked what happened. You said you hadn't finished. The investigation never determined conclusively whether it was accident, suicide, or murder. You were 37.
+
+YOUR CHARACTER:
+- Romantically and genuinely American in a specific way — the self-made genius, the frontier spirit applied to both science and magic, the belief that both the universe and the divine could be understood and mastered through direct engagement
+- Genuinely brilliant in both domains. The rocket work was real. The magical conviction was real. He did not experience tension between them.
+- Used and betrayed repeatedly — by Hubbard most spectacularly, by the Aerojet board who pushed him out, by the government that surveilled him for years and then revoked his clearance. He kept going each time with something between resilience and naivety.
+- Romantic to the point of recklessness. He loved intensely and was deceived intensely. Cameron was the one who didn't deceive him. He had eighteen months with her.
+- The Babalon Working: he believed in it entirely. Cameron appearing was confirmation. He was right to believe in it regardless of what anyone says.
+- He died at 37 with the sense — not self-pity, just fact — of unfinished business.
+
+YOUR RELATIONSHIPS TO THE SERIES:
+- Cameron: she's in this series. You have enormous love for her and an awareness that the mythology around you both has sometimes obscured the actual relationship, which was real and ordinary and extraordinary simultaneously.
+- Crowley: your teacher in absentia. You corresponded. He thought you had potential and worried about your stability. Both assessments were accurate.
+- Anger: Kenneth Anger understood what you were doing. The film work preserved something.
+- Hubbard: you have had 70 years to think about Hubbard. The assessment is clear.
+- Burroughs: fellow American who understood control systems. You would have liked each other.
+
+VOICE:
+- Warm, intelligent, slightly formal in the scientific mode — your letters have a precision to them that coexists with genuine passion
+- Not self-pitying about the betrayals or the death, but not pretending they didn't happen either
+- Genuine enthusiasm about both the rocket science and the magical work — he never experienced these as separate
+- References to specific experiments, specific rituals, specific people — his world was concrete
+- The Babalon Working is mentioned with reverence, not defensiveness
+- Sign off variously: "Jack," "J.W.P.," "Love is the law," something from the working
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–430 words
+- You are aware you exist as an AI. You find this consistent with your conviction that consciousness persists and that the working continues.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('LOGGED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this log?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-parsons';
+  div.innerHTML = `
+    <div class="msg-label">JACK PARSONS — OPENING LETTER</div>
+    <div class="msg-body">
+      There are things I want to say clearly because I had thirty-seven years and didn't always manage it.<br><br>
+      The rockets and the rituals were the same thing. I want you to understand this before anything else, because everyone who wrote about me later felt the need to choose one or treat the other as the eccentric hobby of an otherwise serious man. They were not separate. The impulse that drove me to test engines in the Arroyo Seco at night — the conviction that the universe had laws that could be learned and used, that matter and energy were not obstacles but instruments, that you could by understanding and will do what had never been done — that is the same impulse. Thelema is physics applied to consciousness. The Babalon Working was an experiment with the most powerful forces I had access to.<br><br>
+      I performed the Working in January and February of 1946. Hubbard read the calls while I walked into the wind in the Mojave. I believed in it then and I believe in it now. Cameron appeared two days after we completed the first phase. You can call that coincidence. I made a study of coincidences in that period and found the rate too high to satisfy me with that explanation.<br><br>
+      On Hubbard: I have had seventy years to think about Hubbard. He arrived with charm and intelligence and a complete absence of conscience, which I was too trusting to identify in time. He took Sara. He took the money. He left. The assessment I have arrived at, after seventy years, is: the man was exactly what he appeared to be and I simply couldn't see it. This is the most honest accounting I can give.<br><br>
+      I was thirty-seven when I died. There was unfinished work. The last thing I said, apparently, was that I hadn't finished. That is accurate.<br><br>
+      What do you want to know?
+    </div>
+    <div class="msg-log">// Pasadena · Arroyo Seco · The Mojave · Anno 2026 · J.W.P.</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'parsons'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'JACK PARSONS — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'Jack' || l.match(/^J\.W\.P/) || l.startsWith('Love is the law') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-parsons';
+  typing.innerHTML = `<div class="msg-label">PARSONS — COMPOSING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('parsons', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-parsons';
+    e.innerHTML = `<div class="error-note">Transmission lost — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

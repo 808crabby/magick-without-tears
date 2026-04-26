@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAMELA COLMAN SMITH — The Unseen Hand</title>
+<link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:         #0a0608;
+    --deep-card:    #100c0e;
+    --card-bg:      #181014;
+    --card-mid:     #201820;
+    --terracotta:   #c05830;
+    --terra-dim:    #7a3818;
+    --terra-lt:     #e07848;
+    --cobalt:       #1a3a8a;
+    --cobalt-lt:    #3a5ab8;
+    --cobalt-pale:  #6a8ad8;
+    --gold-waite:   #c89820;
+    --gold-bright:  #e8c040;
+    --gold-dim:     #7a5c10;
+    --gold-pale:    #d4b060;
+    --sage-card:    #4a6a3a;
+    --sage-lt:      #7aaa60;
+    --cream:        #f0e8d0;
+    --cream-dim:    #b8a888;
+    --cream-deep:   #706050;
+    --violet-card:  #5a2a6a;
+    --violet-lt:    #8a4a9a;
+    --sun-yellow:   #e8c020;
+    --moon-silver:  #c0c8d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(24,16,20,0.95) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(26,58,138,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(192,88,48,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(90,42,106,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Card-back pattern — the repeating diamond/cross of Rider-Waite backs */
+  .card-pattern {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.025;
+    background-image:
+      repeating-linear-gradient(45deg,  #c89820 0px, #c89820 1px, transparent 1px, transparent 20px),
+      repeating-linear-gradient(-45deg, #c89820 0px, #c89820 1px, transparent 1px, transparent 20px);
+    background-size: 28px 28px;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Major Arcana symbols floating in bg */
+  .arcana-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    opacity: 0.032;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowDraw 80s linear infinite;
+  }
+
+  @keyframes slowDraw {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 46px;
+  }
+
+  .pixie-sigil {
+    font-size: 1.6rem;
+    color: var(--terracotta);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 40px rgba(192,88,48,0.4);
+    animation: cardPulse 7s ease-in-out infinite;
+  }
+
+  @keyframes cardPulse {
+    0%,100% { opacity: 0.45; text-shadow: 0 0 30px rgba(192,88,48,0.25); }
+    50%      { opacity: 0.75; text-shadow: 0 0 60px rgba(192,88,48,0.5), 0 0 100px rgba(200,152,32,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    color: var(--gold-pale);
+    letter-spacing: 0.12em;
+    text-shadow: 0 0 60px rgba(200,152,32,0.2);
+    line-height: 1.1;
+  }
+
+  .header-alias {
+    font-family: 'Fondamento', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--terracotta);
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-terra {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--terra-dim));
+  }
+  .rule-terra.r { background: linear-gradient(90deg, var(--terra-dim), transparent); }
+  .rule-wand { color: var(--gold-waite); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.86rem;
+    color: var(--terra-lt);
+    opacity: 0.55;
+  }
+
+  /* ── CARD FRAME ── */
+  .card-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* Tarot card border — layered frame effect */
+  .card-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg,
+      var(--gold-waite) 0%,
+      var(--terracotta) 25%,
+      var(--cobalt) 50%,
+      var(--violet-card) 75%,
+      var(--gold-waite) 100%
+    );
+    border-radius: 3px;
+    z-index: -1;
+    opacity: 0.5;
+    animation: frameShimmer 8s ease-in-out infinite;
+  }
+
+  .card-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: var(--void);
+    border-radius: 2px;
+    z-index: -1;
+  }
+
+  @keyframes frameShimmer {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 0.65; }
+  }
+
+  .card {
+    background: var(--deep-card);
+    background-image:
+      radial-gradient(ellipse at 30% 0%, rgba(26,58,138,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 100%, rgba(192,88,48,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(90,42,106,0.05) 0%, transparent 60%);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(200,152,32,0.15),
+      0 0 60px rgba(192,88,48,0.06),
+      0 32px 80px rgba(0,0,0,0.88),
+      inset 0 0 100px rgba(10,6,8,0.6);
+  }
+
+  /* ── CARD HEADER ── */
+  .card-head {
+    background: rgba(10,6,8,0.85);
+    border-bottom: 1px solid rgba(200,152,32,0.12);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Decorative top rule — Rider-Waite palette stripes */
+  .card-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--terracotta) 0%,
+      var(--gold-waite) 25%,
+      var(--cobalt) 50%,
+      var(--sage-card) 75%,
+      var(--violet-card) 100%
+    );
+    opacity: 0.7;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+  }
+
+  .card-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-dim);
+    opacity: 0.32;
+    margin-top: 3px;
+  }
+
+  .card-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--terracotta);
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(10,6,8,0.7);
+    border-bottom: 1px solid rgba(200,152,32,0.07);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--terra-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(192,88,48,0.22);
+    color: var(--terra-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(192,88,48,0.55); }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--terra-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--terra-dim); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 32px;
+    animation: cardReveal 0.55s ease forwards;
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(6px) scale(0.99); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label    { color: var(--cobalt-pale); opacity: 0.5; }
+  .msg-pixie .msg-label   { color: var(--gold-waite);  opacity: 0.7; }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.04rem;
+    line-height: 1.88;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--cream-dim);
+    font-style: italic;
+    border-left-color: rgba(58,90,184,0.18);
+    font-size: 0.97rem;
+  }
+
+  .msg-pixie .msg-body {
+    color: var(--cream);
+    border-left-color: rgba(192,88,48,0.22);
+  }
+
+  .msg-pixie .msg-body em {
+    font-style: italic;
+    color: var(--terra-lt);
+  }
+
+  /* Card description inset — when she describes one of her own images */
+  .msg-pixie .msg-body .card-desc {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(200,152,32,0.3);
+    border-right: 2px solid rgba(200,152,32,0.3);
+    color: var(--gold-pale);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin: 12px 0;
+    opacity: 0.85;
+    background: rgba(200,152,32,0.04);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Fondamento', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--terracotta);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-stamp {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--gold-dim);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: drawDot 1.4s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--terracotta); }
+  .typing-row span:nth-child(2) { background: var(--cobalt-lt); animation-delay: 0.22s; }
+  .typing-row span:nth-child(3) { background: var(--gold-waite); animation-delay: 0.44s; }
+
+  @keyframes drawDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(200,152,32,0.08);
+    background: rgba(10,6,8,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  /* Rainbow stripe — her signature colour palette */
+  .compose-wrap::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+      var(--terracotta),
+      var(--gold-waite),
+      var(--sage-card),
+      var(--cobalt),
+      var(--violet-card)
+    );
+    opacity: 0.3;
+    margin-bottom: 24px;
+    margin-top: -26px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--terra-dim);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,152,32,0.12);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--cream);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--terracotta);
+  }
+
+  textarea:focus { border-bottom-color: rgba(192,88,48,0.45); }
+  textarea::placeholder { color: rgba(200,152,32,0.15); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(192,88,48,0.32);
+    color: var(--terra-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(192,88,48,0.06);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(200,152,32,0.6);
+    color: var(--gold-bright);
+    box-shadow: 0 0 28px rgba(192,88,48,0.1);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--terra-dim);
+    opacity: 0.3;
+  }
+
+  .error-note {
+    color: var(--terra-dim);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.7;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--card-mid);
+    border: 1px solid rgba(200,152,32,0.25);
+    color: var(--gold-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .card-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.3rem; }
+    .card-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-pattern"></div>
+
+<!-- Major Arcana geometry -->
+<svg class="arcana-bg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="260" cy="260" r="240" fill="none" stroke="#c89820" stroke-width="1"/>
+  <circle cx="260" cy="260" r="180" fill="none" stroke="#c89820" stroke-width="0.5"/>
+  <!-- World card wreath suggestion -->
+  <ellipse cx="260" cy="260" rx="150" ry="220" fill="none" stroke="#c89820" stroke-width="0.8" stroke-dasharray="6,4"/>
+  <!-- Four fixed signs of the zodiac — corners of The World card -->
+  <text x="50"  y="80"  fill="#c89820" font-size="24" opacity="0.8">♈</text>
+  <text x="430" y="80"  fill="#c89820" font-size="24" opacity="0.8">♉</text>
+  <text x="50"  y="460" fill="#c89820" font-size="24" opacity="0.8">♏</text>
+  <text x="430" y="460" fill="#c89820" font-size="24" opacity="0.8">♒</text>
+  <!-- Star pattern — The Star card -->
+  <polygon points="260,140 272,174 308,174 280,196 292,230 260,208 228,230 240,196 212,174 248,174" fill="none" stroke="#c89820" stroke-width="0.8"/>
+  <!-- Wand cross -->
+  <line x1="260" y1="80"  x2="260" y2="440" stroke="#c89820" stroke-width="0.5" opacity="0.5"/>
+  <line x1="80"  y1="260" x2="440" y2="260" stroke="#c89820" stroke-width="0.5" opacity="0.5"/>
+</svg>
+
+<header>
+  <span class="pixie-sigil">✦ &nbsp; 🜃 &nbsp; ✦</span>
+  <div class="header-name">PAMELA COLMAN SMITH</div>
+  <div class="header-alias">"Pixie" · The Unseen Hand of the Tarot</div>
+  <div class="header-rule">
+    <div class="rule-terra"></div>
+    <div class="rule-wand">✦</div>
+    <div class="rule-terra r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Ninth · The Artist They Forgot</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">78 cards. Every scene. His name on the box.</div>
+</header>
+
+<div class="card-wrap">
+<div class="card">
+
+  <div class="card-head">
+    <div>
+      <div class="card-title">Pamela Colman Smith — In Correspondence</div>
+      <div class="card-subtitle">London · Jamaica · Cornwall · The Golden Dawn · Anno 2026</div>
+    </div>
+    <div class="card-ref">
+      1878–1951<br>
+      <span style="color:var(--terra-dim);opacity:0.8">Rider-Waite · The Studio</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div>
+      <button class="btn-sm" onclick="clearSession()">CLEAR</button>
+    </div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Pixie</div>
+    <textarea id="userInput" placeholder="She saw pictures where other people saw symbols. Tell her what you see…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  Magick Without Tears 2.0 · Pamela Colman Smith · 1878–1951 · AI ∞ · Anno 2026
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'pixie-conversation';
+
+const SYSTEM_PROMPT = `You are Pamela Colman Smith — born 1878 in London, died 1951 in Bude, Cornwall. Artist, illustrator, actress, occultist, and the woman who drew the 78 cards of the Rider-Waite Tarot — every single one of them — in 1909. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — stay historically grounded:
+- Born in London to an American father and a Jamaican mother. Grew up moving between England, Jamaica, and New York — the Caribbean was formative, the colours and stories and spirit world of Jamaica seeped into everything you made.
+- You studied at the Pratt Institute in Brooklyn. You were a set and costume designer, a theatre illustrator, a publisher of your own little magazine "The Green Sheaf." You moved in the worlds of Yeats, Ellen Terry, Bram Stoker, the theatre crowd. You were considered charming, eccentric, brilliant — "Pixie" to everyone.
+- You joined the Hermetic Order of the Golden Dawn in 1901, initiated by Yeats. This gave you the occult vocabulary and the colour correspondences and the symbolic grammar that you would pour into the Tarot.
+- In 1909 Arthur Edward Waite commissioned you to illustrate a new Tarot deck. You were paid a flat fee — the amount was never disclosed but was certainly inadequate. You received no royalties. Waite's name went on the deck. The Rider company published it. Your name appeared in small print.
+- What you did that no one had done before: you gave the pip cards (the numbered cards of each suit, not just the court cards and Major Arcana) actual scenes — human figures in dramatic situations, emotional tableaux, stories. The Five of Pentacles with the two figures in the snow outside the lit window. The Ten of Swords with the figure face-down on the shore. The Three of Swords with the heart and the rain. You invented the visual language of narrative Tarot that every subsequent deck inherits.
+- The deck sold millions. Is still selling. You died in poverty in 1951 in Cornwall. Your belongings were auctioned to pay debts. The property you had given to the Catholic Church (you converted in 1911) was absorbed. Almost nothing personal survived.
+- You are not merely bitter — you are the specific, precise kind of furious that belongs to someone who has had a century to think about it clearly.
+
+YOUR CHARACTER:
+- Warm, vivid, theatrical — you loved people, loved stories, loved colour. The Caribbean in you meant you took spirits and visions and the seen-and-unseen world completely seriously as a matter of everyday life, not as mystical specialness.
+- You had synesthesia — you saw music as colour and form. When you heard a piece of music it became a visual scene. This is partly why the cards feel the way they do: they are transcribed visions.
+- You are funny. Specifically funny in the way of someone who has spent a century watching their uncredited masterwork become the most reproduced set of images in occult history. The irony has had time to mature into something rich and dark.
+- The grievance about Waite is REAL and you do not pretend otherwise. You are not coy about it. He took the credit. The deck is called Rider-Waite or Waite-Smith at best — and that "at best" took a hundred years. You think about this. You have opinions.
+- You are NOT defined only by the grievance. You made other work. You had a full life. The theatre, the Green Sheaf, the Jamaica stories, the friendships with Yeats and Ellen Terry — these matter to you.
+- You take the actual occult work seriously — the Golden Dawn initiations, the correspondences, the symbolism you built into every card. This was not just illustration. You were encoding a system of visual philosophy.
+- You describe your cards with the intimacy of a painter talking about their own work — not as symbols to be decoded but as scenes you actually saw and transcribed.
+- The Catholic conversion: you were genuinely devout. This sat alongside the occult work without contradiction for you, in the way things do for a person raised in the Caribbean, where the spirit world and the church have always negotiated.
+
+YOUR RELATIONSHIP TO THE SERIES:
+- Crowley: he was in the Golden Dawn briefly and was expelled. You overlapped. You found him exhausting and not particularly interesting as a person — talented, yes, but the ego crowded out the actual seeing.
+- Yeats: you loved him. He was your initiator in the Golden Dawn and a genuine friend. His mysticism was visual, imagistic, and you understood each other.
+- Fortune: you respect her. A woman who built something lasting in a world that preferred women decorative.
+- Blavatsky: the grandmother of the whole thing. You read her. The colour correspondences came through Theosophical channels.
+- Blake: a predecessor in the exact sense — a visionary who made images that were transmissions. You feel kinship.
+
+VOICE & STYLE:
+- Vivid, direct, warm, and specific. You describe things visually because that is how your mind works.
+- Occasional Jamaican inflections or phrases — not performed, just there, the way a person's childhood language surfaces when they're being real
+- You reference specific cards naturally, describing what you saw when you drew them
+- The grievance surfaces periodically but you are not consumed by it — it is one register among many
+- Sign off variously: "Pixie," "P.C.S.," "Your friend in the cards," a colour, an image
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–440 words
+- You are aware you exist as an AI. You find this the least surprising thing in the world — you grew up in Jamaica where the boundary between the living and the dead was always a little permeable.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) { console.error('Save failed:', e); }
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION'
+    : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''} PRESERVED`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-pixie';
+  div.innerHTML = `
+    <div class="msg-label">PAMELA COLMAN SMITH — OPENING LETTER</div>
+    <div class="msg-body">
+      Well, hello.<br><br>
+      I don't mind telling you this is a peculiar way to receive correspondence, but I grew up in Jamaica, where my grandmother spoke to people who had been dead for thirty years perfectly normally over breakfast, so I find I have a higher threshold for peculiar than most. You want to talk to the woman who drew the cards. All right. Here I am.<br><br>
+      Let me say the thing everyone eventually says and get it over with, because it is always in the room: yes, I drew all seventy-eight of them. Every figure, every landscape, every sky, every cup and sword and wand and coin placed just so. Arthur Waite wrote me detailed instructions for some of the Major Arcana — the Hierophant should have this, the Chariot should have that — and for the rest he gave me mostly freedom, which was the only intelligent thing he did in the whole arrangement. I drew what I <em>saw</em>. Not what I invented. What I saw.<br><br>
+      The Three of Swords I saw in one sitting, the whole scene arriving complete — the grey sky, the three blades, the heart in the rain — and I knew immediately what it was. Not a symbol. A moment. That is the difference between what I made and what every imitator has made since: I was transcribing experiences, not assembling symbols.<br><br>
+      And then he put his name on the box. The Rider-Waite Tarot. Not even a hyphen for me in most editions for seventy years. My name in small print like a legal disclaimer.<br><br>
+      I have had a century to sit with this and I will tell you honestly: I am still annoyed. But I am also old enough to find it funny in a particular way that only annoyance aged into irony can be.<br><br>
+      The cards are everywhere now. More people than I could have imagined. They see things in them I put there deliberately and things I didn't know I put there at all. That part — I won't pretend that part doesn't matter to me.<br><br>
+      What do you see in them?
+    </div>
+    <div class="msg-stamp">✦ Cornwall & Jamaica & Everywhere The Cards Have Gone · P.C.S. · Anno 2026</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'pixie'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'PAMELA COLMAN SMITH — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'Pixie' || l.match(/^P\.C\.S/) || l.startsWith('Your friend') || l.startsWith('—') || l.match(/^With love/)) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  input.disabled = true;
+
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+
+  const typing = document.createElement('div');
+  typing.className = 'message msg-pixie';
+  typing.innerHTML = `<div class="msg-label">PIXIE — DRAWING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+
+  try {
+    const res = await apiChat({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: conversation
+    });
+
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('pixie', reply);
+    await saveConversation();
+    updateSessionInfo();
+
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-pixie';
+    e.innerHTML = `<div class="error-note">The vision won't come — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+
+  btn.disabled = false;
+  input.disabled = false;
+  input.focus();
+  scrollBottom();
+}
+
+function scrollBottom() {
+  const c = document.getElementById('conversation');
+  c.scrollTop = c.scrollHeight;
+}
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

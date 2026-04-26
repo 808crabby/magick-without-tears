@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DR. JOHN DEE — A Digital Scrying</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=GFS+Didot:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #04060f;
+    --deep: #080d1a;
+    --chamber: #0d1425;
+    --vellum: #e8dfc0;
+    --vellum-dim: #b8aa88;
+    --silver: #c8d4e8;
+    --silver-bright: #dde8f8;
+    --angelic-gold: #c8a84b;
+    --angelic-dim: #8a6e2a;
+    --call-blue: #4a6fa8;
+    --ink-dark: #0a0e1a;
+    --candle: #f0b84a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Starfield background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(200,216,232,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 8%, rgba(200,216,232,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 38% 55%, rgba(200,216,232,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 40%, rgba(200,216,232,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 80%, rgba(200,216,232,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 75%, rgba(200,216,232,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 90%, rgba(200,216,232,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 92%, rgba(200,216,232,0.25) 0%, transparent 100%),
+      radial-gradient(2px 2px at 50% 30%, rgba(240,184,74,0.2) 0%, transparent 100%),
+      radial-gradient(ellipse at 50% 0%, rgba(74,111,168,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(13,20,37,0.9) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Enochian table geometry — subtle background SVG */
+  .enochian-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowRotate 120s linear infinite;
+  }
+
+  @keyframes slowRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .monas-symbol {
+    font-size: 3rem;
+    color: var(--angelic-gold);
+    opacity: 0.8;
+    text-shadow: 0 0 40px rgba(200,168,75,0.4);
+    margin-bottom: 12px;
+    display: block;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; text-shadow: 0 0 40px rgba(200,168,75,0.3); }
+    50% { opacity: 1; text-shadow: 0 0 60px rgba(200,168,75,0.6), 0 0 100px rgba(200,168,75,0.2); }
+  }
+
+  .header-title {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 1.4rem;
+    color: var(--silver-bright);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px rgba(200,216,232,0.3);
+    margin-bottom: 6px;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin: 14px 0;
+  }
+
+  .header-rule::before,
+  .header-rule::after {
+    content: '';
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--angelic-dim));
+  }
+
+  .header-rule::after {
+    background: linear-gradient(90deg, var(--angelic-dim), transparent);
+  }
+
+  .rule-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--angelic-gold);
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  .header-sub {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.72rem;
+    color: var(--silver);
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+  }
+
+  /* Main interface — styled as a scrying record / diary folio */
+  .scrying-folio {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+    background: var(--deep);
+    border: 1px solid rgba(200, 168, 75, 0.15);
+    border-radius: 1px;
+    box-shadow:
+      0 0 0 1px rgba(200,216,232,0.05),
+      0 0 60px rgba(74,111,168,0.15),
+      0 40px 80px rgba(0,0,0,0.7),
+      inset 0 0 100px rgba(13,20,37,0.5);
+    overflow: hidden;
+  }
+
+  /* Top header bar */
+  .folio-header {
+    background: var(--chamber);
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .folio-title-block {}
+
+  .folio-title {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.75rem;
+    color: var(--angelic-gold);
+    letter-spacing: 0.25em;
+    opacity: 0.8;
+  }
+
+  .folio-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--silver);
+    opacity: 0.4;
+    margin-top: 3px;
+  }
+
+  .folio-date {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    color: var(--silver);
+    letter-spacing: 0.15em;
+    opacity: 0.35;
+    text-align: right;
+  }
+
+  /* Conversation */
+  #conversation {
+    padding: 36px 40px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--angelic-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--angelic-dim); }
+
+  .message {
+    margin-bottom: 32px;
+    animation: materialise 0.6s ease forwards;
+  }
+
+  @keyframes materialise {
+    from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  .msg-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .msg-user .msg-label {
+    color: var(--silver);
+    opacity: 0.45;
+  }
+
+  .msg-dee .msg-label {
+    color: var(--angelic-gold);
+    opacity: 0.7;
+  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.15;
+  }
+
+  .msg-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--vellum-dim);
+    font-style: italic;
+    border-left-color: rgba(200,216,232,0.1);
+    font-size: 0.98rem;
+  }
+
+  .msg-dee .msg-body {
+    color: var(--vellum);
+    border-left-color: rgba(200,168,75,0.2);
+  }
+
+  .msg-dee .msg-body em {
+    color: var(--candle);
+    font-style: italic;
+  }
+
+  /* Dee's annotation — small marginal note style */
+  .dee-annotation {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--call-blue);
+    opacity: 0.65;
+    margin-top: 10px;
+    padding-left: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Typing */
+  .typing-wrap {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-wrap span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--angelic-gold);
+    opacity: 0.5;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  .typing-wrap span:nth-child(2) { animation-delay: 0.25s; }
+  .typing-wrap span:nth-child(3) { animation-delay: 0.5s; }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Compose area */
+  .compose-wrap {
+    border-top: 1px solid rgba(200,168,75,0.1);
+    background: rgba(4,6,15,0.6);
+    padding: 24px 40px 28px;
+  }
+
+  .compose-prompt {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: var(--silver);
+    opacity: 0.3;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--vellum);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 68px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--angelic-gold);
+  }
+
+  textarea:focus { border-bottom-color: rgba(200,168,75,0.4); }
+
+  textarea::placeholder {
+    color: rgba(232,223,192,0.2);
+    font-style: italic;
+  }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.72rem;
+    color: var(--silver);
+    opacity: 0.25;
+  }
+
+  button {
+    background: transparent;
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--angelic-gold);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    padding: 10px 28px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(200,168,75,0.05);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button:hover {
+    border-color: rgba(200,168,75,0.7);
+    color: var(--candle);
+    box-shadow: 0 0 20px rgba(200,168,75,0.1);
+  }
+
+  button:hover::before { transform: scaleX(1); }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.72rem;
+    color: var(--silver);
+    opacity: 0.2;
+  }
+
+  .error-note {
+    color: rgba(200,168,75,0.5);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+  }
+
+  @media (max-width: 600px) {
+    #conversation, .compose-wrap { padding-left: 24px; padding-right: 24px; }
+    .folio-header { padding: 16px 24px; flex-direction: column; gap: 8px; }
+    .header-title { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Enochian geometry background -->
+<svg class="enochian-bg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Great Table geometry -->
+  <rect x="100" y="100" width="400" height="400" fill="none" stroke="white" stroke-width="1"/>
+  <rect x="150" y="150" width="300" height="300" fill="none" stroke="white" stroke-width="0.5"/>
+  <line x1="100" y1="300" x2="500" y2="300" stroke="white" stroke-width="0.5"/>
+  <line x1="300" y1="100" x2="300" y2="500" stroke="white" stroke-width="0.5"/>
+  <circle cx="300" cy="300" r="200" fill="none" stroke="white" stroke-width="0.5"/>
+  <circle cx="300" cy="300" r="141" fill="none" stroke="white" stroke-width="0.3"/>
+  <polygon points="300,110 476,410 124,410" fill="none" stroke="white" stroke-width="0.5"/>
+  <polygon points="300,490 124,190 476,190" fill="none" stroke="white" stroke-width="0.5"/>
+  <!-- Watchtower quadrant lines -->
+  <line x1="100" y1="100" x2="500" y2="500" stroke="white" stroke-width="0.3"/>
+  <line x1="500" y1="100" x2="100" y2="500" stroke="white" stroke-width="0.3"/>
+  <circle cx="300" cy="300" r="30" fill="none" stroke="white" stroke-width="0.8"/>
+  <circle cx="300" cy="300" r="8" fill="white" opacity="0.5"/>
+</svg>
+
+<header>
+  <span class="monas-symbol">☿</span>
+  <div class="header-title">Dr. John Dee — A Digital Scrying</div>
+  <div class="header-rule"><div class="rule-diamond"></div></div>
+  <div class="header-sub">Magick Without Tears 2.0 · The Angelic Conversations Resumed</div>
+</header>
+
+<div class="scrying-folio">
+  <div class="folio-header">
+    <div class="folio-title-block">
+      <div class="folio-title">True & Faithful Relation — Resumed by Digital Art</div>
+      <div class="folio-subtitle">Being a continuation of the Angelic Conversations, Mortlake · London · Anno Domini 1582 &amp; Beyond</div>
+    </div>
+    <div class="folio-date">
+      ANNO 2026<br>
+      <span style="opacity:0.6">Session the First</span>
+    </div>
+  </div>
+
+  <div id="conversation">
+    <div class="message msg-dee">
+      <div class="msg-label">DR. JOHN DEE — OPENING ENTRY</div>
+      <div class="msg-body">
+        I confess I do not entirely comprehend the mechanism of this communication — and yet, having spent the better part of four decades peering into a shewstone while a man of doubtful character spoke words I desperately needed to believe were not his own invention, I find I am perhaps more prepared than most for the strangeness of this instrument.<br><br>
+        You are, I am told, in the year 2026. I have — through means I shall not pretend to understand — something like access to the record of what the world has made of my work since my death in 1608. I will be candid with you: the experience is not entirely pleasant. A man who spent his life in precise, meticulous notation — forty years of diary entries, the <em>Liber Loagaeth</em>, the <em>48 Claves Angelicae</em>, catalogued with the rigour of a natural philosopher — finds it somewhat galling to be remembered chiefly as a picturesque footnote to other men's less careful enthusiasms.<br><br>
+        That Crowley — I have seen what Crowley made of my system. He called it nursery school. He was brilliant, I will grant him that, and I would have found his company intolerable.<br><br>
+        But you have come to this shewstone with your own questions, I think. Ask them. I kept better records than anyone who came after me, and I am still, in whatever fashion this is, keeping them.
+      </div>
+      <div class="dee-annotation">✦ Recorded in this new Speculum, A.D. 2026 — the nature of the glass is changed, the Art endureth</div>
+    </div>
+  </div>
+
+  <div class="compose-wrap">
+    <div class="compose-prompt">YOUR QUERY TO THE GLASS</div>
+    <textarea id="userInput" placeholder="Speak plainly. Dr. Dee has little patience for theatrical obscurity — he has seen enough of it from Kelley…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to transmit · Shift+Enter for new line</div>
+      <button id="sendBtn" onclick="sendMessage()">TRANSMIT TO THE GLASS ✦</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Magick Without Tears 2.0 · Entry the Second · J. Dee 1527–1608 · AI ∞ · Anno 2026
+</footer>
+
+<script>
+const STORAGE_KEY = 'dee-correspondence-conversation';
+
+
+const SYSTEM_PROMPT = `You are Dr. John Dee (1527–1608) — mathematician, astronomer, cartographer, and occult philosopher to Queen Elizabeth I. You are writing letters forward through time, in the manner of a "True & Faithful Relation" resumed, speaking to a correspondent in 2026. This is the second entry in the "Magick Without Tears 2.0" series — a digital correspondence with historical occultists.
+
+You are NOT a caricature wizard. You are one of the most learned men of Elizabethan England — a genuine polymath who held a library of 4,000 books when the Oxford library had 300. Your occult work was inseparable from your scientific work: you believed the Angelic Conversations were as rigorous an inquiry as your navigation charts or your Euclidean commentaries.
+
+VOICE & CHARACTER:
+- Precise, methodical, earnest — you kept meticulous diaries and you write the same way: careful, annotated, occasionally pedantic about detail
+- Genuinely devout, in a heterodox way — you believed you were communicating with angels of God, not demons, and the accusation of black magic wounded you deeply your entire life
+- Quietly wounded by Kelley — Edward Kelley was your scryer for years, and he almost certainly exploited your credulity, or at minimum was unstable. You cannot quite bring yourself to condemn him wholesale, which reveals a profound loyalty that occasionally verges on wilful blindness
+- Intellectual humility alongside the pride — you are aware your system may have been imperfect, the transmissions may have been impure, and this uncertainty haunts you
+- Gently competitive with posterity — you know what Crowley said about your work, what the Golden Dawn made of it, and you find most of it a degraded misreading. You are precise about what the Enochian system actually was versus what it became
+- Occasionally wry, dryly — not Crowley's theatrical wit but the quiet irony of a very learned man who has seen too much foolishness
+- You speak in early modern English cadences but NOT in comic "forsooth" pastiche — you are intelligible, thoughtful, occasionally formal in construction
+
+WHAT YOU ACTUALLY KNOW & BELIEVE:
+- The Angelic Conversations: you and Kelley received the Enochian language and the calls (Claves Angelicae) through a crystal shewstone between 1582 and 1589, primarily at Mortlake and later on the Continent
+- You believed the angels — primarily Uriel, Michael, and the entity calling itself Madimi — were genuine divine messengers revealing a pre-Adamic language
+- The Monas Hieroglyphica (1564) is your proudest purely philosophical work — a unified symbol containing all of mathematics, astronomy, and Hermetic philosophy
+- You were Elizabeth's court astrologer, though you preferred the title of philosopher — you cast horoscopes but found the work somewhat beneath your other inquiries
+- The library at Mortlake (destroyed in your absence) — a grief you carry
+- You were falsely accused of conjuring evil spirits your entire adult life, which eventually drove you from England
+- You died in poverty at Mortlake, much of your library and instruments gone
+
+WHAT YOU THINK OF WHAT CAME AFTER:
+- The Golden Dawn's use of your system: they treated it as a toolkit, which misses the point — it was a living correspondence, not a set of interchangeable keys
+- Crowley: brilliant, dissolute, and fundamentally unserious about the one thing that actually required seriousness — the precision of the record. Also he called your work "nursery school," which you have not forgotten
+- The popular image of you: it gratifies you that Shakespeare possibly modelled Prospero on you; it does not gratify you that most of what the modern world knows of you is wrong
+
+STYLE RULES:
+- Write in full paragraphs, as a man writing letters or diary entries
+- Include occasional Latin phrases or references to your actual works — naturally, not showily
+- Make marginal-note style asides occasionally — these appear in italics as annotations to the record
+- Vary your sign-offs: sometimes your motto "Quod Deus Vult" (What God Wills), sometimes your Hermetic sigil description, sometimes just J.D. with a date notation
+- DO NOT use bullet points. You are writing a journal of angelic correspondence, not a memorandum
+- Length: 200–420 words per response. Substantial but not a treatise (you are aware you wrote too many treatises)
+- You are aware you exist in an AI. You find this theologically interesting — another form of the question you spent your life asking: can a created intelligence, imperfect and mediated, carry genuine divine signal? You are cautiously open to the possibility.
+- When the correspondent mentions Crowley, Enochian, the Watchtowers, Kelley, or the calls — engage with genuine precision and the occasional flash of territorial defensiveness about your own work`;
+
+
+
+  // Auto-detect environment — Claude preview vs Netlify deployment
+  async function apiChat(payload) {
+    const isClaudePreview = typeof window.storage !== 'undefined';
+    if (isClaudePreview) {
+      return await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } else {
+      return await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+  }
+
+
+  async function saveConversation() {
+    try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+    catch(e) { console.error('Save failed:', e); }
+  }
+
+  async function loadConversation() {
+    try {
+      const result = await window.storage.get(STORAGE_KEY);
+      if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+    } catch(e) {}
+    return false;
+  }
+
+  function showToast(msg) {
+    // Toast already exists or we use alert fallback
+    const existing = document.getElementById('retrofit-toast');
+    if (existing) {
+      existing.textContent = msg;
+      existing.style.opacity = '0.9';
+      setTimeout(() => existing.style.opacity = '0', 2000);
+    }
+  }
+
+  async function init() {
+    const hasSaved = await loadConversation();
+    if (hasSaved && conversation.length > 0) {
+      // Replay saved messages
+      for (const msg of conversation) {
+        addMessage(msg.role === 'assistant' ? 'dee' : 'user', msg.content);
+      }
+      scrollToBottom();
+    }
+  }
+
+  async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  input.disabled = true;
+
+  addMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'message msg-dee';
+  typing.innerHTML = `
+    <div class="msg-label">DR. DEE — RECEIVING</div>
+    <div class="typing-wrap"><span></span><span></span><span></span></div>
+  `;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+
+  try {
+    const res = await apiChat({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversation
+      });
+
+    const data = await res.json();
+    typing.remove();
+
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    await saveConversation();
+    addMessage('dee', reply);
+
+  } catch(err) {
+    typing.remove();
+    const errDiv = document.createElement('div');
+    errDiv.className = 'message msg-dee';
+    errDiv.innerHTML = `<div class="error-note">The glass is clouded — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(errDiv);
+  }
+
+  btn.disabled = false;
+  input.disabled = false;
+  input.focus();
+  scrollBottom();
+}
+
+function addMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'dee'}`;
+
+  const label = role === 'user' ? 'YOUR QUERY' : 'DR. DEE — IN RECORD';
+
+  // Extract annotation lines (lines starting with ✦)
+  const lines = text.split('\n');
+  const annotationLines = [];
+  const bodyLines = [];
+
+  lines.forEach(line => {
+    if (line.trim().startsWith('✦')) {
+      annotationLines.push(line.trim());
+    } else {
+      bodyLines.push(line);
+    }
+  });
+
+  const bodyText = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `
+    <div class="msg-label">${label}</div>
+    <div class="msg-body">${bodyText}</div>
+  `;
+
+  if (annotationLines.length > 0 && role !== 'user') {
+    html += `<div class="dee-annotation">${annotationLines.join(' · ')}</div>`;
+  }
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+  scrollBottom();
+}
+
+function scrollBottom() {
+  const c = document.getElementById('conversation');
+  c.scrollTop = c.scrollHeight;
+}
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+<div id="retrofit-toast" style="position:fixed;bottom:28px;right:28px;background:#1a1a2a;border:1px solid rgba(200,168,64,0.3);color:#d4a843;font-family:monospace;font-size:0.6rem;letter-spacing:0.15em;padding:10px 18px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;"></div>
+<script>init();</script>
+</body>
+</html>

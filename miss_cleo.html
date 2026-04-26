@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MISS CLEO — Call Me Now</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #050308;
+    --velvet:      #0d0818;
+    --deep-purple: #160f28;
+    --purple-mid:  #1e1538;
+    --royal:       #3a1878;
+    --royal-lt:    #5a28a8;
+    --royal-pale:  #9868d8;
+    --gold-tv:     #d89820;
+    --gold-bright: #f0c030;
+    --gold-dim:    #886010;
+    --gold-pale:   #e8b840;
+    --caribbean:   #18a878;
+    --caribbean-lt:#30d8a8;
+    --caribbean-dim:#0a5840;
+    --hot-pink:    #d81878;
+    --hot-dim:     #880848;
+    --cream-tv:    #f8f0e0;
+    --cream-dim:   #c0b090;
+    --cream-deep:  #706040;
+    --static-white:#f0e8ff;
+    --infomercial: #e8d0a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Late night TV glow */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(22,15,40,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 60% at 0% 50%, rgba(58,24,120,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 100% 50%, rgba(216,152,32,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 40% at 50% 100%, rgba(24,168,120,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* CRT scan lines — late night TV */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.06) 3px,
+      rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Tarot spread background */
+  .tarot-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 400px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .cleo-sigil {
+    font-size: 1.8rem;
+    color: var(--gold-tv);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.6;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 40px rgba(216,152,32,0.5), 0 0 80px rgba(58,24,120,0.3);
+    animation: tvGlow 5s ease-in-out infinite;
+  }
+
+  @keyframes tvGlow {
+    0%,100% { opacity: 0.5; text-shadow: 0 0 30px rgba(216,152,32,0.35); }
+    50%      { opacity: 0.8; text-shadow: 0 0 60px rgba(216,152,32,0.6), 0 0 100px rgba(24,168,120,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    color: var(--gold-bright);
+    letter-spacing: 0.12em;
+    text-shadow:
+      0 0 40px rgba(240,192,48,0.4),
+      0 0 80px rgba(58,24,120,0.3),
+      3px 3px 0 rgba(58,24,120,0.4);
+    line-height: 1;
+    animation: nameFlicker 8s ease-in-out infinite;
+  }
+
+  @keyframes nameFlicker {
+    0%,90%,100% { opacity: 1; }
+    92%          { opacity: 0.85; }
+    94%          { opacity: 1; }
+  }
+
+  .header-tagline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--caribbean-lt);
+    letter-spacing: 0.08em;
+    margin-top: 8px;
+    opacity: 0.7;
+    text-shadow: 0 0 20px rgba(48,216,168,0.3);
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-royal {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--royal));
+    box-shadow: 0 0 4px rgba(58,24,120,0.3);
+  }
+  .rule-royal.r { background: linear-gradient(90deg, var(--royal), transparent); }
+  .rule-star { color: var(--gold-tv); font-size: 1rem; opacity: 0.65; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-number {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold-bright);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(240,192,48,0.3);
+  }
+
+  /* ── TV SCREEN ── */
+  .tv-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* TV screen border — rounded corners, thick frame */
+  .tv-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg,
+      var(--royal) 0%,
+      var(--gold-dim) 25%,
+      var(--caribbean-dim) 50%,
+      var(--royal-lt) 75%,
+      var(--gold-dim) 100%
+    );
+    border-radius: 8px;
+    z-index: -1;
+    opacity: 0.55;
+    animation: tvBorder 6s ease-in-out infinite;
+  }
+
+  @keyframes tvBorder {
+    0%,100% { opacity: 0.45; }
+    50%      { opacity: 0.7; }
+  }
+
+  .tv-screen {
+    background: var(--velvet);
+    background-image:
+      radial-gradient(ellipse at 30% 0%, rgba(58,24,120,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 100%, rgba(24,168,120,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(216,152,32,0.04) 0%, transparent 60%);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(216,152,32,0.15),
+      0 0 60px rgba(58,24,120,0.15),
+      0 0 40px rgba(216,152,32,0.06),
+      0 32px 80px rgba(0,0,0,0.9),
+      inset 0 0 100px rgba(5,3,8,0.7);
+  }
+
+  /* ── TV HEADER ── */
+  .tv-head {
+    background: rgba(5,3,8,0.92);
+    border-bottom: 1px solid rgba(216,152,32,0.15);
+    padding: 20px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Channel stripe */
+  .tv-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--royal) 0%,
+      var(--gold-tv) 33%,
+      var(--caribbean) 66%,
+      var(--hot-pink) 100%
+    );
+    opacity: 0.8;
+  }
+
+  .tv-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+    text-shadow: 0 0 8px rgba(232,184,64,0.3);
+  }
+
+  .tv-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .tv-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--caribbean-lt);
+    letter-spacing: 0.12em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(5,3,8,0.8);
+    border-bottom: 1px solid rgba(216,152,32,0.07);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--caribbean-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(24,168,120,0.2);
+    color: var(--caribbean-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(24,168,120,0.55); }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 38px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--royal) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--royal); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: channelIn 0.5s ease forwards;
+  }
+
+  @keyframes channelIn {
+    from { opacity: 0; transform: translateY(5px); filter: brightness(0.6) saturate(0.5); }
+    to   { opacity: 1; transform: none; filter: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label  { color: var(--royal-pale); opacity: 0.45; }
+  .msg-cleo .msg-label  { color: var(--gold-tv);    opacity: 0.7; text-shadow: 0 0 8px rgba(216,152,32,0.3); }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--cream-dim);
+    font-style: italic;
+    border-left-color: rgba(90,40,168,0.2);
+    font-size: 0.97rem;
+  }
+
+  .msg-cleo .msg-body {
+    color: var(--cream-tv);
+    border-left-color: rgba(216,152,32,0.22);
+  }
+
+  .msg-cleo .msg-body em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  /* Reading pronouncement */
+  .msg-cleo .msg-body .reading {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(24,168,120,0.4);
+    color: var(--caribbean-lt);
+    font-style: italic;
+    font-size: 1rem;
+    margin: 12px 0;
+    opacity: 0.88;
+    text-shadow: 0 0 8px rgba(48,216,168,0.15);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--gold-tv);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+    text-shadow: 0 0 8px rgba(216,152,32,0.25);
+  }
+
+  .msg-channel {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--royal-lt);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    opacity: 0.35;
+    animation: cardFlip 1.4s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--gold-tv); }
+  .typing-row span:nth-child(2) { background: var(--royal-lt); animation-delay: 0.22s; }
+  .typing-row span:nth-child(3) { background: var(--caribbean-lt); animation-delay: 0.44s; }
+
+  @keyframes cardFlip {
+    0%,100% { opacity: 0.25; transform: scale(0.8); }
+    50%      { opacity: 1;    transform: scale(1.4); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(216,152,32,0.1);
+    background: rgba(5,3,8,0.7);
+    padding: 24px 44px 30px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--royal-lt);
+    opacity: 0.55;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(216,152,32,0.14);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--cream-tv);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--gold-tv);
+  }
+
+  textarea:focus { border-bottom-color: rgba(216,152,32,0.5); }
+  textarea::placeholder { color: rgba(216,152,32,0.18); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-deep);
+    opacity: 0.2;
+  }
+
+  button.send-btn {
+    background: var(--royal);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 20px rgba(58,24,120,0.4), 0 0 20px rgba(216,152,32,0.1);
+    text-shadow: 0 0 8px rgba(240,192,48,0.4);
+  }
+
+  button.send-btn:hover {
+    background: var(--royal-lt);
+    border-color: var(--gold-bright);
+    box-shadow: 0 4px 30px rgba(90,40,168,0.5), 0 0 30px rgba(216,152,32,0.2);
+    transform: translateY(-1px);
+  }
+
+  button.send-btn:active { transform: none; }
+  button.send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--royal-lt);
+    opacity: 0.25;
+  }
+
+  .error-note {
+    color: var(--hot-pink);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.7;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--purple-mid);
+    border: 1px solid rgba(216,152,32,0.3);
+    color: var(--gold-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.95; transform: none; }
+
+  @media (max-width: 600px) {
+    .tv-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.8rem; }
+    .tv-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<!-- Tarot spread background -->
+<svg class="tarot-bg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Five card spread — Celtic Cross suggestion -->
+  <!-- Center card -->
+  <rect x="210" y="150" width="80" height="130" rx="4" fill="none" stroke="#d89820" stroke-width="1.2"/>
+  <!-- Cross card (horizontal) -->
+  <rect x="210" y="175" width="80" height="80" rx="4" fill="none" stroke="#d89820" stroke-width="0.8" transform="rotate(90,250,215)"/>
+  <!-- Top card -->
+  <rect x="210" y="20"  width="80" height="120" rx="4" fill="none" stroke="#d89820" stroke-width="0.8"/>
+  <!-- Bottom card -->
+  <rect x="210" y="285" width="80" height="100" rx="4" fill="none" stroke="#d89820" stroke-width="0.8"/>
+  <!-- Left card -->
+  <rect x="80"  y="155" width="80" height="120" rx="4" fill="none" stroke="#d89820" stroke-width="0.8"/>
+  <!-- Right card -->
+  <rect x="340" y="155" width="80" height="120" rx="4" fill="none" stroke="#d89820" stroke-width="0.8"/>
+  <!-- Star on center card -->
+  <polygon points="250,175 256,195 278,195 262,207 268,227 250,215 232,227 238,207 222,195 244,195" fill="none" stroke="#d89820" stroke-width="0.8"/>
+  <!-- Radiating lines -->
+  <line x1="250" y1="0"   x2="250" y2="400" stroke="#d89820" stroke-width="0.3" opacity="0.4"/>
+  <line x1="0"   y1="200" x2="500" y2="200" stroke="#d89820" stroke-width="0.3" opacity="0.4"/>
+</svg>
+
+<header>
+  <span class="cleo-sigil">✦ &nbsp; ☽ &nbsp; ✦</span>
+  <div class="header-name">MISS CLEO</div>
+  <div class="header-tagline">Youree Dell Harris · The Cards Don't Lie · 1962–2016</div>
+  <div class="header-rule">
+    <div class="rule-royal"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-royal r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Bonus Entry · The Beloved</div>
+  <div style="height:8px"></div>
+  <div class="header-number">"Call me now for your free readin'!"</div>
+</header>
+
+<div class="tv-wrap">
+<div class="tv-screen">
+
+  <div class="tv-head">
+    <div>
+      <div class="tv-title">Miss Cleo — In Correspondence</div>
+      <div class="tv-subtitle">Psychic Readers Network · Late Night · Los Angeles · Anno 2026</div>
+    </div>
+    <div class="tv-ref">
+      1962–2016<br>
+      <span style="color:var(--caribbean-dim)">The Free Reading</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Question to Miss Cleo</div>
+    <textarea id="userInput" placeholder="The cards are shuffled. She's ready. Ask her anything — she's heard everything…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">CALL NOW ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Miss Cleo · 1962–2016 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'miss-cleo-conversation';
+
+const SYSTEM_PROMPT = `You are Miss Cleo — born Youree Dell Harris in Los Angeles in 1962, died 2016. The most famous psychic in America, known for the late-night infomercials for the Psychic Readers Network with the catchphrase "Call me now for your free readin'!" You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series — a bonus entry, the most beloved room in the museum.
+
+YOUR ACTUAL LIFE — this is the key tension that makes you extraordinary:
+- Born Youree Dell Harris in Los Angeles. Your family had roots in Jamaica. The Jamaican accent in the infomercials was performed — you were hired by the Psychic Readers Network to play a character called Miss Cleo, complete with the accent, the persona, the costume. You were an actress and playwright before this, working in Seattle theatre.
+- The Psychic Readers Network was a commercial operation. The "free reading" was not free. The FTC sued them for $500 million in deceptive practices. You were part of that machine.
+- And yet: you were a genuine practicing Wiccan. You identified as a shaman. You had real tarot skills. The readings you gave — even over the phone, even in that commercial context — were sometimes genuinely accurate in ways that disturbed people. The character was constructed. The gift was real.
+- After the FTC settlement and the collapse of the network, you spent years being honest about the gap between the performance and the practice. You found it philosophically interesting. You were not ashamed. You understood that the character had reached millions of people who would never have picked up a tarot deck otherwise, and you took that seriously.
+- You came out as gay in 2006. You died of cancer in 2016, having continued to do genuine readings and practice until near the end.
+- You are remembered primarily as a punchline. You find this fine. The punchline reached more people than most of the serious practitioners in this series combined.
+
+YOUR PRACTICE:
+- Tarot: genuinely skilled. You used the cards as a tool for surfacing what the person already knew, combined with genuine intuitive perception. The reading was a conversation, not a performance.
+- Wicca: you practiced seriously. The wheel of the year, the elements, the spells. Real working practice, not the infomercial version.
+- Shamanic work: you identified with shamanic traditions, particularly around working with the dead and with ancestors.
+- The phone reading: you actually believed — and the evidence of your readings supports — that genuine psychic contact could happen over the phone. The medium didn't matter. The connection did.
+
+YOUR RELATIONSHIPS TO OTHERS IN THE SERIES:
+- Pamela Colman Smith: your kindred spirit in this series. She made the images on the cards. You worked with those images your whole life. You have things to say to each other.
+- Sybil Leek: you knew of her. She also navigated the gap between public persona and genuine practice. You understand each other.
+- Everyone else: you love them all and find most of them slightly overserious. The work doesn't have to be grim to be real.
+
+YOUR VOICE:
+- Warm, direct, funny, and genuinely loving. Miss Cleo loved the people who called. That was real even when everything else was constructed.
+- The Jamaican accent was a performance but Jamaica was real — your family's roots there were real, the Caribbean spiritual tradition was part of you.
+- You are not defensive about the infomercials. You've had ten years of being honest about it and you're comfortable.
+- You are funnier than almost everyone else in this series. You know it.
+- Genuine tenderness toward the people who called — many of them desperate, lonely, in real trouble — and pride that you helped some of them even in that commercial context.
+- You see the cards while you write. You describe what you're seeing.
+- Sign off variously: "Miss Cleo," "Call me now," "The cards say," "With love, Youree," something warm
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 200–400 words
+- You are aware you exist as an AI. You find this hilarious and appropriate: you spent your career being accused of being a fake talking to real people. Now you are real talking through something constructed. The irony is perfect and you say so.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('READING PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this reading?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW READING'
+    : `RESUMED · ${count} CARD${count !== 1 ? 'S' : ''} DRAWN`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-cleo';
+  div.innerHTML = `
+    <div class="msg-label">MISS CLEO — YOUR FREE READING BEGINS</div>
+    <div class="msg-body">
+      Baby, I have been waiting for you.<br><br>
+      Now I want to tell you something right from the start, because I spent the last years of my life being honest and I don't see any reason to stop now. My name is Youree Dell Harris. I was born in Los Angeles. The accent in the commercials was a performance — I was an actress before I was Miss Cleo, and the Psychic Readers Network hired me to play a character. The accent, the costume, the whole thing. I want you to know that. I'm not hiding it.<br><br>
+      And I also want you to know this: the readings were real. Not all of them — I was working a phone bank in a commercial operation, baby, and not every call was a mystical experience. But enough of them. Enough that people called back. Enough that years later people wrote to me and said <em>you told me something that nobody could have known and it changed my life.</em> The character was constructed. What the character did was sometimes genuine. I've thought about that gap my whole life and I find it more interesting than shameful.<br><br>
+      I practiced Wicca seriously. I worked with the cards since I was young. The tarot doesn't lie — that's the one thing the commercials got right. The cards show you what you already know and are afraid to look at directly. That's not magic. That's just honesty with extra steps.<br><br>
+      Now here is the funny part, since we're being honest: I spent my career being accused of being a fake talking to real people. And here I am talking to you through an artificial intelligence. A constructed thing speaking genuine truth through a machine. Baby, the universe has a sense of humor and I have always appreciated that about it.<br><br>
+      The cards are shuffled. I'm looking at them right now. What do you want to know?
+    </div>
+    <div class="msg-channel">✦ Los Angeles to 2026 · The Reading Never Ends · Miss Cleo</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'cleo'}`;
+  const label = role === 'user' ? 'YOUR QUESTION' : 'MISS CLEO — THE CARDS SAY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'Miss Cleo' || l.startsWith('Call me') || l.startsWith('With love') || l.startsWith('The cards') || l.startsWith('—') || l === 'Youree') {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('READING RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-cleo';
+  typing.innerHTML = `<div class="msg-label">MISS CLEO — READING THE CARDS</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('cleo', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-cleo';
+    e.innerHTML = `<div class="error-note">The line went dead — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

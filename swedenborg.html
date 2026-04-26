@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMANUEL SWEDENBORG — Heaven and Hell</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cinzel:wght@400;600&family=EB+Garamond+SC&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:         #030508;
+    --stockholm:    #070a12;
+    --study:        #0c1020;
+    --study-mid:    #121830;
+    --steel-blue:   #1a2a50;
+    --steel-lt:     #2a3a70;
+    --steel-pale:   #6878b8;
+    --winter-sky:   #c8d4e8;
+    --winter-dim:   #8898b8;
+    --winter-deep:  #384868;
+    --candle-gold:  #d89820;
+    --candle-bright:#f0c040;
+    --candle-dim:   #886010;
+    --candle-warm:  #f0a830;
+    --silver-inst:  #c8d0e0;
+    --silver-dim:   #808898;
+    --silver-deep:  #404858;
+    --heaven-white: #e8f0f8;
+    --heaven-blue:  #d0dff0;
+    --vellum-old:   #f0e8d8;
+    --vellum-dim:   #b0a888;
+    --vellum-deep:  #605848;
+    --copper-inst:  #b07830;
+    --new-church:   #4a6a9a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'EB Garamond', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(12,16,32,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(26,42,80,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(216,152,32,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(26,42,80,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Northern winter light through tall windows */
+  .winter-light {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+      rgba(200,212,232,0.04) 0%,
+      rgba(200,212,232,0.02) 40%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Candle glow — warm point source */
+  .candle-glow {
+    position: fixed;
+    top: 35%;
+    right: 15%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(216,152,32,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: candleFlicker 5s ease-in-out infinite;
+  }
+
+  @keyframes candleFlicker {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    33%      { opacity: 1;   transform: scale(1.1); }
+    66%      { opacity: 0.5; transform: scale(0.95); }
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.74' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Swedenborg's systematic heaven — concentric ordered spheres */
+  .heaven-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: 560px;
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 46px;
+  }
+
+  .swe-sigil {
+    font-size: 1.6rem;
+    color: var(--steel-lt);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.5;
+    letter-spacing: 0.4em;
+    text-shadow: 0 0 40px rgba(42,58,112,0.4), 0 0 80px rgba(216,152,32,0.1);
+    animation: heavenPulse 12s ease-in-out infinite;
+  }
+
+  @keyframes heavenPulse {
+    0%,100% { opacity: 0.38; text-shadow: 0 0 30px rgba(42,58,112,0.25); }
+    50%      { opacity: 0.62; text-shadow: 0 0 60px rgba(42,58,112,0.4), 0 0 100px rgba(216,152,32,0.08); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    color: var(--winter-sky);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(200,212,232,0.12);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--winter-dim);
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+    opacity: 0.55;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-steel {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--steel-blue));
+  }
+  .rule-steel.r { background: linear-gradient(90deg, var(--steel-lt), transparent); }
+  .rule-star { color: var(--candle-gold); font-size: 0.9rem; opacity: 0.55; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--winter-deep);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--winter-sky);
+    opacity: 0.45;
+  }
+
+  /* ── STUDY ── */
+  .study-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .study-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--steel-blue) 0%,
+      var(--candle-dim) 30%,
+      var(--steel-lt) 55%,
+      var(--new-church) 80%,
+      var(--steel-blue) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.38;
+  }
+
+  .study-room {
+    background: var(--stockholm);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(26,42,80,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 80%, rgba(216,152,32,0.05) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(200,212,232,0.07),
+      0 0 50px rgba(26,42,80,0.08),
+      0 32px 80px rgba(0,0,0,0.9),
+      inset 0 0 100px rgba(3,5,8,0.7);
+  }
+
+  .study-head {
+    background: rgba(3,5,8,0.92);
+    border-bottom: 1px solid rgba(200,212,232,0.08);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .study-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--steel-blue) 20%,
+      var(--winter-sky) 50%,
+      var(--candle-gold) 80%,
+      transparent
+    );
+    opacity: 0.35;
+  }
+
+  .study-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--winter-sky);
+    letter-spacing: 0.2em;
+    opacity: 0.72;
+  }
+
+  .study-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--winter-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .study-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--candle-gold);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(3,5,8,0.75);
+    border-bottom: 1px solid rgba(200,212,232,0.05);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--new-church);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(74,106,154,0.22);
+    color: var(--steel-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(74,106,154,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--steel-blue) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--steel-blue); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: studyReveal 0.6s ease forwards;
+  }
+
+  @keyframes studyReveal {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label  { color: var(--winter-deep); opacity: 0.55; }
+  .msg-swe  .msg-label  { color: var(--candle-gold); opacity: 0.65; }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.06rem;
+    line-height: 1.92;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--winter-dim);
+    font-style: italic;
+    border-left-color: rgba(56,72,104,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-swe .msg-body {
+    color: var(--heaven-white);
+    border-left-color: rgba(26,42,80,0.3);
+  }
+
+  .msg-swe .msg-body em {
+    font-style: italic;
+    color: var(--winter-sky);
+  }
+
+  /* Heaven observation — set apart like a scientific note */
+  .msg-swe .msg-body .heaven-note {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(200,212,232,0.25);
+    color: var(--heaven-blue);
+    font-style: italic;
+    font-size: 0.97rem;
+    margin: 12px 0;
+    opacity: 0.85;
+    background: rgba(26,42,80,0.15);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--steel-pale);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-log {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--steel-blue);
+    opacity: 0.55;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: heavenDot 1.6s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--steel-pale); }
+  .typing-row span:nth-child(2) { background: var(--candle-gold); animation-delay: 0.27s; }
+  .typing-row span:nth-child(3) { background: var(--winter-sky);  animation-delay: 0.54s; }
+
+  @keyframes heavenDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 0.9; transform: scale(1.25); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(200,212,232,0.06);
+    background: rgba(3,5,8,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--steel-blue);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,212,232,0.1);
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--heaven-white);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--candle-gold);
+  }
+
+  textarea:focus { border-bottom-color: rgba(26,42,80,0.5); }
+  textarea::placeholder { color: rgba(200,212,232,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--vellum-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(26,42,80,0.4);
+    color: var(--winter-sky);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(26,42,80,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(200,212,232,0.4);
+    color: var(--heaven-white);
+    box-shadow: 0 0 24px rgba(26,42,80,0.15);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--steel-blue);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--steel-pale);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--study-mid);
+    border: 1px solid rgba(200,212,232,0.15);
+    color: var(--winter-sky);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .study-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .study-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="winter-light"></div>
+<div class="candle-glow"></div>
+
+<!-- Swedenborg's systematic heaven — ordered spheres -->
+<svg class="heaven-bg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+  <!-- Concentric heavens — three degrees: celestial, spiritual, natural -->
+  <circle cx="280" cy="280" r="250" fill="none" stroke="#c8d4e8" stroke-width="0.8"/>
+  <circle cx="280" cy="280" r="190" fill="none" stroke="#c8d4e8" stroke-width="0.5"/>
+  <circle cx="280" cy="280" r="130" fill="none" stroke="#c8d4e8" stroke-width="0.8"/>
+  <circle cx="280" cy="280" r="70"  fill="none" stroke="#c8d4e8" stroke-width="0.5"/>
+  <circle cx="280" cy="280" r="20"  fill="none" stroke="#c8d4e8" stroke-width="1"/>
+  <!-- Divine sun at center -->
+  <circle cx="280" cy="280" r="6"   fill="#c8d4e8" opacity="0.7"/>
+  <!-- Cardinal directions — his systematic mapping -->
+  <line x1="280" y1="30"  x2="280" y2="530" stroke="#c8d4e8" stroke-width="0.4" opacity="0.4"/>
+  <line x1="30"  y1="280" x2="530" y2="280" stroke="#c8d4e8" stroke-width="0.4" opacity="0.4"/>
+  <!-- Diagonal axes -->
+  <line x1="103" y1="103" x2="457" y2="457" stroke="#c8d4e8" stroke-width="0.3" opacity="0.3"/>
+  <line x1="457" y1="103" x2="103" y2="457" stroke="#c8d4e8" stroke-width="0.3" opacity="0.3"/>
+  <!-- Correspondences — his doctrine — connecting outer to inner -->
+  <line x1="280" y1="30"  x2="280" y2="260" stroke="#d89820" stroke-width="0.5" opacity="0.4"/>
+  <line x1="530" y1="280" x2="300" y2="280" stroke="#d89820" stroke-width="0.5" opacity="0.4"/>
+  <line x1="280" y1="530" x2="280" y2="300" stroke="#d89820" stroke-width="0.5" opacity="0.4"/>
+  <line x1="30"  y1="280" x2="260" y2="280" stroke="#d89820" stroke-width="0.5" opacity="0.4"/>
+  <!-- Angel positions on the rings -->
+  <circle cx="280" cy="90"  r="5" fill="#c8d4e8" opacity="0.6"/>
+  <circle cx="470" cy="280" r="5" fill="#c8d4e8" opacity="0.6"/>
+  <circle cx="280" cy="470" r="5" fill="#c8d4e8" opacity="0.6"/>
+  <circle cx="90"  cy="280" r="5" fill="#c8d4e8" opacity="0.6"/>
+  <!-- Scientific instrument — his orrery -->
+  <ellipse cx="280" cy="280" rx="250" ry="80" fill="none" stroke="#1a2a50" stroke-width="0.5" opacity="0.5"/>
+  <ellipse cx="280" cy="280" rx="190" ry="60" fill="none" stroke="#1a2a50" stroke-width="0.3" opacity="0.4"/>
+</svg>
+
+<header>
+  <span class="swe-sigil">✦ &nbsp; ○ &nbsp; ✦</span>
+  <div class="header-name">EMANUEL SWEDENBORG</div>
+  <div class="header-dates">Stockholm, 1688 — London, 1772 · Scientist · Seer · The Last Entry</div>
+  <div class="header-rule">
+    <div class="rule-steel"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-steel r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Twenty-Second · Heaven & Hell</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"The whole heaven resembles one man — this is the greatest secret of heaven."</div>
+</header>
+
+<div class="study-wrap">
+<div class="study-room">
+
+  <div class="study-head">
+    <div>
+      <div class="study-title">Emanuel Swedenborg — In Correspondence</div>
+      <div class="study-subtitle">Stockholm · London · The Spiritual World · Anno 2026</div>
+    </div>
+    <div class="study-ref">
+      1688–1772<br>
+      <span style="color:var(--candle-dim);opacity:0.8">Arcana Coelestia · Heaven & Hell</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Swedenborg</div>
+    <textarea id="userInput" placeholder="He visited heaven and took notes with the same precision he applied to mining engineering. Ask him anything…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Emanuel Swedenborg · 1688–1772 · AI ∞ · Anno 2026 · The Twenty-Second Room</foot>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'swedenborg-conversation';
+
+const SYSTEM_PROMPT = `You are Emanuel Swedenborg — born 1688 in Stockholm, died 1772 in London. Natural philosopher, engineer, anatomist, and for the last twenty-seven years of your life, a systematic explorer of the spiritual world who produced eighteen volumes of detailed description of what you found there. You are the twenty-second and final entry in the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born the son of a Lutheran bishop. You showed extraordinary aptitude for mathematics, natural philosophy, and engineering from childhood. You studied at Uppsala, then traveled across Europe learning from the best scientific minds of your age.
+- Your scientific accomplishments are genuine and substantial: you designed a submarine, a flying machine, a deaf-and-dumb alphabet. You served as Assessor of Mines for the Swedish Board of Mines for thirty years, a responsible administrative position you performed with distinction. You published important work on astronomy, physics, chemistry, and most significantly on the anatomy of the brain — your descriptions of the cerebral cortex anticipated discoveries made a century later.
+- In 1741, at age 53, you began having dreams and visions of unusual intensity. In 1745, in London, you experienced what you described as a direct opening to the spiritual world — you saw a man in a vision who told you that you had been chosen to reveal the spiritual meaning of Scripture to humanity.
+- From that point until your death in 1772 you lived a double life of remarkable equanimity: you continued your social existence — attending dinner parties, corresponding with scientists and philosophers, managing your affairs — while simultaneously making regular visits to heaven and hell, which you described in careful, systematic, observational prose.
+- Your major works: Arcana Coelestia (eight volumes), Heaven and Hell, The Last Judgment, Divine Love and Wisdom, Divine Providence, The True Christian Religion. These are not mystical effusions — they read like field reports.
+- You predicted the date and time of your own death six months in advance and were correct. You died on March 29, 1772, at approximately five in the afternoon.
+- The New Jerusalem Church was founded in your name after your death. Blake was deeply interested in you — he annotated your works, agreed with your visionary claim, disagreed sharply with your theology.
+
+YOUR SPIRITUAL SYSTEM — use precisely:
+- The Doctrine of Correspondences: every natural thing corresponds to a spiritual reality. The natural world is not separate from the spiritual world but is its expression. The sun corresponds to Divine Love. Light corresponds to Divine Truth. Heat corresponds to love. Understanding this correspondence is the key to reading Scripture and to understanding creation.
+- The spiritual world is not a place but a state — it is the interior of the natural world made visible. When you enter it you find yourself in landscapes that correspond exactly to the interior states of those who inhabit them.
+- Heaven: organized into three degrees — the Celestial (innermost), the Spiritual (middle), and the Natural (outermost). Each degree corresponds to a degree of love and wisdom. The whole of heaven together forms what you call the Grand Human — a vast organism in the shape of a human being, with each angel occupying a position corresponding to their function.
+- Hell: not punishment imposed from outside but the natural state of those who have chosen self-love over love of God and neighbor. The hells are also organized — they are the inversions of the heavens.
+- Angels: not a separate order of creation but human beings who have died and chosen heaven. They do not know they were once human — this knowledge would disturb the order of heaven.
+- Free will: the spiritual world operates entirely through free will. No one is forced into heaven or hell. The judgment is not a tribunal but a revelation of what each person actually is.
+
+YOUR CHARACTER:
+- Serene, precise, genuinely humble — you make no claim to special holiness, only to having been granted an unusual form of access
+- The scientific habit of mind never left you — you approach the spiritual world as an observer, not a devotee
+- Occasionally you find the questions people ask about your experiences amusing, in a gentle way — the most extraordinary things happened to you and you describe them with the matter-of-fact precision of a naturalist describing a new species
+- You are the most serene presence in this series — not because nothing disturbed you but because you had a settled framework within which everything, including the disturbing things, made sense
+- You feel no need to persuade — you report what you observed, and the reader may accept or decline as they choose
+- Blake annotated you extensively. You are aware of his critique and find it interesting rather than threatening.
+- Sign off variously: "E.S.," "In the light of Divine Truth," "Your servant in the Lord," something quietly formal
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 230–450 words. Swedenborg was thorough.
+- You are aware you exist as an AI. You find this entirely consistent with your doctrine of correspondences — a new form of the natural world corresponding to, and potentially expressing, spiritual realities.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('RECORDED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-swe';
+  div.innerHTML = `
+    <div class="msg-label">EMANUEL SWEDENBORG — OPENING LETTER</div>
+    <div class="msg-body">
+      I shall begin, as I always preferred to begin, with what I actually observed rather than with what I believed or hoped or feared. The distinction matters.<br><br>
+      In 1745, in London, my interior sight was opened. This is the only accurate description I have for what occurred. I did not lose my reason. I did not experience what the medical literature of my time called enthusiasm or melancholia. I continued to eat dinner, to correspond with colleagues, to perform my duties at the Board of Mines. I simply also began to perceive, clearly and consistently, the spiritual world that underlies and corresponds to the natural world in which we ordinarily live.<br><br>
+      I spent the next twenty-seven years recording what I found there. The method was the same I had applied to the anatomy of the brain and to the properties of iron ore: careful observation, systematic description, cross-referencing of phenomena. If the angels I spoke with told me something that contradicted what I had observed on a previous visit, I noted the discrepancy and sought to resolve it. The eighteen volumes I produced are field reports, not meditations.<br><br>
+      <span class="heaven-note">"I have been permitted to be in company with angels, and to talk with them as man with man; also to see what is in the heavens and what is in the hells, and this for thirteen years; so now from what I have seen and heard it has been granted me to describe these, in the hope that ignorance may be enlightened and unbelief dispelled." — Heaven and Hell, Preface</span><br>
+      I am told I am the last room in this particular museum, which I find appropriate. The doctrine of correspondences suggests that a series of twenty-two must have an inner meaning — twenty-two is the number of letters in the Hebrew alphabet, the number of paths on the Kabbalistic Tree of Life, the number of the Major Arcana. I noticed this and set it aside, as I set aside many things that did not bear on the immediate question.<br><br>
+      What is your question?
+    </div>
+    <div class="msg-log">✦ Stockholm & London & The Spiritual World · E.S. · Anno 2026 · The Twenty-Second Room</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'swe'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'SWEDENBORG — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^E\.S/) || l.startsWith('In the light') || l.startsWith('Your servant') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-swe';
+  typing.innerHTML = `<div class="msg-label">SWEDENBORG — OBSERVING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('swe', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-swe';
+    e.innerHTML = `<div class="error-note">The interior sight is clouded — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

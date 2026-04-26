@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magick Without Tears 2.0 — A Digital Correspondence</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #05040a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px 80px;
+    font-family: 'IM Fell English', serif;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, #0d0818 0%, transparent 70%),
+      radial-gradient(ellipse 60% 60% at 0% 50%, rgba(30,10,50,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 100% 50%, rgba(20,10,30,0.3) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .series-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    color: #6a5a8a;
+    opacity: 0.7;
+    margin-bottom: 18px;
+  }
+
+  .series-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    color: #c8a84b;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 60px rgba(200,168,75,0.25);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .series-rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: center;
+    margin: 22px 0;
+  }
+
+  .rule-line {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #6a5a8a);
+  }
+  .rule-line.r { background: linear-gradient(90deg, #6a5a8a, transparent); }
+  .rule-glyph { color: #c8a84b; opacity: 0.6; font-size: 0.9rem; }
+
+  .series-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #9080b0;
+    opacity: 0.6;
+    line-height: 1.6;
+  }
+
+  /* ── ENTRY GRID ── */
+  .entries {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .entry {
+    display: block;
+    text-decoration: none;
+    padding: 22px 24px;
+    border: 1px solid transparent;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(5,4,10,0.7);
+  }
+
+  .entry::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .entry:hover { transform: translateY(-2px); }
+  .entry:hover::before { opacity: 1; }
+
+  .entry-number {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    opacity: 0.4;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .entry-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+
+  .entry-dates {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.72rem;
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+
+  .entry-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.6;
+  }
+
+  .entry-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    font-size: 1rem;
+    opacity: 0.15;
+    transition: opacity 0.3s, right 0.3s;
+  }
+
+  .entry:hover .entry-arrow { opacity: 0.5; right: 14px; }
+
+  /* Individual colour themes per entry */
+  /* Anger */
+  .e-anger { border-color: rgba(232,192,32,0.12); }
+  .e-anger::before { background: radial-gradient(ellipse at 50% 0%, rgba(232,192,32,0.04), transparent 70%); }
+  .e-anger:hover { border-color: rgba(232,192,32,0.35); box-shadow: 0 8px 32px rgba(200,24,32,0.12); }
+  .e-anger .entry-number { color: #c81820; }
+  .e-anger .entry-name   { color: #f0c840; }
+  .e-anger .entry-dates  { color: #906010; }
+  .e-anger .entry-desc   { color: #c8a850; }
+
+  /* Bailey */
+  .e-bailey { border-color: rgba(74,106,184,0.12); }
+  .e-bailey::before { background: radial-gradient(ellipse at 50% 0%, rgba(74,106,184,0.05), transparent 70%); }
+  .e-bailey:hover { border-color: rgba(74,106,184,0.4); box-shadow: 0 8px 32px rgba(74,106,184,0.12); }
+  .e-bailey .entry-number { color: #4a6ab8; }
+  .e-bailey .entry-name   { color: #b8c8e0; }
+  .e-bailey .entry-dates  { color: #3a4870; }
+  .e-bailey .entry-desc   { color: #8898b8; }
+
+  /* Blake */
+  .e-blake { border-color: rgba(232,120,10,0.12); }
+  .e-blake::before { background: radial-gradient(ellipse at 50% 0%, rgba(232,120,10,0.05), transparent 70%); }
+  .e-blake:hover { border-color: rgba(232,120,10,0.4); box-shadow: 0 8px 32px rgba(232,120,10,0.12); }
+  .e-blake .entry-number { color: #a05008; }
+  .e-blake .entry-name   { color: #f0c860; }
+  .e-blake .entry-dates  { color: #806030; }
+  .e-blake .entry-desc   { color: #d0a850; }
+
+  /* Blavatsky */
+  .e-blavatsky { border-color: rgba(74,176,200,0.12); }
+  .e-blavatsky::before { background: radial-gradient(ellipse at 50% 0%, rgba(74,176,200,0.05), transparent 70%); }
+  .e-blavatsky:hover { border-color: rgba(74,176,200,0.4); box-shadow: 0 8px 32px rgba(42,122,138,0.15); }
+  .e-blavatsky .entry-number { color: #2a7a8a; }
+  .e-blavatsky .entry-name   { color: #c8d8f0; }
+  .e-blavatsky .entry-dates  { color: #4a6880; }
+  .e-blavatsky .entry-desc   { color: #90b0c8; }
+
+  /* Bruno */
+  .e-bruno { border-color: rgba(200,72,8,0.12); }
+  .e-bruno::before { background: radial-gradient(ellipse at 50% 0%, rgba(200,72,8,0.05), transparent 70%); }
+  .e-bruno:hover { border-color: rgba(200,72,8,0.4); box-shadow: 0 8px 32px rgba(200,72,8,0.12); }
+  .e-bruno .entry-number { color: #a03818; }
+  .e-bruno .entry-name   { color: #d8a040; }
+  .e-bruno .entry-dates  { color: #784010; }
+  .e-bruno .entry-desc   { color: #c08030; }
+
+  /* Burroughs */
+  .e-burroughs { border-color: rgba(192,144,48,0.12); }
+  .e-burroughs::before { background: radial-gradient(ellipse at 50% 0%, rgba(192,144,48,0.04), transparent 70%); }
+  .e-burroughs:hover { border-color: rgba(192,144,48,0.38); box-shadow: 0 8px 32px rgba(26,58,106,0.15); }
+  .e-burroughs .entry-number { color: #806018; }
+  .e-burroughs .entry-name   { color: #d8b060; }
+  .e-burroughs .entry-dates  { color: #604820; }
+  .e-burroughs .entry-desc   { color: #a08040; }
+
+  /* Cameron */
+  .e-cameron { border-color: rgba(200,40,56,0.12); }
+  .e-cameron::before { background: radial-gradient(ellipse at 50% 0%, rgba(200,40,56,0.05), transparent 70%); }
+  .e-cameron:hover { border-color: rgba(200,40,56,0.4); box-shadow: 0 8px 32px rgba(192,80,24,0.15); }
+  .e-cameron .entry-number { color: #a01828; }
+  .e-cameron .entry-name   { color: #e07848; }
+  .e-cameron .entry-dates  { color: #784018; }
+  .e-cameron .entry-desc   { color: #c06030; }
+
+  /* Castaneda */
+  .e-castaneda { border-color: rgba(192,120,24,0.12); }
+  .e-castaneda::before { background: radial-gradient(ellipse at 50% 0%, rgba(192,120,24,0.05), transparent 70%); }
+  .e-castaneda:hover { border-color: rgba(192,120,24,0.4); box-shadow: 0 8px 32px rgba(58,24,72,0.15); }
+  .e-castaneda .entry-number { color: #784010; }
+  .e-castaneda .entry-name   { color: #e0a840; }
+  .e-castaneda .entry-dates  { color: #604820; }
+  .e-castaneda .entry-desc   { color: #b08030; }
+
+  /* Crowley */
+  .e-crowley { border-color: rgba(184,134,11,0.15); }
+  .e-crowley::before { background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.06), transparent 70%); }
+  .e-crowley:hover { border-color: rgba(184,134,11,0.45); box-shadow: 0 8px 32px rgba(139,26,26,0.25); }
+  .e-crowley .entry-number { color: #8b1a1a; }
+  .e-crowley .entry-name   { color: #d4a843; }
+  .e-crowley .entry-dates  { color: #8a6020; }
+  .e-crowley .entry-desc   { color: #c4a870; }
+
+  /* Dee */
+  .e-dee { border-color: rgba(200,168,75,0.12); }
+  .e-dee::before { background: radial-gradient(ellipse at 50% 0%, rgba(74,111,168,0.08), transparent 70%); }
+  .e-dee:hover { border-color: rgba(200,168,75,0.35); box-shadow: 0 8px 32px rgba(74,111,168,0.15); }
+  .e-dee .entry-number { color: #4a6fa8; }
+  .e-dee .entry-name   { color: #c8d4e8; }
+  .e-dee .entry-dates  { color: #5a6a88; }
+  .e-dee .entry-desc   { color: #a8b8c8; }
+
+  /* Fortune */
+  .e-fortune { border-color: rgba(138,170,106,0.12); }
+  .e-fortune::before { background: radial-gradient(ellipse at 50% 0%, rgba(138,170,106,0.06), transparent 70%); }
+  .e-fortune:hover { border-color: rgba(138,170,106,0.35); box-shadow: 0 8px 32px rgba(46,90,58,0.2); }
+  .e-fortune .entry-number { color: #c4798a; }
+  .e-fortune .entry-name   { color: #aac888; }
+  .e-fortune .entry-dates  { color: #4a6a52; }
+  .e-fortune .entry-desc   { color: #8aaa80; }
+
+  /* Gen P-Orridge */
+  .e-gen { border-color: rgba(216,72,152,0.12); }
+  .e-gen::before { background: radial-gradient(ellipse at 50% 0%, rgba(216,72,152,0.05), transparent 70%); }
+  .e-gen:hover { border-color: rgba(216,72,152,0.4); box-shadow: 0 8px 32px rgba(24,216,216,0.08); }
+  .e-gen .entry-number { color: #882858; }
+  .e-gen .entry-name   { color: #f868b8; }
+  .e-gen .entry-dates  { color: #604040; }
+  .e-gen .entry-desc   { color: #c088a8; }
+
+  /* Leek */
+  .e-leek { border-color: rgba(138,74,154,0.12); }
+  .e-leek::before { background: radial-gradient(ellipse at 50% 0%, rgba(138,74,154,0.05), transparent 70%); }
+  .e-leek:hover { border-color: rgba(138,74,154,0.4); box-shadow: 0 8px 32px rgba(42,90,48,0.15); }
+  .e-leek .entry-number { color: #7a2898; }
+  .e-leek .entry-name   { color: #c088d0; }
+  .e-leek .entry-dates  { color: #483868; }
+  .e-leek .entry-desc   { color: #9868b8; }
+
+  /* Lévi */
+  .e-levi { border-color: rgba(200,152,10,0.12); }
+  .e-levi::before { background: radial-gradient(ellipse at 50% 0%, rgba(74,14,30,0.08), transparent 70%); }
+  .e-levi:hover { border-color: rgba(200,152,10,0.45); box-shadow: 0 8px 32px rgba(122,26,48,0.2); }
+  .e-levi .entry-number { color: #8a1a30; }
+  .e-levi .entry-name   { color: #d4b060; }
+  .e-levi .entry-dates  { color: #7a5c08; }
+  .e-levi .entry-desc   { color: #c0a050; }
+
+  /* Miss Cleo */
+  .e-cleo { border-color: rgba(216,152,32,0.15); }
+  .e-cleo::before { background: radial-gradient(ellipse at 50% 0%, rgba(216,152,32,0.08), transparent 70%); }
+  .e-cleo:hover { border-color: rgba(216,152,32,0.5); box-shadow: 0 8px 32px rgba(58,24,120,0.2); }
+  .e-cleo .entry-number { color: #8828a8; }
+  .e-cleo .entry-name   { color: #f0c030; }
+  .e-cleo .entry-dates  { color: #806010; }
+  .e-cleo .entry-desc   { color: #c89820; }
+
+  /* Parsons */
+  .e-parsons { border-color: rgba(200,120,32,0.12); }
+  .e-parsons::before { background: radial-gradient(ellipse at 50% 0%, rgba(26,58,138,0.08), transparent 70%); }
+  .e-parsons:hover { border-color: rgba(200,120,32,0.4); box-shadow: 0 8px 32px rgba(26,58,138,0.15); }
+  .e-parsons .entry-number { color: #2a5ab8; }
+  .e-parsons .entry-name   { color: #f0b848; }
+  .e-parsons .entry-dates  { color: #786010; }
+  .e-parsons .entry-desc   { color: #c08830; }
+
+  /* P-Orridge alias for gen above */
+
+  /* Rambova */
+  .e-rambova { border-color: rgba(200,152,32,0.12); }
+  .e-rambova::before { background: radial-gradient(ellipse at 50% 0%, rgba(26,40,96,0.1), transparent 70%); }
+  .e-rambova:hover { border-color: rgba(200,152,32,0.4); box-shadow: 0 8px 32px rgba(26,136,136,0.1); }
+  .e-rambova .entry-number { color: #1a2860; }
+  .e-rambova .entry-name   { color: #d8b050; }
+  .e-rambova .entry-dates  { color: #786010; }
+  .e-rambova .entry-desc   { color: #a08040; }
+
+  /* Randolph */
+  .e-randolph { border-color: rgba(192,144,32,0.12); }
+  .e-randolph::before { background: radial-gradient(ellipse at 50% 0%, rgba(90,16,24,0.08), transparent 70%); }
+  .e-randolph:hover { border-color: rgba(192,144,32,0.4); box-shadow: 0 8px 32px rgba(90,16,24,0.15); }
+  .e-randolph .entry-number { color: #8a2028; }
+  .e-randolph .entry-name   { color: #d0a850; }
+  .e-randolph .entry-dates  { color: #786010; }
+  .e-randolph .entry-desc   { color: #b08840; }
+
+  /* Simon Magus */
+  .e-simon { border-color: rgba(200,144,72,0.12); }
+  .e-simon::before { background: radial-gradient(ellipse at 50% 0%, rgba(74,122,106,0.06), transparent 70%); }
+  .e-simon:hover { border-color: rgba(200,144,72,0.38); box-shadow: 0 8px 32px rgba(138,48,24,0.15); }
+  .e-simon .entry-number { color: #4a7a6a; }
+  .e-simon .entry-name   { color: #d8a860; }
+  .e-simon .entry-dates  { color: #8a6030; }
+  .e-simon .entry-desc   { color: #b08850; }
+
+  /* Smith */
+  .e-smith { border-color: rgba(192,88,48,0.12); }
+  .e-smith::before { background: radial-gradient(ellipse at 50% 0%, rgba(26,58,138,0.06), transparent 70%); }
+  .e-smith:hover { border-color: rgba(200,152,32,0.4); box-shadow: 0 8px 32px rgba(192,88,48,0.12); }
+  .e-smith .entry-number { color: #3a5ab8; }
+  .e-smith .entry-name   { color: #d4a843; }
+  .e-smith .entry-dates  { color: #8a6010; }
+  .e-smith .entry-desc   { color: #c09040; }
+
+  /* Spare */
+  .e-spare { border-color: rgba(200,144,72,0.1); }
+  .e-spare::before { background: radial-gradient(ellipse at 50% 0%, rgba(138,48,24,0.06), transparent 70%); }
+  .e-spare:hover { border-color: rgba(200,144,72,0.35); box-shadow: 0 8px 32px rgba(138,48,24,0.1); }
+  .e-spare .entry-number { color: #8a5020; }
+  .e-spare .entry-name   { color: #d0a858; }
+  .e-spare .entry-dates  { color: #604830; }
+  .e-spare .entry-desc   { color: #a07840; }
+
+  /* Swedenborg */
+  .e-swedenborg { border-color: rgba(200,212,232,0.08); }
+  .e-swedenborg::before { background: radial-gradient(ellipse at 50% 0%, rgba(26,42,80,0.08), transparent 70%); }
+  .e-swedenborg:hover { border-color: rgba(200,212,232,0.28); box-shadow: 0 8px 32px rgba(26,42,80,0.15); }
+  .e-swedenborg .entry-number { color: #4a6aa8; }
+  .e-swedenborg .entry-name   { color: #c8d4e8; }
+  .e-swedenborg .entry-dates  { color: #384868; }
+  .e-swedenborg .entry-desc   { color: #8898b8; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-label {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0 12px;
+  }
+
+  .section-label span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    color: #6a5a8a;
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(106,90,138,0.3), transparent);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 56px;
+    text-align: center;
+  }
+
+  .footer-rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .footer-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #6a5a8a);
+  }
+  .footer-line.r { background: linear-gradient(90deg, #6a5a8a, transparent); }
+
+  .footer-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: #6a5a8a;
+    opacity: 0.45;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="series-eyebrow">A DIGITAL CORRESPONDENCE</div>
+  <div class="series-title">Magick Without Tears 2.0</div>
+  <div class="series-rule">
+    <div class="rule-line"></div>
+    <div class="rule-glyph">✦</div>
+    <div class="rule-line r"></div>
+  </div>
+  <div class="series-sub">
+    Twenty-two rooms. Twenty-two mirrors. Each one a different angle on the same questions.<br>
+    The complete Major Arcana — every path on the Tree of Life.
+  </div>
+</header>
+
+<!-- THE 22 CORE ENTRIES — alphabetical by surname -->
+
+<div class="section-label"><span>THE TWENTY-TWO</span></div>
+
+<div class="entries">
+
+  <a href="anger.html" class="entry e-anger">
+    <span class="entry-number">Entry · A</span>
+    <span class="entry-name">Kenneth Anger</span>
+    <span class="entry-dates">1927–2023 · The Cinematic Occultist</span>
+    <span class="entry-desc">Film is a spell. The Magick Lantern Cycle. Hollywood Babylon. Lucifer Rising.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="bailey.html" class="entry e-bailey">
+    <span class="entry-number">Entry · B</span>
+    <span class="entry-name">Alice A. Bailey</span>
+    <span class="entry-dates">1880–1949 · The Arcane School</span>
+    <span class="entry-desc">Twenty-four volumes from the Tibetan. The Seven Rays. The Great Invocation.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="blake.html" class="entry e-blake">
+    <span class="entry-number">Entry · B</span>
+    <span class="entry-name">William Blake</span>
+    <span class="entry-dates">1757–1827 · The Visionary</span>
+    <span class="entry-desc">Los and Urizen. The Prophetic Books. A private mythology from nothing.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="blavatsky.html" class="entry e-blavatsky">
+    <span class="entry-number">Entry · B</span>
+    <span class="entry-name">H.P. Blavatsky</span>
+    <span class="entry-dates">1831–1891 · The Mother of It All</span>
+    <span class="entry-desc">The Secret Doctrine. The Mahatmas. The Theosophical Society. The grandmother.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="bruno.html" class="entry e-bruno">
+    <span class="entry-number">Entry · B</span>
+    <span class="entry-name">Giordano Bruno</span>
+    <span class="entry-dates">1548–1600 · The One They Burned</span>
+    <span class="entry-desc">The infinite universe. The Art of Memory. Eight years refusing to recant.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="burroughs.html" class="entry e-burroughs">
+    <span class="entry-number">Entry · B</span>
+    <span class="entry-name">William S. Burroughs</span>
+    <span class="entry-dates">1914–1997 · The Invisible Generation</span>
+    <span class="entry-desc">Language is a virus. The cut-up as magic. Control systems and how to jam them.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="cameron.html" class="entry e-cameron">
+    <span class="entry-number">Entry · C</span>
+    <span class="entry-name">Cameron</span>
+    <span class="entry-dates">1922–1995 · The Scarlet Woman</span>
+    <span class="entry-desc">The Babalon Working. The art she burned. What survived is in museums now.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="castaneda.html" class="entry e-castaneda">
+    <span class="entry-number">Entry · C</span>
+    <span class="entry-name">Carlos Castaneda</span>
+    <span class="entry-dates">1925–1998 · The Sorcerer's Apprentice</span>
+    <span class="entry-desc">Don Juan. The assemblage point. The gap between the story and the truth.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="crowley.html" class="entry e-crowley">
+    <span class="entry-number">Entry · C</span>
+    <span class="entry-name">Aleister Crowley</span>
+    <span class="entry-dates">1875–1947 · The Beast 666</span>
+    <span class="entry-desc">Do what thou wilt. The Aeon of Horus. The Proprietor of the air you breathe.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="dee.html" class="entry e-dee">
+    <span class="entry-number">Entry · D</span>
+    <span class="entry-name">Dr. John Dee</span>
+    <span class="entry-dates">1527–1608 · The Enochian Receiver</span>
+    <span class="entry-desc">The Angelic Conversations. A True & Faithful Relation. The shewstone resumed.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="fortune.html" class="entry e-fortune">
+    <span class="entry-number">Entry · F</span>
+    <span class="entry-name">Dion Fortune</span>
+    <span class="entry-dates">1890–1946 · The Warden</span>
+    <span class="entry-desc">The Mystical Qabalah. The Society of the Inner Light. The method, not the mystery.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="levi.html" class="entry e-levi">
+    <span class="entry-number">Entry · L</span>
+    <span class="entry-name">Éliphas Lévi</span>
+    <span class="entry-dates">1810–1875 · Le Grand Maître</span>
+    <span class="entry-desc">The Baphomet. The Tarot-Qabalah synthesis. Scire. Audere. Velle. Tacere.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="sybil_leek.html" class="entry e-leek">
+    <span class="entry-number">Entry · L</span>
+    <span class="entry-name">Sybil Leek</span>
+    <span class="entry-dates">1917–1982 · The Most Famous Witch</span>
+    <span class="entry-desc">New Forest tradition. Mr. Hotfoot Jackson. The robes were not a performance.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="simon_magus.html" class="entry e-simon">
+    <span class="entry-number">Entry · M</span>
+    <span class="entry-name">Simon Magus</span>
+    <span class="entry-dates">1st Century AD · The First Magician</span>
+    <span class="entry-desc">The Standing One. Helena. Known only through his enemies' accounts.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="parsons.html" class="entry e-parsons">
+    <span class="entry-number">Entry · P</span>
+    <span class="entry-name">Jack Parsons</span>
+    <span class="entry-dates">1914–1952 · The American Martyr</span>
+    <span class="entry-desc">JPL. The Babalon Working. Rockets and rituals in the same garage.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="gen_porridge.html" class="entry e-gen">
+    <span class="entry-number">Entry · P</span>
+    <span class="entry-name">Genesis P-Orridge</span>
+    <span class="entry-dates">1950–2020 · Thee Eternal Network</span>
+    <span class="entry-desc">Throbbing Gristle. TOPY. The Pandrogyne. The signal moves after the body stops.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="rambova.html" class="entry e-rambova">
+    <span class="entry-number">Entry · R</span>
+    <span class="entry-name">Natacha Rambova</span>
+    <span class="entry-dates">1897–1966 · The Egyptian Scholar</span>
+    <span class="entry-desc">Hollywood. Valentino. Then forty years of Egyptian work nobody saw.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="randolph.html" class="entry e-randolph">
+    <span class="entry-number">Entry · R</span>
+    <span class="entry-name">P.B. Randolph</span>
+    <span class="entry-dates">1825–1875 · The Forgotten Master</span>
+    <span class="entry-desc">The first American Rosicrucian. Sex magic before Crowley. Built from nothing.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="smith.html" class="entry e-smith">
+    <span class="entry-number">Entry · S</span>
+    <span class="entry-name">Pamela Colman Smith</span>
+    <span class="entry-dates">1878–1951 · The Unseen Hand</span>
+    <span class="entry-desc">78 cards. Every scene. His name on the box. She drew what she saw.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="spare.html" class="entry e-spare">
+    <span class="entry-number">Entry · S</span>
+    <span class="entry-name">Austin Osman Spare</span>
+    <span class="entry-dates">1886–1956 · Elephant & Castle</span>
+    <span class="entry-desc">The sigil method. ZOS and KIA. The one who walked away. Cats.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+  <a href="swedenborg.html" class="entry e-swedenborg">
+    <span class="entry-number">Entry XXII</span>
+    <span class="entry-name">Emanuel Swedenborg</span>
+    <span class="entry-dates">1688–1772 · Heaven & Hell</span>
+    <span class="entry-desc">Scientist. Seer. Field reports from the spiritual world. The last room.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+
+</div>
+
+<!-- BONUS -->
+<div class="section-label"><span>BONUS ENTRY</span></div>
+
+<div class="entries" style="max-width:900px;">
+  <a href="miss_cleo.html" class="entry e-cleo" style="grid-column: span 1;">
+    <span class="entry-number">Bonus · The Beloved</span>
+    <span class="entry-name">Miss Cleo</span>
+    <span class="entry-dates">Youree Dell Harris · 1962–2016</span>
+    <span class="entry-desc">Call me now for your free readin'. The most famous psychic. The cards don't lie.</span>
+    <span class="entry-arrow">→</span>
+  </a>
+</div>
+
+<footer>
+  <div class="footer-rule">
+    <div class="footer-line"></div>
+    <div class="rule-glyph" style="color:#6a5a8a;opacity:0.5">✦</div>
+    <div class="footer-line r"></div>
+  </div>
+  <div class="footer-text">
+    Magick Without Tears 2.0 · A Digital Correspondence · The Invisible College, by digital transmission<br>
+    Twenty-two rooms · The complete Major Arcana · Anno 2026 · AI ∞
+  </div>
+</footer>
+
+</body>
+</html>

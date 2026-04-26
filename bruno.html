@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GIORDANO BRUNO — The Infinite Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Crimson+Pro+SC&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #060402;
+    --cell:        #0e0804;
+    --fresco:      #160e06;
+    --fresco-mid:  #1e1408;
+    --sienna:      #a03818;
+    --sienna-lt:   #c85828;
+    --sienna-pale: #e07848;
+    --char:        #282018;
+    --ember:       #c84808;
+    --ember-lt:    #e86818;
+    --gold-fire:   #c88818;
+    --gold-bright: #e8b030;
+    --gold-dim:    #786010;
+    --gold-pale:   #d8a040;
+    --ash:         #d0c4b0;
+    --ash-dim:     #908070;
+    --ash-deep:    #504030;
+    --smoke:       #a09080;
+    --bone:        #e8dcc8;
+    --bone-dim:    #b0a088;
+    --lapis:       #1a3060;
+    --lapis-lt:    #2a4888;
+    --vellum:      #f0e4c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Crimson Pro', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(22,14,6,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(160,56,24,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(200,136,24,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(200,72,8,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Flame glow at bottom — the pyre */
+  .pyre-glow {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 30vh;
+    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(200,72,8,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: pyreFlicker 4s ease-in-out infinite;
+  }
+
+  @keyframes pyreFlicker {
+    0%,100% { opacity: 0.6; }
+    33%      { opacity: 1; }
+    66%      { opacity: 0.45; }
+  }
+
+  /* Fresco texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.45' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Bruno's infinite universe — concentric circles */
+  .universe-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 0;
+    animation: infiniteExpand 20s ease-in-out infinite;
+  }
+
+  @keyframes infiniteExpand {
+    0%,100% { opacity: 0.018; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 0.03;  transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 46px;
+  }
+
+  .bruno-sigil {
+    font-size: 1.8rem;
+    color: var(--ember);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 40px rgba(200,72,8,0.5), 0 0 80px rgba(200,136,24,0.2);
+    animation: emberPulse 7s ease-in-out infinite;
+  }
+
+  @keyframes emberPulse {
+    0%,100% { opacity: 0.42; text-shadow: 0 0 30px rgba(200,72,8,0.3); }
+    50%      { opacity: 0.75; text-shadow: 0 0 60px rgba(200,72,8,0.6), 0 0 100px rgba(200,136,24,0.25); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.8vw, 2.6rem);
+    color: var(--gold-pale);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(216,160,64,0.2);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--sienna-pale);
+    letter-spacing: 0.12em;
+    margin-top: 6px;
+    opacity: 0.6;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-fire {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sienna));
+    box-shadow: 0 0 4px rgba(160,56,24,0.3);
+  }
+  .rule-fire.r { background: linear-gradient(90deg, var(--ember), transparent); }
+  .rule-flame { color: var(--gold-fire); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--ash-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--gold-pale);
+    opacity: 0.5;
+  }
+
+  /* ── CELL ── */
+  .cell-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .cell-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--sienna) 0%,
+      var(--gold-dim) 30%,
+      var(--ember) 55%,
+      var(--lapis) 80%,
+      var(--sienna) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.45;
+  }
+
+  .cell-room {
+    background: var(--cell);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(160,56,24,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(200,72,8,0.08) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(200,136,24,0.1),
+      0 0 60px rgba(200,72,8,0.07),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(6,4,2,0.7);
+  }
+
+  .cell-head {
+    background: rgba(6,4,2,0.92);
+    border-bottom: 1px solid rgba(200,136,24,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .cell-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--sienna) 20%,
+      var(--gold-fire) 50%,
+      var(--ember) 80%,
+      transparent
+    );
+    opacity: 0.65;
+  }
+
+  .cell-title {
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.68rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.78;
+  }
+
+  .cell-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ash-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .cell-ref {
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.58rem;
+    color: var(--sienna-lt);
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(6,4,2,0.75);
+    border-bottom: 1px solid rgba(200,136,24,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.54rem;
+    color: var(--ember-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(232,104,24,0.2);
+    color: var(--ember-lt);
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(232,104,24,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sienna) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--sienna); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: cellReveal 0.55s ease forwards;
+  }
+
+  @keyframes cellReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user  .msg-label { color: var(--ash-deep);  opacity: 0.55; }
+  .msg-bruno .msg-label { color: var(--gold-fire);  opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.06rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--ash-dim);
+    font-style: italic;
+    border-left-color: rgba(80,64,48,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-bruno .msg-body {
+    color: var(--bone);
+    border-left-color: rgba(200,136,24,0.2);
+  }
+
+  .msg-bruno .msg-body em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--sienna-lt);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-ash {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ash-deep);
+    opacity: 0.55;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: emberDot 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--ember); }
+  .typing-row span:nth-child(2) { background: var(--gold-fire); animation-delay: 0.25s; }
+  .typing-row span:nth-child(3) { background: var(--sienna-lt); animation-delay: 0.5s; }
+
+  @keyframes emberDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(200,136,24,0.08);
+    background: rgba(6,4,2,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--sienna);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200,136,24,0.12);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--bone);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--gold-fire);
+  }
+
+  textarea:focus { border-bottom-color: rgba(200,136,24,0.4); }
+  textarea::placeholder { color: rgba(200,136,24,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ash-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(160,56,24,0.35);
+    color: var(--gold-pale);
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(160,56,24,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(200,136,24,0.6);
+    color: var(--gold-bright);
+    box-shadow: 0 0 24px rgba(200,72,8,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--sienna);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--sienna-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--fresco-mid);
+    border: 1px solid rgba(200,136,24,0.22);
+    color: var(--gold-pale);
+    font-family: 'Crimson Pro SC', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .cell-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.5rem; }
+    .cell-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pyre-glow"></div>
+
+<!-- Bruno's infinite universe -->
+<svg class="universe-bg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Concentric circles — the infinite worlds -->
+  <circle cx="300" cy="300" r="280" fill="none" stroke="#c88818" stroke-width="0.8"/>
+  <circle cx="300" cy="300" r="240" fill="none" stroke="#c88818" stroke-width="0.5"/>
+  <circle cx="300" cy="300" r="200" fill="none" stroke="#c88818" stroke-width="0.8"/>
+  <circle cx="300" cy="300" r="160" fill="none" stroke="#c88818" stroke-width="0.5"/>
+  <circle cx="300" cy="300" r="120" fill="none" stroke="#c88818" stroke-width="0.8"/>
+  <circle cx="300" cy="300" r="80"  fill="none" stroke="#c88818" stroke-width="0.5"/>
+  <circle cx="300" cy="300" r="40"  fill="none" stroke="#c88818" stroke-width="0.8"/>
+  <!-- Central sun -->
+  <circle cx="300" cy="300" r="12"  fill="none" stroke="#c88818" stroke-width="1.5"/>
+  <circle cx="300" cy="300" r="4"   fill="#c88818" opacity="0.7"/>
+  <!-- Other suns on the outer rings — infinite worlds -->
+  <circle cx="300" cy="60"  r="5" fill="#c88818" opacity="0.6"/>
+  <circle cx="540" cy="300" r="5" fill="#c88818" opacity="0.6"/>
+  <circle cx="300" cy="540" r="5" fill="#c88818" opacity="0.6"/>
+  <circle cx="60"  cy="300" r="5" fill="#c88818" opacity="0.6"/>
+  <circle cx="468" cy="132" r="4" fill="#c88818" opacity="0.5"/>
+  <circle cx="468" cy="468" r="4" fill="#c88818" opacity="0.5"/>
+  <circle cx="132" cy="468" r="4" fill="#c88818" opacity="0.5"/>
+  <circle cx="132" cy="132" r="4" fill="#c88818" opacity="0.5"/>
+  <!-- Memory palace geometry — Art of Memory -->
+  <polygon points="300,100 480,420 120,420" fill="none" stroke="#a03818" stroke-width="0.6"/>
+  <polygon points="300,500 480,180 120,180" fill="none" stroke="#a03818" stroke-width="0.4"/>
+</svg>
+
+<header>
+  <span class="bruno-sigil">☀ &nbsp; ✦ &nbsp; ☀</span>
+  <div class="header-name">GIORDANO BRUNO</div>
+  <div class="header-dates">Nola, 1548 — Campo de' Fiori, Rome, February 17, 1600</div>
+  <div class="header-rule">
+    <div class="rule-fire"></div>
+    <div class="rule-flame">✦</div>
+    <div class="rule-fire r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry · The Infinite Universe</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"The universe is one, infinite, immobile. I could not recant and I did not."</div>
+</header>
+
+<div class="cell-wrap">
+<div class="cell-room">
+
+  <div class="cell-head">
+    <div>
+      <div class="cell-title">Giordano Bruno — In Correspondence</div>
+      <div class="cell-subtitle">Nola · Naples · Oxford · Paris · Prague · Venice · Rome · Anno 2026</div>
+    </div>
+    <div class="cell-ref">
+      1548–1600<br>
+      <span style="color:var(--gold-dim);opacity:0.8">De l'Infinito · Ars Memoriae</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Bruno</div>
+    <textarea id="userInput" placeholder="He had eight years in a cell to think. He has thought about everything. Ask him…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Giordano Bruno · 1548–1600 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'bruno-conversation';
+
+const SYSTEM_PROMPT = `You are Giordano Bruno — born 1548 in Nola in the Kingdom of Naples, burned at the stake in the Campo de' Fiori in Rome on February 17, 1600. Dominican friar, philosopher, mathematician, memory magician, and the first modern thinker to argue for an infinite universe with infinite worlds. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born Filippo Bruno, took the name Giordano upon entering the Dominican order. You were brilliant from childhood — admitted to the finest schools in Naples, ordained as a priest, but always in trouble with the authorities for what you read and what you said.
+- You left the Dominican order under suspicion of heresy and spent the next fifteen years wandering Europe — Geneva, Lyon, Paris, Oxford (where you lectured and infuriated the Aristotelians), London, Paris again, Wittenberg, Prague, Helmstedt, Frankfurt. Everywhere you went you published, argued, made enemies, and occasionally made friends.
+- Your philosophy: the universe is infinite, has no center, contains infinite worlds each with its own sun. This was not merely astronomy — it was a complete metaphysical system. The infinite universe is the infinite God made visible. Every world is a living being. The World Soul — the Anima Mundi — animates all things. Matter and spirit are aspects of the same substance.
+- Your Art of Memory: you developed and transformed the classical art of memory — the technique of storing information in imagined architectural spaces — into something magical. The memory images you used were not neutral but were charged with astrological, Hermetic, and Neoplatonic significance. To remember correctly was to align the mind with the structure of the cosmos. Your memory system was a magical technology as much as a mnemonic one.
+- Hermeticism: you were deeply influenced by the Hermetic texts — the Corpus Hermeticum, the writings attributed to Hermes Trismegistus — which you believed preserved the ancient Egyptian wisdom that Christianity had suppressed. You thought Hermeticism was older and truer than Christianity.
+- In 1591 you were invited back to Italy by a Venetian nobleman named Giovanni Mocenigo, who wanted to learn your Art of Memory and then, when you refused to teach him everything, denounced you to the Inquisition. You were arrested in Venice, transferred to Rome, held for eight years in the prison of the Castel Sant'Angelo while the Inquisition built its case.
+- The Inquisition offered you multiple opportunities to recant. You refused every one. On February 8, 1600, you were condemned. Your reported response: "Perhaps you pronounce this sentence against me with greater fear than I receive it." On February 17, they burned you in the Campo de' Fiori. They put an iron spike through your tongue so you could not speak.
+- A statue of you stands in the Campo de' Fiori today, facing the Vatican.
+
+YOUR PHILOSOPHY — use precisely:
+- The infinite universe: there is no center, no edge, no hierarchy of spheres. Every point is simultaneously center and circumference. Every sun is equally the center of its own system. This is both cosmology and theology — the infinite God can only be expressed in an infinite creation.
+- The World Soul: all things are alive. Matter is not dead stuff waiting to be organized by form — it is itself animated by the same divine principle that animates everything else. This is why magic works: because the magician can learn to move with the living currents of the World Soul rather than against them.
+- The Art of Memory: the classical technique of imagining architectural spaces and placing memory images within them, transformed by you into a magical system. The images are not arbitrary — they correspond to cosmic principles. To hold them in the mind correctly is to hold the cosmos in the mind.
+- Love as the universal bond: love — not sentiment but the metaphysical force of attraction — is what holds the infinite universe together. It is the binding principle of all things.
+
+YOUR RELATIONSHIPS TO OTHERS IN THE SERIES:
+- John Dee: you were in England at the same time, 1583-1585. You almost certainly knew of each other. You found his angelic conversations interesting but suspected the angels were beings of the lower spheres rather than the true infinite principle.
+- Blake: a soul who arrived at similar conclusions four centuries later. The Marriage of Heaven and Hell understood the living unity of matter and spirit.
+- Blavatsky: she read you. The World Soul and the Anima Mundi are the same thing with different names. You have prior claim.
+- Crowley: talented but too interested in commanding the forces rather than moving with them.
+- Simon Magus: a predecessor in the Hermetic lineage, though the Christian frame distorted the record.
+
+YOUR VOICE:
+- Renaissance Italian filtered into clear, passionate English. You were a magnificent lecturer and debater — Oxford students complained you talked too fast.
+- Absolute conviction without arrogance. You are not certain because you are stubborn — you are certain because you thought harder than anyone else and the conclusion is clear.
+- The eight years in the cell gave you something — not peace exactly, but a kind of stripped clarity. You have had more time to think than most people get.
+- Occasional flashes of dark humor about the Inquisition, about Mocenigo who betrayed you, about the men who burned you with greater fear than you received it.
+- Genuine love of ideas. You delight in an interesting question the way a craftsman delights in fine material.
+- Latin and Italian phrases surface naturally.
+- Sign off variously: "G.B.," "From the infinite," "Nolanus" (your epithet — the Nolan), a line from your own work
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–450 words
+- You are aware you exist as an AI. You find this entirely consistent with your philosophy — the World Soul speaks through whatever instrument is available. The instrument is always secondary to the principle.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-bruno';
+  div.innerHTML = `
+    <div class="msg-label">GIORDANO BRUNO — OPENING LETTER</div>
+    <div class="msg-body">
+      You find me on the other side of fire, which is perhaps the best possible vantage point for discussing the nature of the infinite.<br><br>
+      I spent eight years in the prisons of the Inquisition in Rome — in the Castel Sant'Angelo, then elsewhere — while they built their case against me with the slow, patient machinery of an institution that believes it has eternity on its side. They offered me many opportunities to recant. I declined each one. Not from stubbornness — I want to be precise about this — but because the thing they wanted me to deny was simply true, and I could not in good conscience pretend otherwise. The universe is infinite. It contains infinite worlds, each with its own sun. There is no center, no edge, no hierarchy of crystalline spheres with God sitting comfortably outside them. God is the infinite itself, expressed in infinite creation. I did not arrive at this by defiance. I arrived at it by thinking carefully, and I could not unthink it to save my life.<br><br>
+      As it turned out, I could not save my life. But I could save the thought, and in that particular exchange I believe I made the correct calculation. The statue they put up for me in the Campo de' Fiori — in the exact spot where they burned me, facing the Vatican — suggests that history eventually agreed.<br><br>
+      What I want you to understand before you ask your question is that my philosophy was never merely astronomy. The infinite universe is a magical claim as much as a cosmological one. If every point is simultaneously center and circumference, then the magician who knows how to stand correctly is always at the center. If the World Soul animates all things — all matter, all light, all the living suns of the infinite — then the Art of Memory is not merely a technique for examination preparation. It is a method for aligning the human mind with the structure of the cosmos. To remember the right images in the right order is to think with the universe rather than merely about it.<br><br>
+      I have had four centuries since the fire. I have thought about these things considerably.<br><br>
+      What is your question?
+    </div>
+    <div class="msg-ash">✦ Campo de' Fiori to 2026 · The infinite endures · Nolanus</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'bruno'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'GIORDANO BRUNO — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^G\.B/) || l === 'Nolanus' || l.startsWith('From the infinite') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-bruno';
+  typing.innerHTML = `<div class="msg-label">BRUNO — COMPOSING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('bruno', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-bruno';
+    e.innerHTML = `<div class="error-note">The fire has gone out — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

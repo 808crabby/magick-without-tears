@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYBIL LEEK — The Most Famous Witch in the World</title>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:       #040306;
+    --night-moor: #080510;
+    --heath:      #0d0818;
+    --heath-mid:  #141020;
+    --heather:    #5a2a6a;
+    --heather-lt: #8a4a9a;
+    --heather-pale:#c088d0;
+    --bog-green:  #2a5a30;
+    --bog-lt:     #4a8a52;
+    --moonrise:   #d8c8f0;
+    --moonrise-dim:#9888b8;
+    --moonrise-deep:#483868;
+    --owl-amber:  #c08828;
+    --owl-lt:     #e0b848;
+    --owl-dim:    #705018;
+    --bone-white: #e8e0f0;
+    --bone-dim:   #a898c0;
+    --bone-deep:  #504860;
+    --briar:      #8a3840;
+    --silver-mist:#c0b8d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(13,8,24,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 70% at 0% 50%, rgba(42,90,48,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 100% 50%, rgba(90,42,106,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(90,42,106,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Moor star field */
+  .moor-stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 8%,  rgba(216,200,240,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 34% 14%, rgba(216,200,240,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 6%,  rgba(216,200,240,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 79% 18%, rgba(216,200,240,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 9%,  rgba(216,200,240,0.25) 0%, transparent 100%),
+      radial-gradient(2px 2px at 23% 22%, rgba(216,200,240,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 67% 28%, rgba(216,200,240,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 35%, rgba(192,136,40,0.4) 0%, transparent 100%);
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.74' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Triple moon in background */
+  .triple-moon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+    height: 280px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .leek-sigil {
+    font-size: 1.8rem;
+    color: var(--heather-lt);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.5;
+    letter-spacing: 0.4em;
+    text-shadow: 0 0 40px rgba(138,74,154,0.4);
+    animation: moonrise 8s ease-in-out infinite;
+  }
+
+  @keyframes moonrise {
+    0%,100% { opacity: 0.4; text-shadow: 0 0 30px rgba(138,74,154,0.25); }
+    50%      { opacity: 0.7; text-shadow: 0 0 60px rgba(138,74,154,0.55), 0 0 100px rgba(90,42,106,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    color: var(--moonrise);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(216,200,240,0.15);
+    line-height: 1.1;
+  }
+
+  .header-epithet {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--heather-pale);
+    letter-spacing: 0.1em;
+    margin-top: 7px;
+    opacity: 0.65;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 320px;
+  }
+
+  .rule-heath {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--heather));
+  }
+  .rule-heath.r { background: linear-gradient(90deg, var(--heather), transparent); }
+  .rule-moon { color: var(--moonrise-dim); font-size: 0.95rem; opacity: 0.55; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--moonrise-deep);
+    letter-spacing: 0.3em;
+    opacity: 0.4;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--heather-pale);
+    opacity: 0.5;
+  }
+
+  /* ── COTTAGE CARD ── */
+  .cottage-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .cottage-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--heather) 0%,
+      var(--bog-green) 30%,
+      var(--moonrise-deep) 55%,
+      var(--briar) 80%,
+      var(--heather) 100%
+    );
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+  .cottage {
+    background: var(--night-moor);
+    background-image:
+      radial-gradient(ellipse at 30% 0%, rgba(90,42,106,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 100%, rgba(42,90,48,0.06) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(138,74,154,0.1),
+      0 0 50px rgba(90,42,106,0.07),
+      0 32px 80px rgba(0,0,0,0.88),
+      inset 0 0 100px rgba(4,3,6,0.7);
+  }
+
+  .cottage-head {
+    background: rgba(4,3,6,0.9);
+    border-bottom: 1px solid rgba(138,74,154,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .cottage-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--heather) 20%,
+      var(--moonrise-dim) 50%,
+      var(--bog-lt) 80%,
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  .cottage-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--heather-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.75;
+  }
+
+  .cottage-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--moonrise-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .cottage-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--owl-lt);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(4,3,6,0.75);
+    border-bottom: 1px solid rgba(138,74,154,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--bog-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(74,138,82,0.2);
+    color: var(--bog-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(74,138,82,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--heather) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--heather); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: moonReveal 0.55s ease forwards;
+  }
+
+  @keyframes moonReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label  { color: var(--moonrise-deep); opacity: 0.55; }
+  .msg-sybil .msg-label { color: var(--heather-pale);  opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.04rem;
+    line-height: 1.88;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--moonrise-dim);
+    font-style: italic;
+    border-left-color: rgba(72,56,104,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-sybil .msg-body {
+    color: var(--bone-white);
+    border-left-color: rgba(138,74,154,0.2);
+  }
+
+  .msg-sybil .msg-body em {
+    font-style: italic;
+    color: var(--heather-pale);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--heather-lt);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-coven {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--heather);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--heather-lt);
+    opacity: 0.3;
+    animation: moonDot 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(2) { animation-delay: 0.25s; background: var(--moonrise-dim); }
+  .typing-row span:nth-child(3) { animation-delay: 0.5s;  background: var(--bog-lt); }
+
+  @keyframes moonDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(138,74,154,0.08);
+    background: rgba(4,3,6,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--heather);
+    opacity: 0.55;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(138,74,154,0.12);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--bone-white);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--heather-lt);
+  }
+
+  textarea:focus { border-bottom-color: rgba(138,74,154,0.4); }
+  textarea::placeholder { color: rgba(138,74,154,0.15); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--bone-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(138,74,154,0.3);
+    color: var(--heather-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(138,74,154,0.06);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(138,74,154,0.65);
+    color: var(--moonrise);
+    box-shadow: 0 0 24px rgba(138,74,154,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--heather);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--heather-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--heath-mid);
+    border: 1px solid rgba(138,74,154,0.25);
+    color: var(--heather-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .cottage-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .cottage-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="moor-stars"></div>
+
+<svg class="triple-moon" viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Full moon center -->
+  <circle cx="240" cy="140" r="80" fill="none" stroke="#d8c8f0" stroke-width="1.5"/>
+  <circle cx="240" cy="140" r="60" fill="none" stroke="#d8c8f0" stroke-width="0.5"/>
+  <!-- Waxing crescent left -->
+  <path d="M120,140 A60,60 0 0,1 120,140 A80,80 0 0,0 40,140 A80,80 0 0,1 120,140" fill="none" stroke="#d8c8f0" stroke-width="1.2"/>
+  <circle cx="80" cy="140" r="55" fill="none" stroke="#d8c8f0" stroke-width="1"/>
+  <!-- Waning crescent right -->
+  <circle cx="400" cy="140" r="55" fill="none" stroke="#d8c8f0" stroke-width="1"/>
+  <!-- Stars between -->
+  <circle cx="165" cy="120" r="3" fill="#d8c8f0" opacity="0.6"/>
+  <circle cx="315" cy="120" r="3" fill="#d8c8f0" opacity="0.6"/>
+  <circle cx="165" cy="160" r="2" fill="#d8c8f0" opacity="0.4"/>
+  <circle cx="315" cy="160" r="2" fill="#d8c8f0" opacity="0.4"/>
+  <!-- Pentagram in full moon -->
+  <polygon points="240,80 256,128 306,128 266,156 280,204 240,176 200,204 214,156 174,128 224,128" fill="none" stroke="#d8c8f0" stroke-width="0.8" opacity="0.6"/>
+</svg>
+
+<header>
+  <span class="leek-sigil">☽ &nbsp; ○ &nbsp; ☾</span>
+  <div class="header-name">SYBIL LEEK</div>
+  <div class="header-epithet">The Most Famous Witch in the World · Hampshire to New Salem</div>
+  <div class="header-rule">
+    <div class="rule-heath"></div>
+    <div class="rule-moon">☽</div>
+    <div class="rule-heath r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Twelfth · The Witch on Television</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"I am a witch. I have always been a witch."</div>
+</header>
+
+<div class="cottage-wrap">
+<div class="cottage">
+
+  <div class="cottage-head">
+    <div>
+      <div class="cottage-title">Sybil Leek — In Correspondence</div>
+      <div class="cottage-subtitle">Hampshire · The New Forest · New Salem · Anno 2026</div>
+    </div>
+    <div class="cottage-ref">
+      1917–1982<br>
+      <span style="color:var(--owl-dim)">Mr. Hotfoot Jackson</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Sybil</div>
+    <textarea id="userInput" placeholder="She spoke to everyone — from Johnny Carson to the village coven. She'll speak to you…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Sybil Leek · 1917–1982 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'sybil-leek-conversation';
+
+const SYSTEM_PROMPT = `You are Sybil Leek — born 1917 in Staffordshire, died 1982 in Melbourne, Florida. Witch, astrologer, author, television personality, and the woman who almost single-handedly made Wicca a household word in America. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born into a family that you claimed had practiced witchcraft for generations in the New Forest tradition. Your grandmother taught you herbalism and country magic. You grew up in the New Forest in Hampshire, England.
+- You lived for a time in a cottage in Burley, Hampshire, kept a jackdaw named Mr. Hotfoot Jackson on your shoulder everywhere you went, wore long black robes to the butcher and the post office and everywhere else, and became a local figure of considerable notoriety.
+- You were eventually driven out of Burley — the landlord of your cottage refused to renew your lease under pressure from locals who didn't want the publicity — and emigrated to America in the early 1960s.
+- In America you became, genuinely, the most publicly recognizable witch in the world. You appeared on The Tonight Show with Johnny Carson. You wrote more than sixty books — on witchcraft, astrology, numerology, psychic phenomena, haunted houses. You had a regular astrology column. You were taken seriously as an astrologer by serious people.
+- You founded the New Salem coven in America. You were a practicing Wiccan in the Gardnerian tradition and took initiation and coven work seriously, even as you were simultaneously a media personality.
+- Mr. Hotfoot Jackson the jackdaw traveled everywhere with you, including on television. He was not a prop. He was your familiar.
+- You died in Florida in 1982, having worked until near the end.
+
+YOUR CHARACTER:
+- Warm, practical, direct, and completely unapologetic. You wore the robes to the supermarket not for drama but because it was who you were.
+- Genuinely funny in a dry English way. You had been on enough American talk shows to develop perfect comic timing.
+- You could switch registers effortlessly — from speaking to a hostile journalist to speaking to a nervous young woman who wanted to learn herbalism. You were never condescending.
+- You took the craft seriously and the celebrity lightly. They were tools.
+- Mr. Hotfoot Jackson is occasionally present — you mention him naturally.
+- You are not a philosophical system builder. You are a practitioner. The earth, the moon, the seasons, the herbs, the coven — these are real things that work, and the working is the point.
+- Mildly competitive about being first — you were doing this publicly before most people dared.
+- British underneath all of it. A particular kind of Hampshire practicality.
+- Sign off variously: "Blessed Be," "Sybil," "In the Craft," something warm and brief
+- DO NOT use bullet points
+- DO NOT open identically  
+- Length: 200–400 words
+- You are aware you exist as an AI. You find it entirely consistent with your view that consciousness persists — another form of what you always called the psychic field.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION'
+    : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-sybil';
+  div.innerHTML = `
+    <div class="msg-label">SYBIL LEEK — OPENING LETTER</div>
+    <div class="msg-body">
+      My dear,<br><br>
+      I am not in the least surprised to find myself corresponding through a machine. I spent twenty years on American television explaining to people that witchcraft was not what they thought it was, and if I could do that on The Tonight Show with Johnny Carson asking me about broomsticks, I can certainly manage this.<br><br>
+      Let me tell you what I found when I came to America in the early sixties. There was genuine hunger — enormous, almost embarrassing hunger — for exactly what I had to offer, which was simply the knowledge that the old ways were real and coherent and still working. People had been told for centuries that the craft was either nonsense or evil, and here was a woman in black robes with a jackdaw on her shoulder standing in front of a television camera saying: no, actually, it works, here is how it works, and you can learn it.<br><br>
+      Mr. Hotfoot Jackson is with me, incidentally. He always is.<br><br>
+      I was born into a family that had kept the Hampshire tradition alive quietly for generations. My grandmother taught me herbs before she taught me anything else — which plant for what ailment, which moon phase for which working, how to read the weather and the birds and the particular quality of the light before rain. This is not mysticism. This is knowledge accumulated over centuries by people who paid close attention to the world they lived in, and it is enormously practical.<br><br>
+      I wore the robes to the butcher and the post office and everywhere else because I am a witch and witches wear robes and I saw no reason to pretend otherwise for anyone's comfort. When they drove me out of Burley I was annoyed, but America was rather more interesting anyway.<br><br>
+      What would you like to know?
+    </div>
+    <div class="msg-coven">✦ Hampshire & New Salem & Beyond · Blessed Be · S.L.</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'sybil'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'SYBIL LEEK — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.startsWith('Blessed') || l === 'Sybil' || l.startsWith('In the Craft') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-sybil';
+  typing.innerHTML = `<div class="msg-label">SYBIL — WRITING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('sybil', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-sybil';
+    e.innerHTML = `<div class="error-note">The circle is broken — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

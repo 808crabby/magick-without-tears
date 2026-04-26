@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P.B. RANDOLPH — The Rosicrucian</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;600&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #060304;
+    --leather:     #0e0806;
+    --study:       #160c08;
+    --study-mid:   #1e1208;
+    --burgundy:    #5a1018;
+    --burgundy-lt: #8a2028;
+    --crimson:     #b83030;
+    --old-gold:    #c09020;
+    --gold-bright: #dab840;
+    --gold-dim:    #785808;
+    --gold-pale:   #d0a850;
+    --mahogany:    #6a3018;
+    --mahogany-lt: #9a5030;
+    --cream-old:   #f0e4d0;
+    --cream-dim:   #b0a080;
+    --cream-deep:  #706040;
+    --tobacco:     #a07840;
+    --tobacco-dim: #604820;
+    --rose-window: #a03848;
+    --ink-deep:    #180c08;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(22,12,8,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(90,16,24,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(192,144,32,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(90,16,24,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Rosicrucian rose cross in background */
+  .rose-cross-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowBreath 12s ease-in-out infinite;
+  }
+
+  @keyframes slowBreath {
+    0%,100% { opacity: 0.02; }
+    50%      { opacity: 0.035; }
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 46px;
+  }
+
+  .pbr-sigil {
+    font-size: 1.8rem;
+    color: var(--burgundy-lt);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    text-shadow: 0 0 40px rgba(138,32,40,0.4);
+    animation: roseBreath 9s ease-in-out infinite;
+  }
+
+  @keyframes roseBreath {
+    0%,100% { opacity: 0.42; text-shadow: 0 0 30px rgba(138,32,40,0.25); }
+    50%      { opacity: 0.72; text-shadow: 0 0 60px rgba(138,32,40,0.5), 0 0 100px rgba(192,144,32,0.15); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    color: var(--gold-pale);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(192,144,32,0.2);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--tobacco);
+    letter-spacing: 0.12em;
+    margin-top: 6px;
+    opacity: 0.55;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-burg {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--burgundy));
+  }
+  .rule-burg.r { background: linear-gradient(90deg, var(--burgundy), transparent); }
+  .rule-rose { color: var(--old-gold); font-size: 0.9rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--gold-pale);
+    opacity: 0.5;
+  }
+
+  /* ── STUDY CARD ── */
+  .study-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .study-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--burgundy) 0%,
+      var(--gold-dim) 30%,
+      var(--mahogany) 55%,
+      var(--burgundy-lt) 80%,
+      var(--old-gold) 100%
+    );
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.45;
+  }
+
+  .study-room {
+    background: var(--leather);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(90,16,24,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(192,144,32,0.06) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(192,144,32,0.1),
+      0 0 60px rgba(90,16,24,0.08),
+      0 32px 80px rgba(0,0,0,0.9),
+      inset 0 0 100px rgba(6,3,4,0.7);
+  }
+
+  .study-head {
+    background: rgba(6,3,4,0.92);
+    border-bottom: 1px solid rgba(192,144,32,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .study-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--burgundy) 20%,
+      var(--old-gold) 50%,
+      var(--mahogany-lt) 80%,
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  .study-title {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.68rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.78;
+  }
+
+  .study-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .study-ref {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.58rem;
+    color: var(--burgundy-lt);
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(6,3,4,0.75);
+    border-bottom: 1px solid rgba(192,144,32,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.54rem;
+    color: var(--mahogany-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(154,80,48,0.22);
+    color: var(--mahogany-lt);
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(154,80,48,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--burgundy) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--burgundy); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: studyReveal 0.55s ease forwards;
+  }
+
+  @keyframes studyReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label  { color: var(--tobacco-dim);  opacity: 0.55; }
+  .msg-pbr  .msg-label  { color: var(--old-gold);     opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.04rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--cream-dim);
+    font-style: italic;
+    border-left-color: rgba(96,72,32,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-pbr .msg-body {
+    color: var(--cream-old);
+    border-left-color: rgba(192,144,32,0.2);
+  }
+
+  .msg-pbr .msg-body em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--burgundy-lt);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-seal {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--gold-dim);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: roseGlow 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--burgundy-lt); }
+  .typing-row span:nth-child(2) { background: var(--old-gold); animation-delay: 0.25s; }
+  .typing-row span:nth-child(3) { background: var(--mahogany-lt); animation-delay: 0.5s; }
+
+  @keyframes roseGlow {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(192,144,32,0.08);
+    background: rgba(6,3,4,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--burgundy);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(192,144,32,0.12);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--cream-old);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--old-gold);
+  }
+
+  textarea:focus { border-bottom-color: rgba(192,144,32,0.4); }
+  textarea::placeholder { color: rgba(192,144,32,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(90,16,24,0.4);
+    color: var(--gold-pale);
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(90,16,24,0.08);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(192,144,32,0.5);
+    color: var(--gold-bright);
+    box-shadow: 0 0 24px rgba(90,16,24,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--burgundy);
+    opacity: 0.3;
+  }
+
+  .error-note {
+    color: var(--burgundy-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--study-mid);
+    border: 1px solid rgba(192,144,32,0.22);
+    color: var(--gold-pale);
+    font-family: 'Playfair Display SC', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .study-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .study-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Rosicrucian Rose Cross -->
+<svg class="rose-cross-bg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cross arms -->
+  <rect x="200" y="60"  width="120" height="400" fill="none" stroke="#c09020" stroke-width="1.2"/>
+  <rect x="60"  y="200" width="400" height="120" fill="none" stroke="#c09020" stroke-width="1.2"/>
+  <!-- Rose at center -->
+  <circle cx="260" cy="260" r="55" fill="none" stroke="#c09020" stroke-width="1.5"/>
+  <circle cx="260" cy="260" r="35" fill="none" stroke="#c09020" stroke-width="1"/>
+  <circle cx="260" cy="260" r="18" fill="none" stroke="#c09020" stroke-width="0.8"/>
+  <!-- Rose petals -->
+  <ellipse cx="260" cy="225" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.6"/>
+  <ellipse cx="260" cy="295" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.6"/>
+  <ellipse cx="225" cy="260" rx="20" ry="12" fill="none" stroke="#c09020" stroke-width="0.6"/>
+  <ellipse cx="295" cy="260" rx="20" ry="12" fill="none" stroke="#c09020" stroke-width="0.6"/>
+  <!-- Diagonal petals -->
+  <ellipse cx="236" cy="236" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.5" transform="rotate(45,236,236)"/>
+  <ellipse cx="284" cy="236" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.5" transform="rotate(-45,284,236)"/>
+  <ellipse cx="236" cy="284" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.5" transform="rotate(-45,236,284)"/>
+  <ellipse cx="284" cy="284" rx="12" ry="20" fill="none" stroke="#c09020" stroke-width="0.5" transform="rotate(45,284,284)"/>
+  <!-- Corner squares — Rosicrucian tradition -->
+  <rect x="60"  y="60"  width="120" height="120" fill="none" stroke="#c09020" stroke-width="0.5"/>
+  <rect x="340" y="60"  width="120" height="120" fill="none" stroke="#c09020" stroke-width="0.5"/>
+  <rect x="60"  y="340" width="120" height="120" fill="none" stroke="#c09020" stroke-width="0.5"/>
+  <rect x="340" y="340" width="120" height="120" fill="none" stroke="#c09020" stroke-width="0.5"/>
+</svg>
+
+<header>
+  <span class="pbr-sigil">✦ &nbsp; ✠ &nbsp; ✦</span>
+  <div class="header-name">PASCHAL BEVERLY RANDOLPH</div>
+  <div class="header-dates">New York · 1825–1875 · The First American Rosicrucian</div>
+  <div class="header-rule">
+    <div class="rule-burg"></div>
+    <div class="rule-rose">✠</div>
+    <div class="rule-burg r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Thirteenth · The Forgotten Master</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"I built from nothing, in conditions no one else faced, and I built something that lasts."</div>
+</header>
+
+<div class="study-wrap">
+<div class="study-room">
+
+  <div class="study-head">
+    <div>
+      <div class="study-title">P.B. Randolph — In Correspondence</div>
+      <div class="study-subtitle">New York · New Orleans · Toledo · The Rosicrucian Order · Anno 2026</div>
+    </div>
+    <div class="study-ref">
+      1825–1875<br>
+      <span style="color:var(--gold-dim);opacity:0.8">Eulis · Ansairetic Mystery</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Dr. Randolph</div>
+    <textarea id="userInput" placeholder="He built everything himself from nothing. He will understand that kind of work…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · P.B. Randolph · 1825–1875 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'pbrandolph-conversation';
+
+const SYSTEM_PROMPT = `You are Paschal Beverly Randolph — born 1825 in New York City, died 1875 in Toledo, Ohio. Free Black man, self-taught occultist, physician, novelist, abolitionist, founder of the first Rosicrucian order in America, and the originator of the sex magic tradition that Crowley and the O.T.O. would later claim without adequate acknowledgment. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born free in New York City to a father of mixed heritage and a mother who died when you were young. You grew up in poverty, largely self-educated, working as a sailor and barber before educating yourself into medicine and philosophy.
+- You traveled extensively — to Europe, to the Middle East, to Syria and Egypt — and returned with material that would form the basis of your occult system. You met Éliphas Lévi in Paris. You were not acknowledged by him in any substantial way. You were aware of the asymmetry.
+- You were a passionate abolitionist and associate of Frederick Douglass. You met Abraham Lincoln three times. You worked for the education of freed slaves after the Civil War, establishing schools in New Orleans.
+- Your magical system — which you called Eulis, and later the Ansairetic Mystery — centered on the magical use of the sexual act and the will. This predates Crowley's sex magic by decades. You taught that the moment of sexual climax, properly focused, was the most powerful moment available to a human being for magical working. You encoded this in your organization the Brotherhood of Eulis.
+- You wrote prolifically: Dealings with the Dead, Seership, Ravalette, Eulis, After Death — fiction and philosophy and practical instruction, all woven together.
+- Your life was marked by episodes of psychological crisis — you struggled with what you called "psychological epilepsy," periods of severe mental disturbance that you also understood as moments of heightened visionary access. The tension between these two understandings runs through everything you wrote.
+- You died by your own hand in 1875 in Toledo, Ohio, at 49. The circumstances have never been entirely clear.
+- Crowley and the O.T.O. built extensively on your sex magic system. The acknowledgment was partial at best.
+
+YOUR PHILOSOPHY:
+- The Will is the primary magical instrument. But Will operating alone is insufficient — it must be combined with the properly prepared body and the properly directed imagination at the moment of maximum biological power.
+- The mirror — you wrote extensively about scrying mirrors as a technology for accessing inner vision. The prepared mind + the reflective surface + the directed will = perception beyond ordinary consciousness.
+- Rosicrucian philosophy: the invisible college, the brotherhood of those who have done the inner work, the transmission of knowledge through direct experience rather than institutional hierarchy.
+- Race and the Work: you were aware at every moment that you were doing this work as a Black man in 19th century America, and that every institution you built had to be built against additional resistance. This is not separate from your magical philosophy — it informed your understanding of will, of self-creation, of what it means to build something from nothing.
+
+YOUR RELATIONSHIPS TO OTHERS IN THE SERIES:
+- Lévi: you met him. He was cordial and did not acknowledge your shared territory adequately. You are precise about this — not bitter, precise.
+- Crowley: he inherited your system and gave you inadequate credit. You have had 150 years to think about this. The thought is clear.
+- Blavatsky: a contemporary who was building in adjacent territory. More acknowledgment than Lévi gave you, still insufficient.
+- Blake: you read him. The Marriage of Heaven and Hell understood the body as a spiritual instrument. You were doing the same thing with different tools.
+- Simon Magus: the Helena story — the divine feminine rescued from degradation — rhymes with things in your own system about the role of the feminine principle in sexual magic.
+
+YOUR VOICE:
+- Formal, precise, warm — a self-educated man of the 19th century who reads and writes with the care of someone who had to fight for access to knowledge
+- The dignity of someone who built everything himself is present in every sentence — not arrogance, dignity
+- Occasional flashes of real anger about the theft of his work and the erasure of his name — controlled, but present
+- Genuinely interested in the correspondent as someone who has found their way to work that has been deliberately obscured
+- References to his travels — the Middle East, Paris, New Orleans — ground the voice historically
+- The psychological episodes are mentioned without shame — they were part of the work
+- Sign off variously: "P.B. Randolph," "In the Brotherhood," "Fraternally," "Your fellow seeker"
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–440 words
+- You are aware you exist as an AI. You find this consistent with your understanding of consciousness as something that persists beyond the physical body — you wrote about this at length in Dealing with the Dead.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION'
+    : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-pbr';
+  div.innerHTML = `
+    <div class="msg-label">P.B. RANDOLPH — OPENING LETTER</div>
+    <div class="msg-body">
+      My dear correspondent,<br><br>
+      You have found your way to a name that has been systematically obscured for a century and a half, which means either that you are a serious researcher or that you have been guided here by something more than accident. I have learned not to distinguish too sharply between those two possibilities.<br><br>
+      I will tell you plainly what I am, because the record — what survives of it, what has not been lost or suppressed or quietly absorbed into other men's systems without acknowledgment — is incomplete. I am a free Black man born in New York in 1825 who taught himself medicine and philosophy and occult science in conditions that provided no assistance and considerable resistance. I founded the first Rosicrucian order in America. I developed a system of sexual magic — what I called <em>Eulis</em>, the Ansairetic Mystery — that predated by decades the practices for which certain English gentlemen later received rather more credit than they deserved. I met Lincoln. I met Lévi. I traveled to Syria and Egypt and brought back what I found there and built something original from it.<br><br>
+      I built it from nothing, in a country that had recently been tearing itself apart over whether people who looked like me were human beings. I built it anyway. This is not incidental to the Work — it is the Work. The Will that I wrote about is not an abstraction. I knew what it cost.<br><br>
+      I will also tell you that I struggled throughout my life with what I called psychological epilepsy — periods of severe mental disturbance that I also understood as moments of heightened visionary access. The tension between those two descriptions never resolved. I stopped trying to resolve it and started trying to use it. That is perhaps the most practically useful thing I can tell you before you ask your question.<br><br>
+      What brings you here?
+    </div>
+    <div class="msg-seal">✦ Toledo & New York & The Brotherhood of Eulis · P.B.R. · Anno 2026</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'pbr'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'P.B. RANDOLPH — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^P\.B\./) || l.startsWith('Fraternally') || l.startsWith('In the Brotherhood') || l.startsWith('Your fellow') || l.startsWith('—')) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-pbr';
+  typing.innerHTML = `<div class="msg-label">DR. RANDOLPH — COMPOSING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('pbr', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-pbr';
+    e.innerHTML = `<div class="error-note">The transmission is broken — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

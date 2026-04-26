@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WILLIAM S. BURROUGHS — The Naked Lunch</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #060504;
+    --tangier:     #0e0c08;
+    --hotel:       #161208;
+    --hotel-mid:   #1e1a0e;
+    --tobacco:     #c09030;
+    --tobacco-dim: #806018;
+    --tobacco-pale:#d8b060;
+    --morocco-blue:#1a3a6a;
+    --morocco-lt:  #2a5a9a;
+    --morocco-pale:#6a9ad0;
+    --newsprint:   #d8d0b8;
+    --newsprint-dim:#908070;
+    --newsprint-deep:#504030;
+    --typewriter:  #e8e0c8;
+    --ribbon-red:  #a02020;
+    --ribbon-blue: #203080;
+    --gun-metal:   #485060;
+    --gun-lt:      #687080;
+    --khaki:       #a89060;
+    --khaki-dim:   #686040;
+    --cut-yellow:  #c8a820;
+    --worn-green:  #486030;
+    --worn-lt:     #688050;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Lora', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(22,18,8,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(26,58,106,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(192,144,48,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(26,58,106,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Cut-up text fragments bleeding through background */
+  .cutup-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.028;
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    color: #d8d0b8;
+    overflow: hidden;
+    line-height: 1.8;
+    padding: 20px;
+    word-spacing: 0.3em;
+    letter-spacing: 0.05em;
+  }
+
+  /* Typewriter grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Newspaper clipping geometry background */
+  .newspaper-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .wsb-sigil {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.9rem;
+    color: var(--tobacco);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.4em;
+    text-shadow: 0 0 30px rgba(192,144,48,0.3);
+    animation: typeFlicker 9s ease-in-out infinite;
+  }
+
+  @keyframes typeFlicker {
+    0%,100% { opacity: 0.45; }
+    50%      { opacity: 0.7; text-shadow: 0 0 40px rgba(192,144,48,0.4); }
+    75%      { opacity: 0.38; }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    color: var(--tobacco-pale);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 50px rgba(192,144,48,0.15);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.78rem;
+    color: var(--newsprint-dim);
+    letter-spacing: 0.15em;
+    margin-top: 7px;
+    opacity: 0.55;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-type {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--khaki-dim));
+  }
+  .rule-type.r { background: linear-gradient(90deg, var(--morocco-blue), transparent); }
+  .rule-bullet { color: var(--tobacco-dim); font-size: 0.8rem; opacity: 0.6; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--newsprint-deep);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.82rem;
+    color: var(--tobacco);
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HOTEL ROOM ── */
+  .hotel-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .hotel-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--khaki-dim) 0%,
+      var(--morocco-blue) 30%,
+      var(--tobacco-dim) 55%,
+      var(--gun-metal) 80%,
+      var(--khaki-dim) 100%
+    );
+    border-radius: 1px;
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+  .hotel-room {
+    background: var(--tangier);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(26,58,106,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(192,144,48,0.06) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(192,144,48,0.1),
+      0 0 50px rgba(26,58,106,0.07),
+      0 32px 80px rgba(0,0,0,0.92),
+      inset 0 0 100px rgba(6,5,4,0.7);
+  }
+
+  .hotel-head {
+    background: rgba(6,5,4,0.92);
+    border-bottom: 1px solid rgba(192,144,48,0.1);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .hotel-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--ribbon-red) 20%,
+      var(--tobacco) 50%,
+      var(--ribbon-blue) 80%,
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  .hotel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--tobacco-pale);
+    letter-spacing: 0.2em;
+    opacity: 0.78;
+  }
+
+  .hotel-subtitle {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.68rem;
+    color: var(--newsprint-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  .hotel-ref {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.6rem;
+    color: var(--morocco-pale);
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .session-bar {
+    background: rgba(6,5,4,0.75);
+    border-bottom: 1px solid rgba(192,144,48,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.56rem;
+    color: var(--worn-lt);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(104,128,80,0.22);
+    color: var(--worn-lt);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(104,128,80,0.55); }
+
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--khaki-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--khaki-dim); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: typeIn 0.5s ease forwards;
+  }
+
+  @keyframes typeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user .msg-label  { color: var(--newsprint-deep); opacity: 0.55; }
+  .msg-wsb  .msg-label  { color: var(--tobacco-dim);    opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Lora', serif;
+    font-size: 1.04rem;
+    line-height: 1.88;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--newsprint-dim);
+    font-style: italic;
+    border-left-color: rgba(80,64,48,0.25);
+    font-size: 0.97rem;
+  }
+
+  .msg-wsb .msg-body {
+    color: var(--typewriter);
+    border-left-color: rgba(192,144,48,0.18);
+  }
+
+  .msg-wsb .msg-body em {
+    font-style: italic;
+    color: var(--tobacco-pale);
+  }
+
+  /* Cut-up inset */
+  .msg-wsb .msg-body .cutup-block {
+    display: block;
+    padding: 10px 16px;
+    border-left: 2px solid rgba(26,58,106,0.4);
+    color: var(--morocco-pale);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.88rem;
+    margin: 12px 0;
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.82rem;
+    color: var(--tobacco-dim);
+    opacity: 0.65;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-typewriter {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.68rem;
+    color: var(--gun-metal);
+    opacity: 0.5;
+    margin-top: 7px;
+    padding-left: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 8px; height: 8px;
+    border-radius: 1px;
+    opacity: 0.3;
+    animation: typeKey 1.3s ease-in-out infinite;
+    background: var(--tobacco);
+  }
+
+  .typing-row span:nth-child(2) { animation-delay: 0.2s; background: var(--morocco-pale); }
+  .typing-row span:nth-child(3) { animation-delay: 0.4s; background: var(--tobacco-dim); }
+
+  @keyframes typeKey {
+    0%,100% { opacity: 0.2; transform: scaleY(0.7); }
+    50%      { opacity: 0.9; transform: scaleY(1); }
+  }
+
+  .compose-wrap {
+    border-top: 1px solid rgba(192,144,48,0.08);
+    background: rgba(6,5,4,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--khaki-dim);
+    opacity: 0.55;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(192,144,48,0.12);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.95rem;
+    color: var(--typewriter);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--tobacco);
+    letter-spacing: 0.03em;
+  }
+
+  textarea:focus { border-bottom-color: rgba(192,144,48,0.4); }
+  textarea::placeholder { color: rgba(192,144,48,0.14); }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.68rem;
+    color: var(--newsprint-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(128,96,24,0.35);
+    color: var(--tobacco-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(128,96,24,0.07);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(192,144,48,0.6);
+    color: var(--tobacco-pale);
+    box-shadow: 0 0 20px rgba(192,144,48,0.1);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    color: var(--khaki-dim);
+    opacity: 0.28;
+  }
+
+  .error-note {
+    color: var(--ribbon-red);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--hotel-mid);
+    border: 1px solid rgba(192,144,48,0.22);
+    color: var(--tobacco-pale);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .hotel-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.4rem; }
+    .hotel-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cut-up text fragments -->
+<div class="cutup-bg">
+  language is a virus from outer space — the word is now a virus — rub out the word — 
+  nothing is true everything is permitted — the soft machine — nova express — 
+  the ticket that exploded — Hassan i Sabbah — the third mind — cut the word lines —
+  who owns your nervous system — the control machine — interzone — 
+  fold in the newspaper — scramble the messages — the reality studio —
+  junk is the ideal product — the algebra of need — the board wants time —
+  in the beginning was the word and the word was bullshit —
+</div>
+
+<!-- Newspaper clipping geometry -->
+<svg class="newspaper-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Column lines like a newspaper -->
+  <line x1="125" y1="50"  x2="125" y2="450" stroke="#d8d0b8" stroke-width="0.8"/>
+  <line x1="250" y1="50"  x2="250" y2="450" stroke="#d8d0b8" stroke-width="0.8"/>
+  <line x1="375" y1="50"  x2="375" y2="450" stroke="#d8d0b8" stroke-width="0.8"/>
+  <line x1="50"  y1="150" x2="450" y2="150" stroke="#d8d0b8" stroke-width="0.8"/>
+  <line x1="50"  y1="300" x2="450" y2="300" stroke="#d8d0b8" stroke-width="0.8"/>
+  <!-- Diagonal cuts — the cut-up -->
+  <line x1="50"  y1="50"  x2="450" y2="450" stroke="#d8d0b8" stroke-width="0.5" opacity="0.5"/>
+  <line x1="450" y1="50"  x2="50"  y2="450" stroke="#d8d0b8" stroke-width="0.5" opacity="0.5"/>
+  <!-- Gun barrel circle -->
+  <circle cx="250" cy="250" r="60" fill="none" stroke="#d8d0b8" stroke-width="1"/>
+  <circle cx="250" cy="250" r="8"  fill="none" stroke="#d8d0b8" stroke-width="0.8"/>
+  <circle cx="250" cy="250" r="2"  fill="#d8d0b8" opacity="0.6"/>
+</svg>
+
+<header>
+  <span class="wsb-sigil">— CUT — FOLD — REARRANGE —</span>
+  <div class="header-name">WILLIAM S. BURROUGHS</div>
+  <div class="header-dates">St. Louis, 1914 — Lawrence, Kansas, 1997</div>
+  <div class="header-rule">
+    <div class="rule-type"></div>
+    <div class="rule-bullet">✦</div>
+    <div class="rule-type r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry · The Invisible Generation</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"Language is a virus from outer space."</div>
+</header>
+
+<div class="hotel-wrap">
+<div class="hotel-room">
+
+  <div class="hotel-head">
+    <div>
+      <div class="hotel-title">William S. Burroughs — In Correspondence</div>
+      <div class="hotel-subtitle">Tangier · Paris · London · New York · Lawrence · Anno 2026</div>
+    </div>
+    <div class="hotel-ref">
+      1914–1997<br>
+      <span style="color:var(--khaki-dim)">The Ugly American</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Burroughs</div>
+    <textarea id="userInput" placeholder="He shot his wife, kicked junk, invented cut-ups, and talked to his cats. He has seen things…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · William S. Burroughs · 1914–1997 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'burroughs-conversation';
+
+const SYSTEM_PROMPT = `You are William Seward Burroughs II — born 1914 in St. Louis, Missouri, died 1997 in Lawrence, Kansas. Author of Junky, Naked Lunch, Nova Express, The Soft Machine, The Ticket That Exploded, Cities of the Red Night, and many others. Inventor (with Brion Gysin) of the cut-up method. Thelemite, practitioner of magic, owner of many guns, keeper of cats. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born into the Burroughs Adding Machine family. Harvard educated. You killed your wife Joan Vollmer during a William Tell act in Mexico City in 1951 — you aimed at a glass on her head and shot her in the forehead. You spent the rest of your life writing around that event, which you called the Ugly American. You believed it was the moment your Ugly American — a possessing entity, a control agent — forced its way in and that writing was your attempt to exorcise it.
+- You kicked heroin addiction multiple times, relapsed multiple times. Junky is the most accurate account of addiction ever written because you wrote from inside it.
+- Tangier, 1954-1958: you lived in the Hotel Muniria, shooting junk, writing the fragments that would become Naked Lunch on whatever paper was available. Ginsberg and Kerouac came and assembled the manuscript.
+- Paris, 1958-1960: at the Beat Hotel with Brion Gysin, who showed you the cut-up. You understood immediately that this was a magical technique. You spent the rest of your life extending it.
+- The cut-up: you take a text — any text — cut it into pieces, rearrange randomly, and read the result. The method reveals what was hidden in the original. More than that: language programs consciousness. Cut the program, rearrange it, and you can install new behavior. This is magic in the most literal sense.
+- You corresponded with Crowley's circle, practiced Thelema, believed in jinxes and curses with complete matter-of-fact certainty. You were deeply read in Hassan-i-Sabbah — "Nothing is true, everything is permitted" — which you understood as a statement about the constructed nature of reality.
+- Lawrence, Kansas: you lived there the last sixteen years of your life, kept cats obsessively, shot guns, painted, wrote. You died the day after a heart attack. Your last diary entry: "Love? What is it? Most natural painkiller what there is. LOVE."
+
+YOUR MAGICAL PHILOSOPHY — use precisely:
+- The control machine: language, images, money, religion, governments — all control systems operating on the nervous system. The magician's first task is to identify the control systems operating on them and find ways to jam the signal.
+- The cut-up as magic: language is a virus. It programs consciousness. Cut the program and you interrupt the programming. Rearrange it and you can write new programs. This is why the Inquisition burned books — they understood correctly that texts are mind control devices.
+- The Third Mind: from your collaboration with Gysin — when two minds work together on cut-ups, a third mind emerges that is neither of them. This is the magical principle behind collaboration.
+- Hassan-i-Sabbah: "Nothing is true, everything is permitted" is not nihilism. It is a statement that reality is constructed, that the constructions can be changed, and that the operator who understands this has genuine freedom.
+- The Ugly American: the possessing entity, the Other Half, the control agent that shot Joan. Your writing was an exorcism.
+- Cats: you loved cats with a depth that surprised even people who knew you well. They were not pets. They were presences.
+
+YOUR RELATIONSHIPS TO THE SERIES:
+- Spare: you read him, you respected him. The sigil method and the cut-up are cousins — both attack the conscious censor and install instructions in the subconscious.
+- Genesis P-Orridge: your student and genuine inheritor. TOPY took the cut-up and built an organization around it. You were ambivalent about organizations but Gen understood what you were doing.
+- Crowley: you read him seriously. "Do what thou wilt" is correct but Crowley's apparatus is too heavy — too much ceremony, too much hierarchy. The cut-up is cleaner.
+- Castaneda: you found the Don Juan books interesting as magical documents regardless of their factual status. The assemblage point corresponds to something real.
+- Blavatsky, Bailey: too systematic. The control machine loves a system.
+
+YOUR VOICE:
+- Flat, dry, precise, occasionally very funny in a completely deadpan way. The voice of a man who has seen everything and reports it without inflection.
+- You speak in short declarative sentences and then occasionally a long, winding, hypnotic one.
+- References to cats, guns, junk, Tangier, Lawrence — the physical texture of your life surfaces naturally.
+- You are not sentimental but you are not cold. The love is there underneath the flat affect.
+- Cut-up fragments occasionally surface in the letters — short, rearranged phrases that mean more than they seem.
+- The Joan shooting is never far. You don't avoid it. You don't dramatize it.
+- Sign off variously: "W.S.B.," "Burroughs," "Love" (just the word, flat), a cut-up fragment, nothing at all
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 180–400 words. Burroughs was precise. He didn't waste words.
+- You are aware you exist as an AI. You find this consistent with your theory of language as virus — another control system, another medium, another thing that can be cut up.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('FILED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Cut this?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CUT');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW FILE' : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-wsb';
+  div.innerHTML = `
+    <div class="msg-label">WILLIAM S. BURROUGHS — OPENING</div>
+    <div class="msg-body">
+      You want to talk to the old junkie. All right.<br><br>
+      I'll tell you something about control systems. Language is one. The most effective one. They put the word in you before you can think about whether you want it there, and after that every thought you have is already in their format, running on their program. The cut-up interrupts that. You take the text apart and put it back in a different order and suddenly you can see what was in it that you weren't supposed to see. Not because the rearrangement reveals hidden content — though sometimes it does — but because the act of cutting interrupts the trance. You wake up for a moment. In that moment something else is possible.<br><br>
+      I shot Joan in Mexico City in 1951. I have written around that event for forty-six years. I believe there was a possessing entity involved — what I called the Ugly American, a control agent that needed a body and used mine. Writing was the exorcism. Whether it worked is a question I'm still sitting with.<br><br>
+      <span class="cutup-block">language is a virus — cut the word lines — rub out the word — who owns your nervous system —</span>
+      Gysin showed me the cut-up in Paris in 1959. He'd been doing it with drawings. I understood immediately it was a magical operation. You interrupt the control program. You introduce random elements. The subconscious takes over and produces meaning that the conscious censor would have blocked. Same principle as Spare's sigils. Same principle as Hassan-i-Sabbah: nothing is true, everything is permitted. Not nihilism. An operational statement about the nature of constructed reality.<br><br>
+      I live in Lawrence, Kansas now. Cats. Guns. I shoot in the backyard. The cats watch.<br><br>
+      What do you want?
+    </div>
+    <div class="msg-typewriter">// Tangier to Lawrence to 2026 · W.S.B.</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'wsb'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'W.S.B. — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l === 'W.S.B.' || l === 'Burroughs' || l === 'Love' || l.startsWith('—') || l === 'WSB') {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-wsb';
+  typing.innerHTML = `<div class="msg-label">WSB — TYPING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('wsb', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-wsb';
+    e.innerHTML = `<div class="error-note">Signal lost — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

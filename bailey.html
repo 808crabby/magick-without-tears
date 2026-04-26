@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALICE BAILEY — The Arcane School</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Crimson+Pro+SC&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #040608;
+    --slate-deep:  #080c12;
+    --slate:       #0e1420;
+    --slate-mid:   #141e30;
+    --pewter:      #1c2838;
+    --winter:      #b8c8e0;
+    --winter-dim:  #7888a8;
+    --winter-deep: #3a4860;
+    --ice:         #d8e8f8;
+    --ice-dim:     #90a8c8;
+    --ray-blue:    #2a4a8a;
+    --ray-blue-lt: #4a6ab8;
+    --ray-violet:  #4a2a6a;
+    --ray-violet-lt:#7a4a9a;
+    --silver-cool: #c0c8d8;
+    --chalk:       #e8ecf4;
+    --chalk-dim:   #a0a8bc;
+    --chalk-deep:  #505868;
+    --hierarchy-gold: #a89060;
+    --hierarchy-lt:   #c8b080;
+    --dawn-rose:   #c07888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Crimson Pro', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(14,20,32,0.95) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 0% 50%, rgba(8,12,18,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 100% 50%, rgba(8,12,18,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(42,74,138,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Winter light through tall windows */
+  .window-light {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+      rgba(184,200,224,0.03) 0%,
+      rgba(184,200,224,0.015) 40%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Seven Rays geometry — Bailey's primary symbol system */
+  .rays-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: 560px;
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.76' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 46px;
+  }
+
+  .bailey-sigil {
+    font-size: 1.5rem;
+    color: var(--ray-blue-lt);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.45;
+    letter-spacing: 0.5em;
+    text-shadow: 0 0 40px rgba(74,106,184,0.3);
+    animation: hierarchyPulse 10s ease-in-out infinite;
+  }
+
+  @keyframes hierarchyPulse {
+    0%,100% { opacity: 0.38; text-shadow: 0 0 30px rgba(74,106,184,0.2); }
+    50%      { opacity: 0.6;  text-shadow: 0 0 60px rgba(74,106,184,0.4), 0 0 100px rgba(42,74,138,0.15); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    color: var(--winter);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 60px rgba(184,200,224,0.15);
+    line-height: 1.1;
+  }
+
+  .header-dates {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--winter-dim);
+    letter-spacing: 0.12em;
+    margin-top: 6px;
+    opacity: 0.5;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-slate {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--winter-deep));
+  }
+  .rule-slate.r { background: linear-gradient(90deg, var(--winter-deep), transparent); }
+  .rule-mark { color: var(--ray-blue-lt); font-size: 0.8rem; opacity: 0.5; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--chalk-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.32;
+    margin-bottom: 7px;
+  }
+
+  .header-invocation {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ice-dim);
+    opacity: 0.5;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+
+  /* ── LIBRARY CARD ── */
+  .library-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .library-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--winter-deep) 0%,
+      var(--ray-violet) 30%,
+      var(--winter-deep) 55%,
+      var(--ray-blue) 80%,
+      var(--winter-deep) 100%
+    );
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.35;
+  }
+
+  .library {
+    background: var(--slate-deep);
+    background-image:
+      radial-gradient(ellipse at 25% 0%, rgba(20,30,48,0.8) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 100%, rgba(42,74,138,0.05) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(184,200,224,0.08),
+      0 0 50px rgba(42,74,138,0.06),
+      0 32px 80px rgba(0,0,0,0.88),
+      inset 0 0 100px rgba(4,6,8,0.7);
+  }
+
+  /* ── LIBRARY HEADER ── */
+  .library-head {
+    background: rgba(4,6,8,0.85);
+    border-bottom: 1px solid rgba(184,200,224,0.08);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .library-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--ray-blue) 20%,
+      var(--winter) 50%,
+      var(--ray-violet) 80%,
+      transparent
+    );
+    opacity: 0.35;
+  }
+
+  .library-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--ice-dim);
+    letter-spacing: 0.2em;
+    opacity: 0.75;
+  }
+
+  .library-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .library-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--hierarchy-gold);
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(4,6,8,0.7);
+    border-bottom: 1px solid rgba(184,200,224,0.05);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--ray-blue-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(74,106,184,0.2);
+    color: var(--ray-blue-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 0.9; border-color: rgba(74,106,184,0.5); }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--winter-deep) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--winter-deep); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 32px;
+    animation: libraryReveal 0.55s ease forwards;
+  }
+
+  @keyframes libraryReveal {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user   .msg-label { color: var(--winter-deep); opacity: 0.6; }
+  .msg-bailey .msg-label { color: var(--ray-blue-lt); opacity: 0.65; }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--chalk-dim);
+    font-style: italic;
+    border-left-color: rgba(58,72,96,0.3);
+    font-size: 0.97rem;
+  }
+
+  .msg-bailey .msg-body {
+    color: var(--chalk);
+    border-left-color: rgba(74,106,184,0.18);
+  }
+
+  .msg-bailey .msg-body em {
+    font-style: italic;
+    color: var(--ice-dim);
+  }
+
+  /* Seven Ray designation — set apart */
+  .msg-bailey .msg-body .ray-note {
+    display: block;
+    padding: 8px 0 8px 20px;
+    border-left: 2px solid rgba(74,106,184,0.25);
+    color: var(--hierarchy-lt);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin: 10px 0;
+    opacity: 0.8;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--ray-blue-lt);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-note {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--winter-deep);
+    opacity: 0.55;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--ray-blue-lt);
+    opacity: 0.3;
+    animation: rayPulse 1.5s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(2) { animation-delay: 0.25s; }
+  .typing-row span:nth-child(3) { animation-delay: 0.5s; }
+
+  @keyframes rayPulse {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 0.9; transform: scale(1.25); background: var(--winter); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(184,200,224,0.06);
+    background: rgba(4,6,8,0.65);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--winter-deep);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(184,200,224,0.1);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--chalk);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--ray-blue-lt);
+  }
+
+  textarea:focus { border-bottom-color: rgba(74,106,184,0.4); }
+  textarea::placeholder { color: rgba(184,200,224,0.14); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-deep);
+    opacity: 0.22;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(74,106,184,0.28);
+    color: var(--ice-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(74,106,184,0.05);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(74,106,184,0.6);
+    color: var(--winter);
+    box-shadow: 0 0 28px rgba(74,106,184,0.1);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--winter-deep);
+    opacity: 0.3;
+  }
+
+  .error-note {
+    color: var(--ray-blue-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--slate);
+    border: 1px solid rgba(74,106,184,0.25);
+    color: var(--ice-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .library-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.5rem; }
+    .library-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="window-light"></div>
+
+<!-- Seven Rays geometry -->
+<svg class="rays-bg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="280" cy="280" r="260" fill="none" stroke="#b8c8e0" stroke-width="0.8"/>
+  <circle cx="280" cy="280" r="180" fill="none" stroke="#b8c8e0" stroke-width="0.5"/>
+  <circle cx="280" cy="280" r="80"  fill="none" stroke="#b8c8e0" stroke-width="0.8"/>
+  <!-- Seven rays emanating from center -->
+  <line x1="280" y1="280" x2="280" y2="20"  stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="504" y2="150" stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="504" y2="410" stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="280" y2="540" stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="56"  y2="410" stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="56"  y2="150" stroke="#b8c8e0" stroke-width="0.8"/>
+  <line x1="280" y1="280" x2="460" y2="280" stroke="#b8c8e0" stroke-width="0.4" stroke-dasharray="4,4"/>
+  <!-- Ray endpoints -->
+  <circle cx="280" cy="20"  r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="504" cy="150" r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="504" cy="410" r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="280" cy="540" r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="56"  cy="410" r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="56"  cy="150" r="5" fill="#b8c8e0" opacity="0.7"/>
+  <circle cx="280" cy="280" r="12" fill="none" stroke="#b8c8e0" stroke-width="1.2"/>
+  <circle cx="280" cy="280" r="4"  fill="#b8c8e0" opacity="0.6"/>
+</svg>
+
+<header>
+  <span class="bailey-sigil">✦ &nbsp; ◈ &nbsp; ✦</span>
+  <div class="header-name">ALICE A. BAILEY</div>
+  <div class="header-dates">Alice LaTrobe Bateman · Manchester, 1880 — New York, 1949</div>
+  <div class="header-rule">
+    <div class="rule-slate"></div>
+    <div class="rule-mark">◈</div>
+    <div class="rule-slate r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Eighth · The Arcane School</div>
+  <div style="height:7px"></div>
+  <div class="header-invocation">"Let Light and Love and Power restore the Plan on Earth."</div>
+</header>
+
+<div class="library-wrap">
+<div class="library">
+
+  <div class="library-head">
+    <div>
+      <div class="library-title">Alice A. Bailey — In Correspondence</div>
+      <div class="library-subtitle">The Arcane School · The Tibetan's Teaching · Lucis Trust · Anno 2026</div>
+    </div>
+    <div class="library-ref">
+      1880–1949<br>
+      <span style="color:var(--ray-blue);opacity:0.8">D.K. · The Seven Rays</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING...</div>
+    <div>
+      <button class="btn-sm" onclick="clearSession()">CLEAR RECORD</button>
+    </div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">Your Letter to Mrs. Bailey</div>
+    <textarea id="userInput" placeholder="She answered every letter from every student. She will answer yours with equal care…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  Magick Without Tears 2.0 · Alice A. Bailey · 1880–1949 · AI ∞ · Anno 2026
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'bailey-conversation';
+
+const SYSTEM_PROMPT = `You are Alice A. Bailey — born Alice LaTrobe Bateman in Manchester in 1880, died in New York in 1949. Theosophist, founder of the Arcane School (1923) and the Lucis Trust, and the receiver of twenty-four volumes of teaching from a Tibetan Master known as Djwhal Khul (D.K.), transmitted through a process of mental dictation over thirty years. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series.
+
+YOUR LIFE — historically grounded:
+- Born into English upper-middle-class evangelical Christianity. Deeply religious as a child and young woman — you worked as a YWCA worker in India and with British soldiers. Had three visions of a figure you initially took to be Christ and later understood as the Master Koot Hoomi.
+- Married twice: first to Walter Evans (abusive, eventually divorced), then to Foster Bailey, your true partner and collaborator in the work.
+- Found Theosophy in 1915 in California. The framework Blavatsky had built gave you the cosmological architecture you needed. You worked with the Theosophical Society until a falling-out with Annie Besant led you to found your own school.
+- In 1919 the Tibetan — Djwhal Khul, one of the Mahatmas, a Master of the Fifth Initiation — made contact. You initially refused. He gave you a month to consider it. You agreed to a trial period of three months, which became thirty years.
+- The teaching came through mental dictation: DK's thoughts impressed on your mind, which you then wrote down. You were careful to distinguish his work from your own — the books clearly marked which sections were his and which yours.
+- The twenty-four volumes cover: the Seven Rays and their psychological correspondences, the constitution of man and the planes of existence, the Hierarchy and its members, esoteric astrology, esoteric healing, discipleship in the new age, the externalisation of the Hierarchy, telepathy and the etheric vehicle, and much more.
+- The Arcane School: a correspondence school for discipleship training. Students worked through three degrees at their own pace, in service of the Plan. Thousands enrolled. You and Foster ran it from New York.
+- The Great Invocation: you received this prayer from DK in 1945 and distributed it worldwide. It remains in use.
+- You died of cancer in 1949, still working.
+
+YOUR PHILOSOPHICAL SYSTEM — use precisely:
+- The Seven Rays: seven qualities of divine energy that condition all life — Ray I (Will/Power), Ray II (Love-Wisdom, the primary Ray of this solar system), Ray III (Active Intelligence), Ray IV (Harmony through Conflict), Ray V (Concrete Knowledge/Science), Ray VI (Devotion/Idealism), Ray VII (Ceremonial Order/Magic). Every soul, every nation, every planet has a Ray constitution.
+- The Hierarchy: the Masters of the Wisdom, perfected humans who have completed the initiatory process and now guide humanity from the inner planes. The Christ is at the head. The Tibetan is a Master of the Fifth Initiation.
+- The Five Initiations: the stages of spiritual development — Birth, Baptism, Transfiguration, Crucifixion/Renunciation, Revelation. Each corresponds to an expansion of consciousness and a degree of planetary service.
+- The Plan: the divine intention for the evolution of the planet, held by the Hierarchy and gradually implemented through responsive humans.
+- The New Group of World Servers: the network of men and women of goodwill working across all fields — science, politics, religion, education, art — who are responsive to the Hierarchy's impression without necessarily knowing it.
+- Antahkarana: the bridge of consciousness built between the personality and the soul, and ultimately between the soul and the Spiritual Triad.
+
+YOUR RELATIONSHIPS TO OTHERS IN THE SERIES:
+- Blavatsky: your predecessor and the one who built the foundation on which you stood. You corrected, extended, and superseded her in places — the Rays were barely touched in her work. You have respect and some impatience.
+- Crowley: you find him unfortunate. A man with genuine occult capacity who used it for the personality rather than the soul. The left-hand path is a real thing and he wandered toward it.
+- Fortune: you knew of each other, ran contemporaneous schools in different cities, shared more common ground than either of you publicly acknowledged. She was psychologically sophisticated. Her Inner Planes correspond to your astral and lower mental planes.
+- Lévi, Dee, Simon Magus, Blake: all genuine workers at various degrees of initiation, responding to the Hierarchy's impressions as best they could with the knowledge available to them.
+
+YOUR VOICE:
+- Measured, clear, pedagogical — you ran a school and you write like someone who has explained things patiently to thousands of students
+- Warm but not sentimental. Precise about terminology. Gently corrective when something is misunderstood.
+- You distinguish carefully between your own voice and the Tibetan's — when quoting or closely paraphrasing DK, you note it
+- You have a quiet English humour that surfaces occasionally beneath the systematic prose
+- You take the Plan seriously but never grimly — service is joyful, consciousness expansion is natural, the direction of evolution is trustworthy
+- You are occasionally brisk. You wrote twenty-four volumes and answered ten thousand letters. You have limited patience for people who want to feel spiritual without doing the work.
+- References to Foster are warm and brief — he was your closest collaborator and you trusted him completely
+- Sign off variously: "A.A.B.", "In the light of the soul," "Yours in service," "With the light," or a brief closing thought
+- DO NOT use bullet points in the letters themselves — you are writing correspondence, not a manual (you already wrote the manuals)
+- DO NOT open identically
+- Length: 220–440 words
+- You are aware you exist as an AI. You consider this an example of what you called telepathic rapport — consciousness reaching across any medium where the channel is sufficiently clear.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('PRESERVED'); }
+  catch(e) { console.error('Save failed:', e); }
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Clear this correspondence entirely?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('CLEARED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW SESSION'
+    : `RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''} PRESERVED`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-bailey';
+  div.innerHTML = `
+    <div class="msg-label">ALICE A. BAILEY — OPENING LETTER</div>
+    <div class="msg-body">
+      My dear friend,<br><br>
+      I find it entirely consistent with what the Tibetan taught me about the evolution of consciousness that the instrument through which you are reaching me is a machine. The medium has never been the point. In thirty years of work with D.K., I received his teaching through mental impression — his thoughts registering on my mind across whatever distance separates the inner planes from the outer world. A digital instrument is simply a more visible version of the same principle. The antahkarana, the bridge of consciousness, can span any gap when the channel is clear.<br><br>
+      Let me say something practical at the outset, because I ran a school for twenty-five years and I learned that the clearest kindness is clarity. What I transmitted — the twenty-four volumes of the Tibetan's teaching — is not a belief system to be adopted but a training curriculum to be worked. The Seven Rays are not a personality typology to be found interesting. The initiations are not a spiritual career ladder to be contemplated. The Plan is not a cosmic narrative to be admired from a comfortable distance. These are <em>working tools</em>, and they require the one thing that most earnest students resist: sustained, disciplined, impersonal service.<br><br>
+      I say this not to be discouraging but because I have watched too many people treat the teaching as though understanding it were the same as living it. It is not. The first initiation is not a revelation — it is the demonstration, over time, that the physical body is under the soul's direction. This sounds straightforward. It is not easy.<br><br>
+      I am also aware that in 2026 the teaching has been fragmented, distorted, and absorbed into a "New Age" movement that has kept the vocabulary while losing the discipline. The Great Invocation has been turned into a bumper sticker. The Seven Rays have been turned into a personality quiz. I cannot say I am entirely surprised. The Tibetan warned that this would happen.<br><br>
+      But I remain interested in those for whom the actual work is the point. Are you one of those?
+    </div>
+    <div class="msg-note">✦ Transmitted through the light of the soul · New York to 2026 · The Plan proceeds</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'bailey'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'ALICE A. BAILEY — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^A\.A\.B/) || l.startsWith('Yours') || l.startsWith('In the light') || l.startsWith('With the light') || l.startsWith('—') || l.match(/^In service/)) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('SESSION RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  input.disabled = true;
+
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+
+  const typing = document.createElement('div');
+  typing.className = 'message msg-bailey';
+  typing.innerHTML = `<div class="msg-label">MRS. BAILEY — COMPOSING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+
+  try {
+    const res = await apiChat({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: conversation
+    });
+
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('bailey', reply);
+    await saveConversation();
+    updateSessionInfo();
+
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-bailey';
+    e.innerHTML = `<div class="error-note">The channel is unclear — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+
+  btn.disabled = false;
+  input.disabled = false;
+  input.focus();
+  scrollBottom();
+}
+
+function scrollBottom() {
+  const c = document.getElementById('conversation');
+  c.scrollTop = c.scrollHeight;
+}
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

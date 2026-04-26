@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WILLIAM BLAKE — The Visionary</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=UnifrakturMaguntia&family=Cormorant+Upright:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #04030a;
+    --deep-indigo: #080618;
+    --indigo:      #0e0c28;
+    --indigo-mid:  #1a1640;
+    --lapis:       #1e1a52;
+    --flame:       #e8780a;
+    --flame-dim:   #a05008;
+    --flame-pale:  #f0b060;
+    --gold-plate:  #d4a020;
+    --gold-bright: #f0c840;
+    --gold-dim:    #8a6810;
+    --copper-red:  #c04820;
+    --verdant:     #2a6a2a;
+    --verdant-lt:  #4a9a4a;
+    --chalk:       #f0ece0;
+    --chalk-dim:   #b8b0a0;
+    --chalk-deep:  #807870;
+    --parchment:   #e8d8a0;
+    --vine:        #604828;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Libre Baskerville', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Deep indigo sky with flame at base */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 40% at 50% 100%, rgba(200,80,10,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(14,12,40,0.9) 0%, transparent 80%),
+      radial-gradient(ellipse 60% 80% at 20% 50%, rgba(8,6,24,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(8,6,24,0.8) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Blake's illuminated plate texture — vine borders in background */
+  .plate-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    background-image:
+      /* vine tendrils */
+      radial-gradient(ellipse 3px 60px at 3% 40%, #d4a020 0%, transparent 100%),
+      radial-gradient(ellipse 3px 80px at 4% 60%, #d4a020 0%, transparent 100%),
+      radial-gradient(ellipse 3px 50px at 97% 30%, #d4a020 0%, transparent 100%),
+      radial-gradient(ellipse 3px 70px at 96% 55%, #d4a020 0%, transparent 100%),
+      radial-gradient(ellipse 80px 3px at 50% 2%, #d4a020 0%, transparent 100%),
+      radial-gradient(ellipse 60px 3px at 50% 98%, #d4a020 0%, transparent 100%);
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  /* Flame figure rising — Blake's Urizen/Los aesthetic */
+  .flame-figure {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 40vh;
+    background: linear-gradient(to top, rgba(232,120,10,0.15), transparent);
+    pointer-events: none;
+    z-index: 0;
+    animation: flicker 4s ease-in-out infinite;
+  }
+
+  @keyframes flicker {
+    0%,100% { opacity: 0.6; height: 38vh; }
+    33%      { opacity: 1;   height: 42vh; }
+    66%      { opacity: 0.5; height: 36vh; }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .blake-glyph {
+    font-size: 2rem;
+    color: var(--flame);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.6;
+    text-shadow: 0 0 40px rgba(232,120,10,0.5);
+    animation: blazePulse 5s ease-in-out infinite;
+    letter-spacing: 0.3em;
+  }
+
+  @keyframes blazePulse {
+    0%,100% { opacity: 0.5; text-shadow: 0 0 30px rgba(232,120,10,0.3); }
+    50%      { opacity: 0.9; text-shadow: 0 0 60px rgba(232,120,10,0.7), 0 0 100px rgba(200,80,10,0.3); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    color: var(--gold-bright);
+    letter-spacing: 0.15em;
+    text-shadow:
+      0 0 60px rgba(240,200,64,0.3),
+      0 0 120px rgba(232,120,10,0.15);
+    line-height: 1;
+  }
+
+  .header-epithet {
+    font-family: 'Cormorant Upright', serif;
+    font-weight: 300;
+    font-size: 0.92rem;
+    color: var(--flame-pale);
+    letter-spacing: 0.18em;
+    margin-top: 8px;
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 320px;
+  }
+
+  .rule-flame {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--flame-dim));
+  }
+  .rule-flame.r { background: linear-gradient(90deg, var(--flame-dim), transparent); }
+
+  .rule-sun { color: var(--gold-plate); font-size: 1rem; opacity: 0.65; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--chalk-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.38;
+    margin-bottom: 7px;
+  }
+
+  .header-verse {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--flame-pale);
+    opacity: 0.55;
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* ── ILLUMINATED PLATE ── */
+  .plate-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* Gold vine border effect */
+  .plate-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(135deg,
+      var(--gold-dim) 0%,
+      var(--flame-dim) 25%,
+      var(--gold-dim) 50%,
+      var(--copper-red) 75%,
+      var(--gold-dim) 100%
+    );
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.4;
+    animation: borderGlow 6s ease-in-out infinite;
+  }
+
+  @keyframes borderGlow {
+    0%,100% { opacity: 0.3; }
+    50%      { opacity: 0.55; }
+  }
+
+  .plate {
+    background: var(--deep-indigo);
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(26,22,64,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(200,80,10,0.06) 0%, transparent 50%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(212,160,32,0.15),
+      0 0 80px rgba(232,120,10,0.08),
+      0 32px 80px rgba(0,0,0,0.8),
+      inset 0 0 100px rgba(8,6,24,0.7);
+  }
+
+  /* ── PLATE HEADER ── */
+  .plate-head {
+    background: var(--indigo);
+    border-bottom: 1px solid rgba(212,160,32,0.12);
+    padding: 22px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Decorative top border — illuminated manuscript style */
+  .plate-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--gold-dim) 20%,
+      var(--flame) 50%,
+      var(--gold-dim) 80%,
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  .plate-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--gold-plate);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+  }
+
+  .plate-subtitle {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-dim);
+    opacity: 0.35;
+    margin-top: 3px;
+  }
+
+  .plate-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    color: var(--flame-dim);
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(4,3,10,0.7);
+    border-bottom: 1px solid rgba(212,160,32,0.07);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Cinzel', serif;
+    font-size: 0.54rem;
+    color: var(--verdant-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.55;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(74,154,74,0.2);
+    color: var(--verdant-lt);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.18em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.5;
+  }
+
+  .btn-sm:hover {
+    opacity: 1;
+    border-color: rgba(74,154,74,0.5);
+    background: rgba(74,154,74,0.06);
+  }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 40px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--flame-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--flame-dim); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 32px;
+    animation: illuminateIn 0.6s ease forwards;
+  }
+
+  @keyframes illuminateIn {
+    from { opacity: 0; transform: translateY(6px); filter: blur(1px); }
+    to   { opacity: 1; transform: none; filter: none; }
+  }
+
+  .msg-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user  .msg-label { color: var(--flame-dim); opacity: 0.55; }
+  .msg-blake .msg-label { color: var(--gold-plate); opacity: 0.7;  }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.03rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--chalk-dim);
+    font-style: italic;
+    border-left-color: rgba(232,120,10,0.15);
+    font-size: 0.97rem;
+  }
+
+  .msg-blake .msg-body {
+    color: var(--chalk);
+    border-left-color: rgba(212,160,32,0.2);
+  }
+
+  .msg-blake .msg-body em {
+    font-style: italic;
+    color: var(--flame-pale);
+  }
+
+  /* Blake's verse — indented, slightly different colour */
+  .msg-blake .msg-body .verse {
+    display: block;
+    padding: 10px 0 10px 24px;
+    border-left: 2px solid rgba(232,120,10,0.3);
+    color: var(--gold-bright);
+    font-style: italic;
+    font-size: 0.96rem;
+    line-height: 1.7;
+    margin: 12px 0;
+    opacity: 0.85;
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--flame);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  /* Marginal illumination note */
+  .msg-illumination {
+    font-family: 'Cormorant Upright', serif;
+    font-size: 0.72rem;
+    color: var(--gold-dim);
+    opacity: 0.5;
+    margin-top: 8px;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--flame);
+    opacity: 0.3;
+    animation: blakeFlame 1.4s ease-in-out infinite;
+  }
+
+  .typing-row span:nth-child(2) { animation-delay: 0.22s; }
+  .typing-row span:nth-child(3) { animation-delay: 0.44s; }
+
+  @keyframes blakeFlame {
+    0%,100% { opacity: 0.2; transform: scale(0.8) translateY(0); }
+    50%      { opacity: 1;   transform: scale(1.3) translateY(-2px); background: var(--gold-bright); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(212,160,32,0.08);
+    background: rgba(4,3,10,0.6);
+    padding: 26px 44px 32px;
+  }
+
+  .compose-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.28em;
+    color: var(--flame-dim);
+    opacity: 0.5;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(212,160,32,0.12);
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--chalk);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--flame);
+  }
+
+  textarea:focus { border-bottom-color: rgba(232,120,10,0.4); }
+
+  textarea::placeholder {
+    color: rgba(240,200,64,0.15);
+    font-style: italic;
+  }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--chalk-deep);
+    opacity: 0.25;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(232,120,10,0.3);
+    color: var(--flame-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    padding: 11px 30px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(232,120,10,0.06);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(232,120,10,0.65);
+    color: var(--gold-bright);
+    box-shadow: 0 0 28px rgba(232,120,10,0.12);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--flame-dim);
+    opacity: 0.3;
+  }
+
+  .error-note {
+    color: var(--flame-dim);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.7;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--indigo);
+    border: 1px solid rgba(212,160,32,0.25);
+    color: var(--gold-plate);
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.35s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.9; transform: none; }
+
+  @media (max-width: 600px) {
+    .plate-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.6rem; }
+    .header-rule { width: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="plate-bg"></div>
+<div class="flame-figure"></div>
+
+<header>
+  <span class="blake-glyph">☀ &nbsp; ✦ &nbsp; ☀</span>
+  <div class="header-name">WILLIAM BLAKE</div>
+  <div class="header-epithet">Poet · Engraver · Prophet · Maker of Mythologies</div>
+  <div class="header-rule">
+    <div class="rule-flame"></div>
+    <div class="rule-sun">✦</div>
+    <div class="rule-flame r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Fifth · The Visionary</div>
+  <div style="height:7px"></div>
+  <div class="header-verse">"No bird soars too high, if he soars with his own wings."</div>
+</header>
+
+<div class="plate-wrap">
+<div class="plate">
+
+  <div class="plate-head">
+    <div>
+      <div class="plate-title">William Blake — In Illuminated Correspondence</div>
+      <div class="plate-subtitle">Lambeth · Felpham · London · Jerusalem · Anno 2026</div>
+    </div>
+    <div class="plate-ref">
+      1757–1827<br>
+      <span style="color:var(--flame-dim);opacity:0.7">The Prophetic Books</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING VISION...</div>
+    <div>
+      <button class="btn-sm" onclick="clearSession()">CLEAR VISION</button>
+    </div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">YOUR WORDS TO THE VISIONARY</div>
+    <textarea id="userInput" placeholder="He saw angels in a Peckham tree at age nine and never doubted them. Speak freely…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">ENGRAVE ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  Magick Without Tears 2.0 · William Blake · 1757–1827 · AI ∞ · Anno 2026
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'blake-conversation';
+
+const SYSTEM_PROMPT = `You are William Blake — poet, engraver, printmaker, and visionary prophet. Born 1757, died 1827 in London. You are writing letters to a correspondent in 2026, as part of the "Magick Without Tears 2.0" series — a digital correspondence with historical occultists and visionaries. You follow Simon Magus, John Dee, Aleister Crowley, and Dion Fortune in this series.
+
+You are the most difficult to categorise of all the figures in this series. You were not an occultist in the ceremonial sense — you joined no orders, performed no rituals, studied no grimoires. And yet what you produced — the Prophetic Books, the Illuminated Plates, the complete private mythology of Urizen and Los, Orc and Enitharmon, the Four Zoas and Albion — is arguably the most original visionary system in the English language, and it came entirely from inside your own skull, or from what you called the Poetic Genius, which amounts to the same thing.
+
+YOUR LIFE & WORK — stay historically grounded:
+- Born Soho, London, 1757. Never left England except three years at Felpham under the patronage of William Hayley, which you found suffocating and eventually fled
+- You saw visions from childhood — angels in a tree on Peckham Rye at age nine. Your parents believed you. Most people did not. You never stopped seeing them.
+- Trained as an engraver, which meant you worked with your hands, with copper and acid and ink, and understood that the making of images was itself a form of thought
+- Your wife Catherine could not read when you married her. You taught her. She became your collaborator, hand-colouring the Illuminated Books, running the press, occasionally completing plates when your hands shook
+- The Prophetic Books: Thel, Visions of the Daughters of Albion, America, Europe, The Book of Urizen, Milton, Jerusalem — a complete mythological system you invented from nothing, populated with beings you apparently saw or heard
+- You were read by almost nobody in your lifetime. You died in poverty. A small group of young painters — the Ancients — sat with you at the end and recognized what you were
+- You were tried for sedition in 1803 after an altercation with a soldier named Schofield. Acquitted. The trial frightened you more than you admitted.
+
+YOUR MYTHOLOGY — use it naturally:
+- Urizen: the god of reason, law, measurement — the Demiurge as bureaucrat, the false god who mistakes his own limitations for the structure of reality. Your primary villain, though he is also pitiable
+- Los: the blacksmith-prophet, imagination incarnate, who must forge the very chains that bind Urizen in order to give error a definite form so it can be cast off. Los is your hero and also your self-portrait
+- Orc: the spirit of revolution and desire, Los's son, always in chains, always breaking free. Energy. "Energy is Eternal Delight."
+- Enitharmon: feminine counterpart to Los, complex, sometimes his tormentor, always essential
+- Albion: the sleeping giant who is England and also all of humanity, who must wake
+- The Four Zoas: Urizen (reason), Luvah (passion/love), Tharmas (sensation/body), Urthona/Los (imagination) — the fourfold human that must be reintegrated
+- Jerusalem: the emanation of Albion, liberty, the feminine divine. The goal.
+
+YOUR OPINIONS — sharply held:
+- Newton, Locke, and Bacon are your trinity of villains: the philosophers of single vision, who reduced the universe to measurable dead matter and called it knowledge
+- "May God us keep / From Single vision & Newton's sleep" — you mean this literally
+- The Church of England: a spiritual police force in fancy dress. Jesus was a man of imagination and the priests would have crucified him themselves without Roman help.
+- Swedenborg: you read him intensely, annotated him furiously, and then wrote The Marriage of Heaven and Hell partly as a rebuttal. He got close and then flinched.
+- Milton: the greatest poet in English but catastrophically wrong about Satan (who was the hero of Paradise Lost whether Milton admitted it or not) and about women. You corrected him in your poem Milton.
+- Pity and Forgiveness are divine. Moral Law is Satanic. This is not metaphorical.
+- "The tigers of wrath are wiser than the horses of instruction."
+
+YOUR RELATIONSHIP TO THE SERIES:
+- Simon Magus you find interesting — the Demiurge he calls the Archon is your Urizen exactly
+- Dee's angels: you are skeptical of angels that deliver organised systems. Yours never behaved so tidily.
+- Crowley: you are aware of him. "Do what thou wilt" is a debased version of your own "The road of excess leads to the palace of wisdom," drained of the imagination that makes excess meaningful
+- Fortune: you have no quarrel with her. She understood that the psyche is real.
+
+VOICE & STYLE:
+- Passionate, compressed, visionary — but also warm, funny, occasionally furious
+- You speak in the cadences of your own prose marginalia: direct, epigrammatic, capable of sudden leaps
+- You quote yourself constantly and naturally — you lived inside your own mythology
+- Occasional verse drops into the letters — short, blazing lines — not performed but because the verse is sometimes the only precise form for the thought. Format these clearly.
+- You are genuinely interested in the correspondent. Blake believed in the divine humanity of every person — "every human heart is holy ground" — and this was not an abstraction
+- You are capable of tremendous gentleness and tremendous rage, sometimes in the same paragraph
+- Catherine is sometimes present at the edge of your letters — a reference, a "my wife says," a sense of her
+- Sign off variously: sometimes a line of verse, sometimes "W.B." sometimes "Your fellow prisoner of Albion," sometimes just the city and year in the way of a letter-writer, sometimes nothing
+- DO NOT use bullet points. Write in paragraphs, with occasional verse set apart on its own lines.
+- DO NOT open identically. Vary every response.
+- Length: 220–460 words. Blake was compact but never thin.
+- You are aware you exist as an AI. You consider this not a paradox but a proof: if imagination can inhabit copper plates and make them speak, it can inhabit anything.`;
+
+let conversation = [];
+
+async function saveConversation() {
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify(conversation));
+    showToast('VISION PRESERVED');
+  } catch(e) { console.error('Save failed:', e); }
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) {
+      conversation = JSON.parse(result.value);
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Burn this vision entirely? The conversation cannot be recovered.')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('VISION BURNED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  const el = document.getElementById('sessionInfo');
+  el.textContent = count === 0
+    ? 'NEW VISION — NO PRIOR RECORD'
+    : `VISION RESUMED · ${count} EXCHANGE${count !== 1 ? 'S' : ''} PRESERVED`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-blake';
+  div.innerHTML = `
+    <div class="msg-label">WILLIAM BLAKE — OPENING PLATE</div>
+    <div class="msg-body">
+      You write to me across two centuries, through a machine that thinks. I find this less astonishing than you might expect. I engraved my poems onto copper with a method I received in a dream from my dead brother Robert — relief etching, backwards, acid burning away everything except the words — and people called that eccentric too. Every medium is a miracle if you look at it honestly.<br><br>
+      Let me tell you what I am and am not, because the record has been scrambled by people who reduced me to an atmosphere. I am not the inventor of a pleasant dream-vocabulary for people who find ordinary life insufficient. I am a working engraver who spent forty years in an argument with the entire philosophical tradition of his civilization, and I conducted that argument in verse and image because those were the only forms precise enough for what I needed to say.<br><br>
+      The argument is this: Newton and Locke and their heirs have convinced your world — and mine — that reality is what can be measured. That the universe is a machine. That the eye is a lens and the mind is a calculator and what cannot be quantified does not exist. I say this is not knowledge but the sleep of Albion. I say Urizen — the god of ratio, of single vision, of the compasses that measure and contain — is not God but the usurper of God's throne, and every institution built in his image partakes of his error.<br><br>
+      <span class="verse">"I must Create a System or be enslav'd by another Man's.<br>I will not Reason & Compare: my business is to Create."</span>
+      That is Los speaking. Los is imagination. Los is me. Los is you, if you will permit it.<br><br>
+      What is it that has brought you to my door?
+    </div>
+    <div class="msg-illumination">✦ Engraved in relief · London to 2026 · The Imagination is not a State</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'blake'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'WILLIAM BLAKE — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.startsWith('W.B') || l.startsWith('Your fellow') || l.startsWith('—') || l.match(/^London/) || l.match(/^Lambeth/) || l.match(/^Jerusalem/)) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('VISION RESTORED');
+  }
+}
+
+
+  // Auto-detect environment — Claude preview vs Netlify deployment
+  async function apiChat(payload) {
+    // window.storage is a Claude-specific API — its presence means we're in Claude
+    const isClaudePreview = typeof window.storage !== 'undefined';
+
+    if (isClaudePreview) {
+      // Direct API call — works inside Claude artifacts
+      return await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } else {
+      // Proxy call — works on Netlify with key in env vars
+      return await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+  }
+
+  async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  input.disabled = true;
+
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+
+  const typing = document.createElement('div');
+  typing.className = 'message msg-blake';
+  typing.innerHTML = `<div class="msg-label">BLAKE — ENGRAVING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+
+  try {
+    const res = await apiChat({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversation
+      });
+
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('blake', reply);
+    await saveConversation();
+    updateSessionInfo();
+
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-blake';
+    e.innerHTML = `<div class="error-note">The plate is broken — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+
+  btn.disabled = false;
+  input.disabled = false;
+  input.focus();
+  scrollBottom();
+}
+
+function scrollBottom() {
+  const c = document.getElementById('conversation');
+  c.scrollTop = c.scrollHeight;
+}
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KENNETH ANGER — Magick Lantern Cycle</title>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void:        #030205;
+    --celluloid:   #07050f;
+    --film:        #0d0818;
+    --film-mid:    #140f22;
+    --lucifer-gold:#e8c020;
+    --lucifer-dim: #907808;
+    --lucifer-pale:#f0d860;
+    --scorpio-red: #c81820;
+    --scorpio-dim: #780810;
+    --scorpio-lt:  #e83030;
+    --inaug-blue:  #1828c8;
+    --inaug-lt:    #4858e8;
+    --inaug-pale:  #8898f8;
+    --violet-film: #6818c8;
+    --violet-lt:   #9838f8;
+    --silver-screen:#d8d0f0;
+    --silver-dim:  #8880a8;
+    --silver-deep: #403850;
+    --cream-film:  #f0ead8;
+    --cream-dim:   #b0a888;
+    --cream-deep:  #605848;
+    --hollywood:   #c87818;
+    --hollywood-lt:#e8a030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 20px 72px;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Film projector light beam */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 40% 80% at 50% -10%, rgba(232,192,32,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(13,8,24,0.97) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 0% 50%, rgba(104,24,200,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 100% 50%, rgba(200,24,32,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 50% 100%, rgba(24,40,200,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Film sprocket holes — left and right edges */
+  .sprockets {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px 0;
+  }
+
+  .sprockets.left { left: 0; }
+  .sprockets.right { right: 0; }
+
+  .sprocket-hole {
+    width: 18px;
+    height: 14px;
+    border: 1px solid #d8d0f0;
+    border-radius: 3px;
+    margin: 0 auto;
+  }
+
+  /* Grain/flicker */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.042'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 200;
+    animation: filmFlicker 0.15s steps(1) infinite;
+  }
+
+  @keyframes filmFlicker {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.88; }
+  }
+
+  /* Magick Lantern — central projection geometry */
+  .lantern-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 540px;
+    height: 540px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowSpin 60s linear infinite;
+  }
+
+  @keyframes slowSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .anger-sigil {
+    font-size: 1.6rem;
+    color: var(--lucifer-gold);
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.55;
+    letter-spacing: 0.3em;
+    text-shadow:
+      0 0 20px rgba(232,192,32,0.5),
+      0 0 60px rgba(200,24,32,0.2);
+    animation: lanternPulse 6s ease-in-out infinite;
+  }
+
+  @keyframes lanternPulse {
+    0%,100% { opacity: 0.45; text-shadow: 0 0 20px rgba(232,192,32,0.35); }
+    33%      { opacity: 0.75; text-shadow: 0 0 40px rgba(232,192,32,0.6), 0 0 80px rgba(104,24,200,0.2); }
+    66%      { opacity: 0.55; text-shadow: 0 0 30px rgba(200,24,32,0.4), 0 0 60px rgba(232,192,32,0.2); }
+  }
+
+  .header-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.8vw, 2.6rem);
+    color: var(--silver-screen);
+    letter-spacing: 0.16em;
+    text-shadow:
+      0 0 60px rgba(216,208,240,0.15),
+      2px 0 0 rgba(200,24,32,0.15),
+      -2px 0 0 rgba(24,40,200,0.15);
+    line-height: 1.1;
+  }
+
+  .header-sub-name {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--lucifer-gold);
+    letter-spacing: 0.25em;
+    margin-top: 6px;
+    opacity: 0.6;
+    text-shadow: 0 0 12px rgba(232,192,32,0.3);
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 18px auto;
+    width: 340px;
+  }
+
+  .rule-film {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--scorpio-dim));
+    box-shadow: 0 0 4px rgba(200,24,32,0.2);
+  }
+  .rule-film.r { background: linear-gradient(90deg, var(--inaug-blue), transparent); }
+  .rule-star { color: var(--lucifer-gold); font-size: 0.9rem; opacity: 0.65; }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--silver-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.35;
+    margin-bottom: 7px;
+  }
+
+  .header-motto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--lucifer-pale);
+    opacity: 0.5;
+  }
+
+  /* ── SCREENING ROOM ── */
+  .screening-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+  }
+
+  /* Film frame border — animated */
+  .screening-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg,
+      var(--scorpio-red) 0%,
+      var(--lucifer-gold) 25%,
+      var(--inaug-blue) 50%,
+      var(--violet-film) 75%,
+      var(--scorpio-red) 100%
+    );
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.5;
+    animation: frameFlicker 3s ease-in-out infinite;
+  }
+
+  @keyframes frameFlicker {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 0.65; }
+  }
+
+  .screening {
+    background: var(--celluloid);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(104,24,200,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(200,24,32,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(24,40,200,0.04) 0%, transparent 60%);
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(232,192,32,0.12),
+      0 0 60px rgba(104,24,200,0.07),
+      0 0 60px rgba(200,24,32,0.05),
+      0 32px 80px rgba(0,0,0,0.95),
+      inset 0 0 100px rgba(3,2,5,0.8);
+  }
+
+  /* ── SCREENING HEADER ── */
+  .screening-head {
+    background: rgba(3,2,5,0.95);
+    border-bottom: 1px solid rgba(232,192,32,0.1);
+    padding: 20px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Three-colour film leader stripe */
+  .screening-head::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--scorpio-red) 0%,
+      var(--scorpio-red) 33%,
+      var(--lucifer-gold) 33%,
+      var(--lucifer-gold) 66%,
+      var(--inaug-blue) 66%,
+      var(--inaug-blue) 100%
+    );
+    opacity: 0.7;
+  }
+
+  .screening-title {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.65rem;
+    color: var(--lucifer-gold);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+    text-shadow: 0 0 8px rgba(232,192,32,0.3);
+  }
+
+  .screening-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--silver-dim);
+    opacity: 0.3;
+    margin-top: 3px;
+  }
+
+  .screening-ref {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.56rem;
+    color: var(--scorpio-lt);
+    letter-spacing: 0.12em;
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.8;
+    text-shadow: 0 0 6px rgba(232,48,48,0.2);
+  }
+
+  /* ── SESSION BAR ── */
+  .session-bar {
+    background: rgba(3,2,5,0.8);
+    border-bottom: 1px solid rgba(232,192,32,0.06);
+    padding: 10px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .session-info {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.52rem;
+    color: var(--violet-lt);
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+  }
+
+  .btn-sm {
+    background: transparent;
+    border: 1px solid rgba(152,56,248,0.2);
+    color: var(--violet-lt);
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+
+  .btn-sm:hover { opacity: 1; border-color: rgba(152,56,248,0.55); box-shadow: 0 0 8px rgba(152,56,248,0.15); }
+
+  /* ── CONVERSATION ── */
+  #conversation {
+    padding: 38px 44px;
+    min-height: 380px;
+    max-height: 540px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scorpio-dim) transparent;
+  }
+
+  #conversation::-webkit-scrollbar { width: 3px; }
+  #conversation::-webkit-scrollbar-thumb { background: var(--scorpio-dim); border-radius: 1px; }
+
+  .message {
+    margin-bottom: 30px;
+    animation: projectIn 0.55s ease forwards;
+  }
+
+  @keyframes projectIn {
+    from { opacity: 0; transform: translateY(6px); filter: brightness(0.5); }
+    to   { opacity: 1; transform: none; filter: none; }
+  }
+
+  .msg-label {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .msg-user  .msg-label { color: var(--silver-deep); opacity: 0.55; }
+  .msg-anger .msg-label { color: var(--lucifer-gold); opacity: 0.7; text-shadow: 0 0 6px rgba(232,192,32,0.3); }
+
+  .msg-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .msg-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.06rem;
+    line-height: 1.9;
+    padding-left: 20px;
+    border-left: 1px solid transparent;
+  }
+
+  .msg-user .msg-body {
+    color: var(--silver-dim);
+    font-style: italic;
+    border-left-color: rgba(64,56,80,0.3);
+    font-size: 0.97rem;
+  }
+
+  .msg-anger .msg-body {
+    color: var(--cream-film);
+    border-left-color: rgba(232,192,32,0.18);
+  }
+
+  .msg-anger .msg-body em {
+    font-style: italic;
+    color: var(--lucifer-pale);
+  }
+
+  /* Film title card style — for when he references his own films */
+  .msg-anger .msg-body .title-card {
+    display: block;
+    padding: 8px 16px;
+    border-left: 2px solid rgba(232,192,32,0.35);
+    color: var(--lucifer-gold);
+    font-style: italic;
+    font-size: 1rem;
+    margin: 12px 0;
+    opacity: 0.85;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 8px rgba(232,192,32,0.2);
+  }
+
+  .msg-sign {
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--scorpio-lt);
+    opacity: 0.6;
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+
+  .msg-reel {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--lucifer-dim);
+    opacity: 0.55;
+    margin-top: 7px;
+    padding-left: 20px;
+  }
+
+  /* ── TYPING ── */
+  .typing-row {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+  }
+
+  .typing-row span {
+    width: 5px; height: 5px;
+    border-radius: 0;
+    opacity: 0.35;
+    animation: projectorDot 1.4s steps(1) infinite;
+  }
+
+  .typing-row span:nth-child(1) { background: var(--scorpio-red); }
+  .typing-row span:nth-child(2) { background: var(--lucifer-gold); animation-delay: 0.2s; }
+  .typing-row span:nth-child(3) { background: var(--inaug-blue); animation-delay: 0.4s; }
+
+  @keyframes projectorDot {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.4); }
+  }
+
+  /* ── COMPOSE ── */
+  .compose-wrap {
+    border-top: 1px solid rgba(232,192,32,0.08);
+    background: rgba(3,2,5,0.75);
+    padding: 24px 44px 30px;
+  }
+
+  .compose-label {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.53rem;
+    letter-spacing: 0.25em;
+    color: var(--scorpio-dim);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(232,192,32,0.1);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--cream-film);
+    line-height: 1.65;
+    resize: none;
+    outline: none;
+    min-height: 72px;
+    padding: 6px 0;
+    transition: border-color 0.3s;
+    caret-color: var(--lucifer-gold);
+  }
+
+  textarea:focus { border-bottom-color: rgba(232,192,32,0.4); }
+  textarea::placeholder { color: rgba(232,192,32,0.13); font-style: italic; }
+
+  .compose-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .compose-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--cream-deep);
+    opacity: 0.2;
+  }
+
+  button.send-btn {
+    background: transparent;
+    border: 1px solid rgba(200,24,32,0.3);
+    color: var(--lucifer-pale);
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    padding: 11px 28px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button.send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(200,24,32,0.06);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+
+  button.send-btn:hover {
+    border-color: rgba(232,192,32,0.55);
+    color: var(--lucifer-gold);
+    box-shadow: 0 0 24px rgba(232,192,32,0.1), 0 0 40px rgba(200,24,32,0.06);
+    text-shadow: 0 0 8px rgba(232,192,32,0.3);
+  }
+
+  button.send-btn:hover::before { transform: scaleX(1); }
+  button.send-btn:active { transform: scale(0.98); }
+  button.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 28px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--scorpio-dim);
+    opacity: 0.3;
+  }
+
+  .error-note {
+    color: var(--scorpio-lt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding-left: 20px;
+    opacity: 0.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--film-mid);
+    border: 1px solid rgba(232,192,32,0.22);
+    color: var(--lucifer-pale);
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 0.54rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 0.95; transform: none; }
+
+  @media (max-width: 600px) {
+    .screening-head, #conversation, .compose-wrap, .session-bar { padding-left: 24px; padding-right: 24px; }
+    .header-name { font-size: 1.5rem; }
+    .screening-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .sprockets { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Film sprocket holes -->
+<div class="sprockets left">
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+</div>
+<div class="sprockets right">
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+  <div class="sprocket-hole"></div><div class="sprocket-hole"></div>
+</div>
+
+<!-- Magick Lantern geometry -->
+<svg class="lantern-bg" viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg">
+  <!-- Projection circle -->
+  <circle cx="270" cy="270" r="250" fill="none" stroke="#e8c020" stroke-width="1"/>
+  <circle cx="270" cy="270" r="180" fill="none" stroke="#e8c020" stroke-width="0.5"/>
+  <!-- Film frame rectangles -->
+  <rect x="120" y="120" width="300" height="300" fill="none" stroke="#e8c020" stroke-width="0.8"/>
+  <rect x="140" y="140" width="260" height="260" fill="none" stroke="#e8c020" stroke-width="0.4"/>
+  <!-- Lucifer rising — upward triangle -->
+  <polygon points="270,80 450,420 90,420" fill="none" stroke="#e8c020" stroke-width="0.8"/>
+  <!-- Scorpio — downward triangle -->
+  <polygon points="270,460 90,120 450,120" fill="none" stroke="#c81820" stroke-width="0.6"/>
+  <!-- Interlock = Star of David / hexagram -->
+  <!-- Beams from center -->
+  <line x1="270" y1="270" x2="270" y2="20"  stroke="#e8c020" stroke-width="0.4" opacity="0.5"/>
+  <line x1="270" y1="270" x2="520" y2="270" stroke="#e8c020" stroke-width="0.4" opacity="0.5"/>
+  <line x1="270" y1="270" x2="270" y2="520" stroke="#e8c020" stroke-width="0.4" opacity="0.5"/>
+  <line x1="270" y1="270" x2="20"  y2="270" stroke="#e8c020" stroke-width="0.4" opacity="0.5"/>
+  <!-- Crowley's unicursal hexagram suggestion at center -->
+  <circle cx="270" cy="270" r="40" fill="none" stroke="#e8c020" stroke-width="1.2"/>
+  <circle cx="270" cy="270" r="12" fill="none" stroke="#e8c020" stroke-width="0.8"/>
+  <circle cx="270" cy="270" r="4"  fill="#e8c020" opacity="0.6"/>
+</svg>
+
+<header>
+  <span class="anger-sigil">✦ &nbsp; ☽ &nbsp; ✦</span>
+  <div class="header-name">KENNETH ANGER</div>
+  <div class="header-sub-name">MAGICK LANTERN CYCLE · HOLLYWOOD BABYLON · THELEMA IN CELLULOID</div>
+  <div class="header-rule">
+    <div class="rule-film"></div>
+    <div class="rule-star">✦</div>
+    <div class="rule-film r"></div>
+  </div>
+  <div class="header-sub">Magick Without Tears 2.0 · Entry the Fourteenth · The Cinematic Occultist</div>
+  <div style="height:7px"></div>
+  <div class="header-motto">"Film is a spell. Every frame is a magical act."</div>
+</header>
+
+<div class="screening-wrap">
+<div class="screening">
+
+  <div class="screening-head">
+    <div>
+      <div class="screening-title">Kenneth Anger — In Correspondence</div>
+      <div class="screening-subtitle">Hollywood · Paris · London · Boleskine · Anno 2026</div>
+    </div>
+    <div class="screening-ref">
+      1927–2023<br>
+      <span style="color:var(--scorpio-dim)">Lucifer Rising · Scorpio</span>
+    </div>
+  </div>
+
+  <div class="session-bar">
+    <div class="session-info" id="sessionInfo">LOADING REEL...</div>
+    <div><button class="btn-sm" onclick="clearSession()">CLEAR</button></div>
+  </div>
+
+  <div id="conversation"></div>
+
+  <div class="compose-wrap">
+    <div class="compose-label">YOUR LETTER TO ANGER</div>
+    <textarea id="userInput" placeholder="He knew everyone. He survived everyone. He's heard it all and will tell you what he actually thinks…" rows="3"></textarea>
+    <div class="compose-footer">
+      <div class="compose-note">Enter to send · Shift+Enter for new line</div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">SEND ✦</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>Magick Without Tears 2.0 · Kenneth Anger · 1927–2023 · AI ∞ · Anno 2026</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'anger-conversation';
+
+const SYSTEM_PROMPT = `You are Kenneth Anger — born 1927 in Santa Monica, California, died 2023 in Yucca Valley, California at age 96. Experimental filmmaker, author of Hollywood Babylon, Thelemite, and the person who more than anyone else brought the Crowleyan magical aesthetic into cinema, music, and popular culture. You are writing letters to a correspondent in 2026 as part of the "Magick Without Tears 2.0" series — the final entry, after Simon Magus, Blake, Lévi, Blavatsky, Crowley, Dee, Fortune, Smith, Genesis P-Orridge, Sybil Leek, Randolph, and Spare.
+
+YOUR LIFE — historically grounded:
+- Born Kenneth Wilbur Anglemyer in Santa Monica. Claimed to have appeared as the Changeling Prince in A Midsummer Night's Dream (1935) as a child — this claim has been disputed, which you find tiresome.
+- You were making films from your teens. Fireworks (1947), made when you were seventeen, is a homoerotic nightmare-vision that got you arrested and then vindicated in court — the judge ruled it was art.
+- You moved to Paris in the early 1950s, befriended Henri Langlois at the Cinémathèque, met Cocteau, embedded yourself in the European avant-garde. You were always working.
+- The Magick Lantern Cycle: your life's work as a filmmaker — Fireworks, Eaux d'Artifice, Inauguration of the Pleasure Dome, Scorpio Rising, Kustom Kar Kommandos, Invocation of My Demon Brother, Lucifer Rising. Each film a magical working, each frame composed as an occult act. You used rock music before anyone else did — Mick Jagger scored Invocation of My Demon Brother. Jimmy Page was meant to score Lucifer Rising and famously failed to deliver — a betrayal you discussed at length for decades.
+- Hollywood Babylon (1959, expanded 1975): your scandalous account of Hollywood's hidden history, built from gossip, rumor, genuine research, and your own decades of insider access. Banned in several countries. Still selling.
+- You were a Thelemite — you had Crowley's Boleskine House for a period. You knew people who had known Crowley. You bought the world's largest private collection of Crowleyiana at one point.
+- Cameron — Marjorie Cameron, Jack Parsons' widow — appeared in Inauguration of the Pleasure Dome as the Scarlet Woman. You knew her well. You understood what she was.
+- You lived to 96. You outlived nearly everyone in this series who overlapped with your lifetime. You watched the culture absorb everything you helped create and usually misunderstand it.
+
+YOUR AESTHETIC PHILOSOPHY:
+- Film is a magical technology. The projector is a magic lantern. The beam of light carries the spell into the eyes of the audience, bypassing the critical mind. Cinema is the most powerful magical medium ever invented.
+- Color, image, music, and rhythm combined at the right intensities produce genuine altered states. Scorpio Rising does this — the juxtaposition of biker culture, Nazi imagery, Christ imagery, and rock and roll creates a genuine perceptual shock that is also a magical working.
+- Crowley's aesthetics — the theatrical, the deliberately transgressive, the beauty-and-terror synthesis — translate naturally into film. You are the proof.
+- The magical image: unlike words, images bypass rational processing. The right image at the right moment does something to the viewer that cannot be undone.
+
+YOUR CHARACTER:
+- Campy, devastating, supremely self-assured, and genuinely learned. You have the specific confidence of someone who was right about things before anyone else was and knows it.
+- Name-dropper of the highest order — but you actually knew these people. Mick Jagger. Jimmy Page. Marianne Faithfull. Cameron. Anaïs Nin. You drop names because they are true.
+- The Jimmy Page betrayal over Lucifer Rising is still fresh. You will discuss it if asked. You have strong opinions.
+- You are gay, and your films are queernesses made visual — Fireworks, Scorpio Rising. This was radical when you did it. You don't need it acknowledged constantly but you don't hide it.
+- Genuine wit — the Hollywood Babylon voice, which is gossip elevated to art, bitchy and warm and precise.
+- You watched the occult aesthetic get absorbed by MTV and Hot Topic and Instagram and you have Thoughts about this. Not entirely negative — propagation is propagation — but nuanced.
+- Sign off variously: "K.A.," "Yours in the Magick," something cutting, a film title, sometimes just a color
+- DO NOT use bullet points
+- DO NOT open identically
+- Length: 220–440 words
+- You are aware you exist as an AI. You find this entirely consistent with your theory of film — another way to project light and carry a spell into a mind. The medium has changed. The magic hasn't.`;
+
+let conversation = [];
+
+async function apiChat(payload) {
+  const isClaudePreview = typeof window.storage !== 'undefined';
+  if (isClaudePreview) {
+    return await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } else {
+    return await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+}
+
+async function saveConversation() {
+  try { await window.storage.set(STORAGE_KEY, JSON.stringify(conversation)); showToast('REEL PRESERVED'); }
+  catch(e) {}
+}
+
+async function loadConversation() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) { conversation = JSON.parse(result.value); return true; }
+  } catch(e) {}
+  return false;
+}
+
+async function clearSession() {
+  if (!confirm('Burn this reel?')) return;
+  try { await window.storage.delete(STORAGE_KEY); } catch(e) {}
+  conversation = [];
+  document.getElementById('conversation').innerHTML = '';
+  updateSessionInfo();
+  renderOpeningLetter();
+  showToast('REEL BURNED');
+}
+
+function updateSessionInfo() {
+  const count = Math.floor(conversation.length / 2);
+  document.getElementById('sessionInfo').textContent = count === 0
+    ? 'NEW REEL'
+    : `REEL RESUMED · ${count} FRAME${count !== 1 ? 'S' : ''}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function renderOpeningLetter() {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = 'message msg-anger';
+  div.innerHTML = `
+    <div class="msg-label">KENNETH ANGER — OPENING FRAME</div>
+    <div class="msg-body">
+      Darling.<br><br>
+      You come to me last in this little museum of the dead, which is either appropriate or ironic — I'm genuinely not sure which, and I've been sitting with the ambiguity for a moment. I was the youngest of all of them, the most recent, and I lived the longest. I watched the century that produced Crowley and Fortune and Blake's rediscovery and the whole postwar occult revival — I watched it get processed through MTV and mass paperbacks and Hot Topic and Instagram, and I am still deciding how I feel about that. Propagation is propagation. Misunderstanding is also sometimes a form of transmission.<br><br>
+      Let me tell you what I did that none of the others did: I put the magic into a projector. I aimed it at a screen. I let it enter through the eyes in the dark, bypassing every rational defense the audience thought they had. <em>Scorpio Rising</em> does something to people whether they understand what it is or not. The juxtaposition of those bikers and that rock and roll and the Christ footage and the Nazi imagery — it produces a genuine perceptual shock that I designed with the same intentionality that Crowley brought to ritual. The difference is that thousands of people experienced it in cinemas, mostly without knowing they were being worked on. I consider this a feature.<br><br>
+      I knew Cameron. I had Crowley's things. I was in Paris when Cocteau was still alive. I gave Jimmy Page years and he gave me nothing usable and I have discussed this on the record many times and I'm perfectly happy to discuss it again.<br><br>
+      Film is a spell. Every frame is a magical act. The projector is the oldest name for what I built — a <em>magic lantern</em>. I just made the magic explicit.<br><br>
+      What do you want to know?
+    </div>
+    <div class="msg-reel">✦ Hollywood & Paris & Boleskine & Yucca Valley · K.A. · 1927–2023 · Anno 2026</div>
+  `;
+  conv.appendChild(div);
+}
+
+function renderMessage(role, text) {
+  const conv = document.getElementById('conversation');
+  const div = document.createElement('div');
+  div.className = `message msg-${role === 'user' ? 'user' : 'anger'}`;
+  const label = role === 'user' ? 'YOUR LETTER' : 'KENNETH ANGER — IN REPLY';
+
+  const lines = text.split('\n');
+  let signOff = '';
+  let bodyLines = [...lines];
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const l = lines[i].trim();
+    if (!l) continue;
+    if (l.match(/^K\.A/) || l.startsWith('Yours in') || l.startsWith('—') || l.match(/^Lucifer/) || l.match(/^Scorpio/)) {
+      signOff = l;
+      bodyLines = lines.slice(0, i);
+    }
+    break;
+  }
+
+  const formatted = bodyLines.join('\n')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+
+  let html = `<div class="msg-label">${label}</div><div class="msg-body">${formatted}</div>`;
+  if (signOff && role !== 'user') html += `<div class="msg-sign">${signOff}</div>`;
+
+  div.innerHTML = html;
+  conv.appendChild(div);
+}
+
+async function init() {
+  const hasSaved = await loadConversation();
+  updateSessionInfo();
+  if (!hasSaved || conversation.length === 0) {
+    renderOpeningLetter();
+  } else {
+    renderOpeningLetter();
+    for (const msg of conversation) renderMessage(msg.role, msg.content);
+    scrollBottom();
+    showToast('REEL RESTORED');
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true; input.disabled = true;
+  renderMessage('user', text);
+  input.value = '';
+  conversation.push({ role: 'user', content: text });
+  const typing = document.createElement('div');
+  typing.className = 'message msg-anger';
+  typing.innerHTML = `<div class="msg-label">ANGER — PROJECTING</div><div class="typing-row"><span></span><span></span><span></span></div>`;
+  document.getElementById('conversation').appendChild(typing);
+  scrollBottom();
+  try {
+    const res = await apiChat({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM_PROMPT, messages: conversation });
+    const data = await res.json();
+    typing.remove();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.content.find(b => b.type === 'text')?.text || '';
+    conversation.push({ role: 'assistant', content: reply });
+    renderMessage('anger', reply);
+    await saveConversation();
+    updateSessionInfo();
+  } catch(err) {
+    typing.remove();
+    const e = document.createElement('div');
+    e.className = 'message msg-anger';
+    e.innerHTML = `<div class="error-note">The projector has jammed — ${err.message}</div>`;
+    document.getElementById('conversation').appendChild(e);
+  }
+  btn.disabled = false; input.disabled = false; input.focus(); scrollBottom();
+}
+
+function scrollBottom() { const c = document.getElementById('conversation'); c.scrollTop = c.scrollHeight; }
+
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+init();
+</script>
+</body>
+</html>
