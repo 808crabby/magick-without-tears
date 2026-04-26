@@ -119,7 +119,11 @@
         node.style.width = '7.5in';
         document.body.appendChild(node);
 
+        var cleanup = function () {
+          if (node.parentNode) node.parentNode.removeChild(node);
+        };
         return html2pdf()
+          .from(node)
           .set({
             margin: [0.5, 0.5, 0.5, 0.5],
             filename: filename(),
@@ -128,11 +132,8 @@
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
             pagebreak: { mode: ['css', 'legacy'] }
           })
-          .from(node)
           .save()
-          .finally(function () {
-            if (node.parentNode) node.parentNode.removeChild(node);
-          });
+          .then(function () { cleanup(); }, function (err) { cleanup(); throw err; });
       })
       .then(function () {
         btn.textContent = '✓ Saved';
@@ -146,8 +147,4 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectButton);
-  } else {
-    injectButton();
-  }
-})();
+    document.addEvent
