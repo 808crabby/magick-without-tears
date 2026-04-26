@@ -1,7 +1,7 @@
 /* Magick Without Tears 2.0 — conversation PDF export
-   Loaded once per page; injects a "Save PDF" button next to #sendBtn,
+   Loaded once per page; injects a "Save as PDF" button next to #sendBtn,
    lazy-loads html2pdf.js on demand, captures the rendered #conversation
-   (plus letterhead for context) and triggers a download. */
+   (plus letterhead) and triggers a download. */
 (function () {
   if (window.__mwtPdfInjected) return;
   window.__mwtPdfInjected = true;
@@ -41,8 +41,6 @@
     btn.textContent = 'Save as PDF';
     btn.title = 'Download this correspondence as a PDF';
 
-    // Match the existing Dispatch button's typography but render as a
-    // secondary, ghost-style action.
     var cs = window.getComputedStyle(sendBtn);
     btn.style.fontFamily = cs.fontFamily;
     btn.style.fontSize = cs.fontSize;
@@ -67,8 +65,6 @@
     var conv = document.getElementById('conversation');
     if (!conv) throw new Error('No conversation on this page');
 
-    // Take the parchment look from the existing letter sheet so the PDF
-    // matches what the user has been reading.
     var bg = '#ede2c5';
     try {
       var sheet = document.querySelector('.letter-sheet');
@@ -90,7 +86,6 @@
     }
 
     var convClone = conv.cloneNode(true);
-    // Strip transient UI (typing indicators, error toasts) from the export.
     convClone.querySelectorAll('.typing, .typing-indicator, .error-line').forEach(function (n) {
       var p = n.closest('.message') || n;
       if (p && p.parentNode) p.parentNode.removeChild(p);
@@ -112,7 +107,6 @@
     loadHtml2Pdf()
       .then(function (html2pdf) {
         var node = buildPrintable();
-        // Render off-screen but laid out so html2canvas can measure.
         node.style.position = 'fixed';
         node.style.left = '-10000px';
         node.style.top = '0';
@@ -147,4 +141,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEvent
+    document.addEventListener('DOMContentLoaded', injectButton);
+  } else {
+    injectButton();
+  }
+})();
