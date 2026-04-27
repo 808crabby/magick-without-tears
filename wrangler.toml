@@ -1,0 +1,7 @@
+name = "magick-without-tears"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+
+[assets]
+directory = "./"
+binding = "ASSETS"
