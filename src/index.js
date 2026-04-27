@@ -23,11 +23,22 @@ export default {
       }
       try {
         const body = await request.json();
+        const apiKey =
+          env.ANTHROPIC_API_KEY ||
+          env["anthropic-api-key"] ||
+          env.anthropic_api_key ||
+          env.AnthropicApiKey;
+        if (!apiKey) {
+          return new Response(
+            JSON.stringify({ error: "ANTHROPIC_API_KEY env var not set" }),
+            { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+          );
+        }
         const upstream = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": env.ANTHROPIC_API_KEY,
+            "x-api-key": apiKey,
             "anthropic-version": "2023-06-01",
           },
           body: JSON.stringify({
@@ -43,20 +54,3 @@ export default {
           headers: {
             "Content-Type": "application/json",
             ...corsHeaders,
-          },
-        });
-      } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json",
-            ...corsHeaders,
-          },
-        });
-      }
-    }
-
-    // Fall through: let Cloudflare's static-assets binding serve the request.
-    return env.ASSETS.fetch(request);
-  },
-};
