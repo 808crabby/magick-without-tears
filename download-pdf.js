@@ -86,6 +86,8 @@
     }
 
     var convClone = conv.cloneNode(true);
+    // Strip the id (duplicate ids break CSS targeting) and any transient UI.
+    convClone.removeAttribute('id');
     convClone.querySelectorAll('.typing, .typing-indicator, .error-line').forEach(function (n) {
       var p = n.closest('.message') || n;
       if (p && p.parentNode) p.parentNode.removeChild(p);
@@ -107,10 +109,15 @@
     loadHtml2Pdf()
       .then(function (html2pdf) {
         var node = buildPrintable();
-        node.style.position = 'fixed';
-        node.style.left = '-10000px';
+        // Render visibly but on top of the page during capture so html2canvas
+        // sees actual layout. We hide it offscreen via translate (which
+        // html2canvas tolerates better than position:fixed left:-10000px).
+        node.style.position = 'absolute';
         node.style.top = '0';
+        node.style.left = '0';
         node.style.width = '7.5in';
+        node.style.transform = 'translate(-99999px, 0)';
+        node.style.zIndex = '0';
         document.body.appendChild(node);
 
         var cleanup = function () {
@@ -131,18 +138,4 @@
       })
       .then(function () {
         btn.textContent = '✓ Saved';
-        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
-      })
-      .catch(function (err) {
-        console.error('[Save as PDF]', err);
-        btn.textContent = 'Failed — see console';
-        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 2400);
-      });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectButton);
-  } else {
-    injectButton();
-  }
-})();
+        setTimeout(function () { btn.textContent
