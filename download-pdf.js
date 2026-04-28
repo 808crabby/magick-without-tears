@@ -86,7 +86,6 @@
     }
 
     var convClone = conv.cloneNode(true);
-    // Strip duplicate #conversation id so CSS rules still target the original.
     convClone.removeAttribute('id');
     convClone.querySelectorAll('.typing, .typing-indicator, .error-line').forEach(function (n) {
       var p = n.closest('.message') || n;
@@ -104,13 +103,11 @@
     if (btn.disabled) return;
     var orig = btn.textContent;
     btn.disabled = true;
-    btn.textContent = 'Preparing…';
+    btn.textContent = 'Preparing...';
 
     loadHtml2Pdf()
       .then(function (html2pdf) {
         var node = buildPrintable();
-        // html2canvas misrenders position:fixed offscreen elements as blank.
-        // Use absolute + translate, which keeps layout correct and is captured.
         node.style.position = 'absolute';
         node.style.top = '0';
         node.style.left = '0';
@@ -136,7 +133,19 @@
           .then(function () { cleanup(); }, function (err) { cleanup(); throw err; });
       })
       .then(function () {
-        btn.textContent = '✓ Saved';
+        btn.textContent = 'Saved';
         setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
       })
-      .catch(funct
+      .catch(function (err) {
+        console.error('[Save as PDF]', err);
+        btn.textContent = 'Failed';
+        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 2400);
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectButton);
+  } else {
+    injectButton();
+  }
+})();
