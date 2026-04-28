@@ -1,5 +1,8 @@
-/* Magick Without Tears 2.0 - PDF export. Captures the visible .letter-sheet
-   directly (the offscreen-clone path was rendering blank in html2canvas). */
+/* Magick Without Tears 2.0 - PDF export.
+   Captures the visible .letter-sheet. The .message animation starts at
+   opacity 0; html2canvas re-triggers animations on its clone, which is
+   why earlier exports came out blank. The onclone hook below forces
+   messages fully visible in the captured DOM. */
 (function () {
   if (window.__mwtPdfInjected) return;
   window.__mwtPdfInjected = true;
@@ -37,8 +40,6 @@
     btn.id = 'downloadPdfBtn';
     btn.type = 'button';
     btn.textContent = 'Save as PDF';
-    btn.title = 'Download this correspondence as a PDF';
-
     var cs = window.getComputedStyle(sendBtn);
     btn.style.fontFamily = cs.fontFamily;
     btn.style.fontSize = cs.fontSize;
@@ -51,9 +52,19 @@
     btn.style.color = 'var(--gold, #d4a843)';
     btn.style.border = '1px solid rgba(212,168,67,0.4)';
     btn.style.cursor = 'pointer';
-    btn.style.opacity = '0.85';
     btn.addEventListener('click', handleClick);
     sendBtn.parentNode.insertBefore(btn, sendBtn);
+  }
+
+  function onClone(clonedDoc) {
+    var style = clonedDoc.createElement('style');
+    style.textContent = [
+      '.message, .msg-label, .msg-body { animation: none !important; opacity: 1 !important; transform: none !important; }',
+      '.typing, .typing-indicator, .error-line { display: none !important; }',
+      '#conversation { max-height: none !important; overflow: visible !important; }',
+      '.compose-area { display: none !important; }'
+    ].join('\n');
+    clonedDoc.head.appendChild(style);
   }
 
   function handleClick() {
@@ -65,35 +76,11 @@
 
     loadHtml2Pdf()
       .then(function (html2pdf) {
-        // Pick the best on-screen target. Letter-sheet includes the
-        // letterhead + conversation + (unwanted) compose area; we hide
-        // the compose area for the duration of the capture.
         var target =
           document.querySelector('.letter-sheet') ||
           document.querySelector('.letter-wrap') ||
           document.getElementById('conversation');
         if (!target) throw new Error('No content to capture');
-
-        // Make the conversation render its full height (no scroll clipping).
-        var conv = document.getElementById('conversation');
-        var prev = {};
-        if (conv) {
-          prev.maxHeight = conv.style.maxHeight;
-          prev.overflow = conv.style.overflow;
-          conv.style.maxHeight = 'none';
-          conv.style.overflow = 'visible';
-        }
-        var compose = document.querySelector('.compose-area');
-        var prevCompose = compose ? compose.style.display : null;
-        if (compose) compose.style.display = 'none';
-
-        var restore = function () {
-          if (conv) {
-            conv.style.maxHeight = prev.maxHeight || '';
-            conv.style.overflow = prev.overflow || '';
-          }
-          if (compose) compose.style.display = prevCompose || '';
-        };
 
         return html2pdf()
           .from(target)
@@ -105,14 +92,13 @@
               scale: 2,
               useCORS: true,
               backgroundColor: '#ede2c5',
-              foreignObjectRendering: false,
-              logging: false
+              logging: false,
+              onclone: onClone
             },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
             pagebreak: { mode: ['css', 'legacy'] }
           })
-          .save()
-          .then(function () { restore(); }, function (err) { restore(); throw err; });
+          .save();
       })
       .then(function () {
         btn.textContent = 'Saved';
