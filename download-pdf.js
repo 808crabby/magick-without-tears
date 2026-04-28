@@ -1,7 +1,5 @@
-/* Magick Without Tears 2.0 — conversation PDF export
-   Loaded once per page; injects a "Save as PDF" button next to #sendBtn,
-   lazy-loads html2pdf.js on demand, captures the rendered #conversation
-   (plus letterhead) and triggers a download. */
+/* Magick Without Tears 2.0 - PDF export. Captures the visible .letter-sheet
+   directly (the offscreen-clone path was rendering blank in html2canvas). */
 (function () {
   if (window.__mwtPdfInjected) return;
   window.__mwtPdfInjected = true;
@@ -54,48 +52,8 @@
     btn.style.border = '1px solid rgba(212,168,67,0.4)';
     btn.style.cursor = 'pointer';
     btn.style.opacity = '0.85';
-    btn.addEventListener('mouseenter', function () { btn.style.opacity = '1'; });
-    btn.addEventListener('mouseleave', function () { btn.style.opacity = '0.85'; });
     btn.addEventListener('click', handleClick);
-
     sendBtn.parentNode.insertBefore(btn, sendBtn);
-  }
-
-  function buildPrintable() {
-    var conv = document.getElementById('conversation');
-    if (!conv) throw new Error('No conversation on this page');
-
-    var bg = '#ede2c5';
-    try {
-      var sheet = document.querySelector('.letter-sheet');
-      if (sheet) bg = window.getComputedStyle(sheet).backgroundColor || bg;
-    } catch (e) {}
-
-    var wrap = document.createElement('div');
-    wrap.style.background = bg;
-    wrap.style.padding = '2.4rem 2.6rem';
-    wrap.style.color = '#3a2f1c';
-    wrap.style.maxWidth = '7.5in';
-    wrap.style.margin = '0 auto';
-
-    var head = document.querySelector('.letterhead');
-    if (head) {
-      var headClone = head.cloneNode(true);
-      headClone.style.marginBottom = '1.2rem';
-      wrap.appendChild(headClone);
-    }
-
-    var convClone = conv.cloneNode(true);
-    convClone.removeAttribute('id');
-    convClone.querySelectorAll('.typing, .typing-indicator, .error-line').forEach(function (n) {
-      var p = n.closest('.message') || n;
-      if (p && p.parentNode) p.parentNode.removeChild(p);
-    });
-    convClone.style.maxHeight = 'none';
-    convClone.style.overflow = 'visible';
-    wrap.appendChild(convClone);
-
-    return wrap;
   }
 
   function handleClick() {
@@ -107,30 +65,54 @@
 
     loadHtml2Pdf()
       .then(function (html2pdf) {
-        var node = buildPrintable();
-        node.style.position = 'absolute';
-        node.style.top = '0';
-        node.style.left = '0';
-        node.style.width = '7.5in';
-        node.style.transform = 'translate(-99999px, 0)';
-        node.style.zIndex = '0';
-        document.body.appendChild(node);
+        // Pick the best on-screen target. Letter-sheet includes the
+        // letterhead + conversation + (unwanted) compose area; we hide
+        // the compose area for the duration of the capture.
+        var target =
+          document.querySelector('.letter-sheet') ||
+          document.querySelector('.letter-wrap') ||
+          document.getElementById('conversation');
+        if (!target) throw new Error('No content to capture');
 
-        var cleanup = function () {
-          if (node.parentNode) node.parentNode.removeChild(node);
+        // Make the conversation render its full height (no scroll clipping).
+        var conv = document.getElementById('conversation');
+        var prev = {};
+        if (conv) {
+          prev.maxHeight = conv.style.maxHeight;
+          prev.overflow = conv.style.overflow;
+          conv.style.maxHeight = 'none';
+          conv.style.overflow = 'visible';
+        }
+        var compose = document.querySelector('.compose-area');
+        var prevCompose = compose ? compose.style.display : null;
+        if (compose) compose.style.display = 'none';
+
+        var restore = function () {
+          if (conv) {
+            conv.style.maxHeight = prev.maxHeight || '';
+            conv.style.overflow = prev.overflow || '';
+          }
+          if (compose) compose.style.display = prevCompose || '';
         };
+
         return html2pdf()
-          .from(node)
+          .from(target)
           .set({
-            margin: [0.5, 0.5, 0.5, 0.5],
+            margin: [0.4, 0.4, 0.4, 0.4],
             filename: filename(),
             image: { type: 'jpeg', quality: 0.95 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: null },
+            html2canvas: {
+              scale: 2,
+              useCORS: true,
+              backgroundColor: '#ede2c5',
+              foreignObjectRendering: false,
+              logging: false
+            },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
             pagebreak: { mode: ['css', 'legacy'] }
           })
           .save()
-          .then(function () { cleanup(); }, function (err) { cleanup(); throw err; });
+          .then(function () { restore(); }, function (err) { restore(); throw err; });
       })
       .then(function () {
         btn.textContent = 'Saved';
