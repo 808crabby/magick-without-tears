@@ -86,7 +86,7 @@
     }
 
     var convClone = conv.cloneNode(true);
-    // Strip the id (duplicate ids break CSS targeting) and any transient UI.
+    // Strip duplicate #conversation id so CSS rules still target the original.
     convClone.removeAttribute('id');
     convClone.querySelectorAll('.typing, .typing-indicator, .error-line').forEach(function (n) {
       var p = n.closest('.message') || n;
@@ -109,9 +109,8 @@
     loadHtml2Pdf()
       .then(function (html2pdf) {
         var node = buildPrintable();
-        // Render visibly but on top of the page during capture so html2canvas
-        // sees actual layout. We hide it offscreen via translate (which
-        // html2canvas tolerates better than position:fixed left:-10000px).
+        // html2canvas misrenders position:fixed offscreen elements as blank.
+        // Use absolute + translate, which keeps layout correct and is captured.
         node.style.position = 'absolute';
         node.style.top = '0';
         node.style.left = '0';
@@ -138,4 +137,6 @@
       })
       .then(function () {
         btn.textContent = '✓ Saved';
-        setTimeout(function () { btn.textContent
+        setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1800);
+      })
+      .catch(funct
